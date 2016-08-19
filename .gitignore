@@ -1,0 +1,12 @@
+/DNAD/Java\ Tutorial/bin
+/DNAD/Java\ Tutorial/.settings
+/DNAD/Java\ Tutorial/.classpath
+/DNAD/Java\ Tutorial/.project
+/DNAD/Java\ Tutorial/target
+*.settings
+*target
+*.project
+*.classpath
+*.idea
+*.iml
+*__pycache__
