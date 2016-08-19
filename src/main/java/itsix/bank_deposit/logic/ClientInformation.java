@@ -17,4 +17,29 @@ public class ClientInformation implements IClientInformation {
 		this.address = address;
 	}
 
+	@Override
+	public boolean hasSsn(String ssn) {
+		return this.ssn.equals(ssn);
+	}
+
+	@Override
+	public String getSsn() {
+		return ssn;
+	}
+
+	@Override
+	public String getFirstName() {
+		return firstName;
+	}
+
+	@Override
+	public String getLastName() {
+		return lastName;
+	}
+
+	@Override
+	public String getAddress() {
+		return address;
+	}
+
 }

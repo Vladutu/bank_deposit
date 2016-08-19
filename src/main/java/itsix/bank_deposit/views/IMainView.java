@@ -10,4 +10,8 @@ public interface IMainView extends ISubscriber {
 	void updateProductDescription(String description);
 
 	void clearScreen();
+
+	String getClientSsn();
+
+	void setClientField(String ssn, String firstName, String lastName, String address);
 }

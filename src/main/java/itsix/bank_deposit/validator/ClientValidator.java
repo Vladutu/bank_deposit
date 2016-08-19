@@ -16,6 +16,7 @@ public class ClientValidator implements IClientValidator {
 	public IValidationResult validate(String ssn, String firstName, String lastName, String address) {
 		validator = validatorBuilder.build();
 		validator.checkNullOrEmpty("ssn", ssn);
+		validator.checkOnlyDigits("ssn", ssn);
 		validator.checkNullOrEmpty("first name", firstName);
 		validator.checkNullOrEmpty("last name", lastName);
 		validator.checkNullOrEmpty("address", address);

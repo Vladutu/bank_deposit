@@ -10,4 +10,6 @@ public interface INewClientView {
 
 	String getAddress();
 
+	void closeWindow();
+
 }

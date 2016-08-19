@@ -2,15 +2,19 @@ package itsix.bank_deposit.logic.controller;
 
 import javax.swing.JOptionPane;
 
+import itsix.bank_deposit.exception.EntityNotFoundException;
 import itsix.bank_deposit.logic.IClient;
 import itsix.bank_deposit.logic.IClientBuilder;
 import itsix.bank_deposit.repository.IClientRepository;
 import itsix.bank_deposit.validator.IClientValidator;
 import itsix.bank_deposit.validator.IValidationResult;
+import itsix.bank_deposit.views.IMainView;
 import itsix.bank_deposit.views.INewClientView;
 import itsix.bank_deposit.views.NewClientView;
 
 public class ClientsController implements IClientsController {
+
+	private IMainView mainView;
 
 	private INewClientView newClientView;
 
@@ -25,6 +29,12 @@ public class ClientsController implements IClientsController {
 		this.clientRepository = clientRepository;
 		this.clientBuilder = clientBuilder;
 		this.clientValidator = clientValidator;
+	}
+
+	@Override
+	public void setMainView(IMainView mainView) {
+		this.mainView = mainView;
+
 	}
 
 	@Override
@@ -50,6 +60,21 @@ public class ClientsController implements IClientsController {
 		IClient client = clientBuilder.build(ssn, firstName, lastName, address);
 
 		clientRepository.save(client);
+		newClientView.closeWindow();
+	}
+
+	@Override
+	public void searchClient() {
+		String ssn = mainView.getClientSsn();
+
+		try {
+			IClient client = clientRepository.findBySsn(ssn);
+
+			mainView.setClientField(client.getSsn(), client.getFirstName(), client.getLastName(), client.getAddress());
+		} catch (EntityNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "Client not found!");
+		}
+
 	}
 
 }

@@ -103,4 +103,10 @@ public class NewClientView extends JFrame implements INewClientView {
 	public String getAddress() {
 		return addressTextField.getText();
 	}
+
+	@Override
+	public void closeWindow() {
+		setVisible(false);
+		dispose();
+	}
 }

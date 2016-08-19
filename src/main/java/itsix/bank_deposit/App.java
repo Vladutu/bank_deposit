@@ -78,6 +78,7 @@ public class App {
 						productsRepository.getProducts());
 				subscribers.add(mainView);
 				productsController.setMainView(mainView);
+				clientsController.setMainView(mainView);
 			}
 		});
 	}

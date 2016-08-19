@@ -15,6 +15,11 @@ public class Validator implements IValidator {
 	}
 
 	@Override
+	public IValidationResult buildResult() {
+		return validationResultBuilder.buildResult(success, stringBuilder.toString());
+	}
+
+	@Override
 	public void checkNullOrEmpty(String stringName, String stringValue) {
 		if (stringValue.equals("") || stringValue == null) {
 			success = false;
@@ -51,8 +56,12 @@ public class Validator implements IValidator {
 	}
 
 	@Override
-	public IValidationResult buildResult() {
-		return validationResultBuilder.buildResult(success, stringBuilder.toString());
+	public void checkOnlyDigits(String stringName, String stringValue) {
+		if (!stringValue.matches("\\d+")) {
+			success = false;
+			stringBuilder.append(stringName + " must contain only digits");
+		}
+
 	}
 
 }

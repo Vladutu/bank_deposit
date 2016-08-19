@@ -8,4 +8,29 @@ public class Client implements IClient {
 		this.clientInformation = clientInformation;
 	}
 
+	@Override
+	public boolean hasSsn(String ssn) {
+		return clientInformation.hasSsn(ssn);
+	}
+
+	@Override
+	public String getSsn() {
+		return clientInformation.getSsn();
+	}
+
+	@Override
+	public String getFirstName() {
+		return clientInformation.getFirstName();
+	}
+
+	@Override
+	public String getLastName() {
+		return clientInformation.getLastName();
+	}
+
+	@Override
+	public String getAddress() {
+		return clientInformation.getAddress();
+	}
+
 }

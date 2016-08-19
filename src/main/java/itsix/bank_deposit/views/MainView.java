@@ -188,6 +188,13 @@ public class MainView extends JFrame implements IMainView {
 		ssnSearchTextField.setColumns(20);
 
 		searchButton = new JButton("Seach");
+		searchButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clientsController.searchClient();
+			}
+		});
 		searchButton.setBounds(216, 11, 81, 25);
 		panel_1.add(searchButton);
 		searchButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("search_icon.png")));
@@ -318,6 +325,19 @@ public class MainView extends JFrame implements IMainView {
 		productDescriptionTextArea.setText("");
 		productList.clearSelection();
 
+	}
+
+	@Override
+	public String getClientSsn() {
+		return ssnSearchTextField.getText();
+	}
+
+	@Override
+	public void setClientField(String ssn, String firstName, String lastName, String address) {
+		ssnTextField.setText(ssn);
+		firstNameTextField.setText(firstName);
+		lastNameTextField.setText(lastName);
+		addressTextField.setText(address);
 	}
 
 }
