@@ -2,6 +2,8 @@ package itsix.bank_deposit.views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
@@ -36,21 +38,13 @@ public class NewProductView extends JFrame implements INewProductView {
 
 	private IProductsController productsController;
 
-	public NewProductView(IProductsController controller, List<ICurrency> currencies) {
+	public NewProductView(IProductsController controller) {
 		initializeGUI();
 
-		initializeData(controller, currencies);
-	}
-
-	private void initializeData(IProductsController controller, List<ICurrency> currencies) {
 		this.productsController = controller;
-		for (ICurrency currency : currencies) {
-			currencyComboBox.addItem(currency);
-		}
 	}
 
 	private void initializeGUI() {
-
 		setResizable(false);
 		setBounds(100, 100, 321, 429);
 		getContentPane().setLayout(null);
@@ -149,7 +143,13 @@ public class NewProductView extends JFrame implements INewProductView {
 		currencyComboBox.setBounds(172, 142, 86, 20);
 		getContentPane().add(currencyComboBox);
 
-		setVisible(true);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				clearTextFields();
+				setVisible(false);
+			}
+		});
 	}
 
 	@Override
@@ -185,7 +185,25 @@ public class NewProductView extends JFrame implements INewProductView {
 	@Override
 	public void closeWindow() {
 		setVisible(false);
-		dispose();
+		clearTextFields();
+	}
+
+	@Override
+	public void show(List<ICurrency> currencies) {
+		for (ICurrency currency : currencies) {
+			currencyComboBox.addItem(currency);
+		}
+
+		setVisible(true);
+	}
+
+	private void clearTextFields() {
+		interestRateTextField.setText("0.0");
+		maxSumTextField.setText("0");
+		minSumTextField.setText("0");
+		nameTextField.setText("");
+		periodTextField.setText("0");
+		currencyComboBox.removeAllItems();
 	}
 
 }

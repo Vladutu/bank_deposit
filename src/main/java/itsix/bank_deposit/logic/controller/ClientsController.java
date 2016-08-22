@@ -10,7 +10,6 @@ import itsix.bank_deposit.validator.IClientValidator;
 import itsix.bank_deposit.validator.IValidationResult;
 import itsix.bank_deposit.views.IMainView;
 import itsix.bank_deposit.views.INewClientView;
-import itsix.bank_deposit.views.NewClientView;
 
 public class ClientsController implements IClientsController {
 
@@ -39,7 +38,7 @@ public class ClientsController implements IClientsController {
 
 	@Override
 	public void openNewClientView() {
-		newClientView = new NewClientView(this);
+		newClientView.showWindow();
 	}
 
 	@Override
@@ -70,11 +69,17 @@ public class ClientsController implements IClientsController {
 		try {
 			IClient client = clientRepository.findBySsn(ssn);
 
-			mainView.setClientField(client.getSsn(), client.getFirstName(), client.getLastName(), client.getAddress());
+			mainView.setClientFields(client.getSsn(), client.getFirstName(), client.getLastName(), client.getAddress(),
+					client.getAccounts());
 		} catch (EntityNotFoundException e) {
 			JOptionPane.showMessageDialog(null, "Client not found!");
 		}
 
+	}
+
+	@Override
+	public void setNewClientView(INewClientView newClientView) {
+		this.newClientView = newClientView;
 	}
 
 }

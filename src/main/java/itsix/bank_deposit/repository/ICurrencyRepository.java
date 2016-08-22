@@ -7,4 +7,6 @@ import itsix.bank_deposit.logic.ICurrency;
 public interface ICurrencyRepository {
 
 	List<ICurrency> getCurrencies();
+
+	ICurrency getDefaultCurrency();
 }

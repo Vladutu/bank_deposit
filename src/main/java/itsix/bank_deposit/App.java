@@ -7,9 +7,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import itsix.bank_deposit.builder.AccountBuilder;
 import itsix.bank_deposit.builder.ClientBuilder;
 import itsix.bank_deposit.builder.ClientInformationBuilder;
 import itsix.bank_deposit.builder.FixedInterestProductBuilder;
+import itsix.bank_deposit.builder.IAccountBuilder;
 import itsix.bank_deposit.builder.IClientInformationBuilder;
 import itsix.bank_deposit.builder.IProductBuilder;
 import itsix.bank_deposit.builder.IValidationResultBuilder;
@@ -36,7 +38,13 @@ import itsix.bank_deposit.validator.IClientValidator;
 import itsix.bank_deposit.validator.IProductValidator;
 import itsix.bank_deposit.validator.ProductValidator;
 import itsix.bank_deposit.views.IMainView;
+import itsix.bank_deposit.views.INewClientView;
+import itsix.bank_deposit.views.INewProductView;
+import itsix.bank_deposit.views.IUpdateProductView;
 import itsix.bank_deposit.views.MainView;
+import itsix.bank_deposit.views.NewClientView;
+import itsix.bank_deposit.views.NewProductView;
+import itsix.bank_deposit.views.UpdateProductView;
 
 /**
  * Hello world!
@@ -65,10 +73,20 @@ public class App {
 
 		IClientRepository clientRepository = new ClientRepository();
 		IClientInformationBuilder clientInformationBuilder = new ClientInformationBuilder();
-		IClientBuilder clientBuilder = new ClientBuilder(clientInformationBuilder);
+		IAccountBuilder accountBuilder = new AccountBuilder(currencyRepository);
+		IClientBuilder clientBuilder = new ClientBuilder(clientInformationBuilder, accountBuilder);
 
 		IClientValidator clientValidator = new ClientValidator(validatorBuilder);
 		IClientsController clientsController = new ClientsController(clientRepository, clientBuilder, clientValidator);
+
+		INewProductView newProductView = new NewProductView(productsController);
+		productsController.setNewProductView(newProductView);
+
+		IUpdateProductView updateProductView = new UpdateProductView(productsController);
+		productsController.setUpdateProductView(updateProductView);
+
+		INewClientView newClientView = new NewClientView(clientsController);
+		clientsController.setNewClientView(newClientView);
 
 		SwingUtilities.invokeLater(new Runnable() {
 

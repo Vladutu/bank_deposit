@@ -2,6 +2,8 @@ package itsix.bank_deposit.views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -81,7 +83,14 @@ public class NewClientView extends JFrame implements INewClientView {
 		saveButton.setBounds(70, 199, 89, 23);
 		getContentPane().add(saveButton);
 
-		setVisible(true);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				clearTextFields();
+				setVisible(false);
+			}
+
+		});
 	}
 
 	@Override
@@ -107,6 +116,19 @@ public class NewClientView extends JFrame implements INewClientView {
 	@Override
 	public void closeWindow() {
 		setVisible(false);
-		dispose();
+		clearTextFields();
+	}
+
+	@Override
+	public void showWindow() {
+		setVisible(true);
+	}
+
+	private void clearTextFields() {
+		addressTextField.setText("");
+		firstNameTextField.setText("");
+		lastNameTextField.setText("");
+		ssnTextField.setText("");
+
 	}
 }

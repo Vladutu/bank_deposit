@@ -13,8 +13,6 @@ import itsix.bank_deposit.validator.IValidationResult;
 import itsix.bank_deposit.views.IMainView;
 import itsix.bank_deposit.views.INewProductView;
 import itsix.bank_deposit.views.IUpdateProductView;
-import itsix.bank_deposit.views.NewProductView;
-import itsix.bank_deposit.views.UpdateProductView;
 
 public class ProductsController implements IProductsController {
 
@@ -36,6 +34,7 @@ public class ProductsController implements IProductsController {
 	public ProductsController(IProductBuilder fixedInterestProductBuilder,
 			IProductBuilder variableInterestProductBuilder, IProductRepository productsRepository,
 			ICurrencyRepository currenciesRepository, IProductValidator productValidator) {
+
 		this.fixedInterestProductBuilder = fixedInterestProductBuilder;
 		this.variableInterestProductBuilder = variableInterestProductBuilder;
 		this.productsRepository = productsRepository;
@@ -47,7 +46,7 @@ public class ProductsController implements IProductsController {
 
 	@Override
 	public void openNewProductView() {
-		newProductView = new NewProductView(this, currenciesRepository.getCurrencies());
+		newProductView.show(currenciesRepository.getCurrencies());
 	}
 
 	@Override
@@ -101,10 +100,6 @@ public class ProductsController implements IProductsController {
 	public void updateProductInformation() {
 		IProduct product = mainView.getSelectedProduct();
 
-		if (product == null) {
-			return;
-		}
-
 		mainView.updateProductDescription(product.description());
 	}
 
@@ -128,8 +123,8 @@ public class ProductsController implements IProductsController {
 		int minSum = selectedProduct.getMinSum();
 		int maxSum = selectedProduct.getMaxSum();
 
-		updateProductView = new UpdateProductView(this, currenciesRepository.getCurrencies(), name, interestRate,
-				period, currency, minSum, maxSum);
+		updateProductView.show(currenciesRepository.getCurrencies(), name, interestRate, period, currency, minSum,
+				maxSum);
 	}
 
 	@Override
@@ -151,6 +146,18 @@ public class ProductsController implements IProductsController {
 
 		mainView.clearScreen();
 		updateProductView.closeWindow();
+	}
+
+	@Override
+	public void setNewProductView(INewProductView newProductView) {
+		this.newProductView = newProductView;
+
+	}
+
+	@Override
+	public void setUpdateProductView(IUpdateProductView updateProductView) {
+		this.updateProductView = updateProductView;
+
 	}
 
 }

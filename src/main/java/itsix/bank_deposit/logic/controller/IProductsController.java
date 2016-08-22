@@ -1,6 +1,8 @@
 package itsix.bank_deposit.logic.controller;
 
 import itsix.bank_deposit.views.IMainView;
+import itsix.bank_deposit.views.INewProductView;
+import itsix.bank_deposit.views.IUpdateProductView;
 
 public interface IProductsController {
 
@@ -21,5 +23,9 @@ public interface IProductsController {
 	void openUpdateProductView();
 
 	void updateProduct();
+
+	void setNewProductView(INewProductView newProductView);
+
+	void setUpdateProductView(IUpdateProductView updateProductView);
 
 }

@@ -29,10 +29,9 @@ import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
-import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 
+import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IProduct;
 import itsix.bank_deposit.logic.controller.IClientsController;
 import itsix.bank_deposit.logic.controller.IProductsController;
@@ -46,6 +45,7 @@ public class MainView extends JFrame implements IMainView {
 	private JTextField lastNameTextField;
 
 	private JTable accountTable;
+	private ClientAccountsTableModel accountTableModel;
 
 	private JList<IProduct> productList;
 	private DefaultListModel<IProduct> productListModel;
@@ -74,11 +74,14 @@ public class MainView extends JFrame implements IMainView {
 
 	private List<IProduct> products;
 
+	private ListSelectionListener productListSelectionListener;
+
 	public MainView(IProductsController productsController, IClientsController clientsController,
 			List<IProduct> products) {
 		this.productsController = productsController;
 		this.clientsController = clientsController;
 		this.products = products;
+		productListSelectionListener = new MyListSelectionListener(productsController);
 		initialize();
 	}
 
@@ -109,13 +112,7 @@ public class MainView extends JFrame implements IMainView {
 		productListPanel.add(scrollPane_1);
 
 		productList = new JList<IProduct>();
-		productList.addListSelectionListener(new ListSelectionListener() {
-
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				productsController.updateProductInformation();
-			}
-		});
+		productList.addListSelectionListener(productListSelectionListener);
 		productList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent evt) {
@@ -232,16 +229,9 @@ public class MainView extends JFrame implements IMainView {
 		accountTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		accountTable.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(accountTable);
-		accountTable.setModel(
-				new DefaultTableModel(new Object[][] { { "LEI", "RON" }, { "Euro", "\u20AC" }, { "Dollar", "$" }, },
-						new String[] { "Name", "Symbol" }) {
-					boolean[] columnEditables = new boolean[] { false, false };
 
-					@Override
-					public boolean isCellEditable(int row, int column) {
-						return columnEditables[column];
-					}
-				});
+		accountTableModel = new ClientAccountsTableModel();
+		accountTable.setModel(accountTableModel);
 
 		ssnTextField = new JTextField();
 		ssnTextField.setBounds(61, 8, 220, 20);
@@ -303,11 +293,14 @@ public class MainView extends JFrame implements IMainView {
 
 	@Override
 	public void update() {
+		productList.removeListSelectionListener(productListSelectionListener);
 		productListModel.removeAllElements();
 
 		for (IProduct product : products) {
 			productListModel.addElement(product);
 		}
+
+		productList.addListSelectionListener(productListSelectionListener);
 	}
 
 	@Override
@@ -333,11 +326,14 @@ public class MainView extends JFrame implements IMainView {
 	}
 
 	@Override
-	public void setClientField(String ssn, String firstName, String lastName, String address) {
+	public void setClientFields(String ssn, String firstName, String lastName, String address,
+			List<IAccount> accounts) {
+
 		ssnTextField.setText(ssn);
 		firstNameTextField.setText(firstName);
 		lastNameTextField.setText(lastName);
 		addressTextField.setText(address);
+		accountTableModel.setAccounts(accounts);
 	}
 
 }

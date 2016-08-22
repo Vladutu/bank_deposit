@@ -1,5 +1,8 @@
 package itsix.bank_deposit.views;
 
+import java.util.List;
+
+import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IProduct;
 import itsix.bank_deposit.publisher_subscriber.ISubscriber;
 
@@ -13,5 +16,5 @@ public interface IMainView extends ISubscriber {
 
 	String getClientSsn();
 
-	void setClientField(String ssn, String firstName, String lastName, String address);
+	void setClientFields(String ssn, String firstName, String lastName, String address, List<IAccount> accounts);
 }

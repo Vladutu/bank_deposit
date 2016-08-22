@@ -1,5 +1,7 @@
 package itsix.bank_deposit.views;
 
+import java.util.List;
+
 import itsix.bank_deposit.logic.ICurrency;
 
 public interface INewProductView {
@@ -17,4 +19,6 @@ public interface INewProductView {
 	int getMaxSum();
 
 	void closeWindow();
+
+	void show(List<ICurrency> currencies);
 }

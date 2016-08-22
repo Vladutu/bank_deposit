@@ -12,4 +12,6 @@ public interface INewClientView {
 
 	void closeWindow();
 
+	void showWindow();
+
 }

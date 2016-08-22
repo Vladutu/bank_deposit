@@ -23,4 +23,9 @@ public class CurrencyRepository implements ICurrencyRepository {
 	public List<ICurrency> getCurrencies() {
 		return currencies;
 	}
+
+	@Override
+	public ICurrency getDefaultCurrency() {
+		return currencies.get(0);
+	}
 }

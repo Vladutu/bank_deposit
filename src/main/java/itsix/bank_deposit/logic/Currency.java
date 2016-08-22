@@ -15,4 +15,14 @@ public class Currency implements ICurrency {
 	public String toString() {
 		return name + " [" + symbol + "]";
 	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public String getSymbol() {
+		return symbol;
+	}
 }

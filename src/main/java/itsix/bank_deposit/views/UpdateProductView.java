@@ -2,6 +2,8 @@ package itsix.bank_deposit.views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -12,7 +14,6 @@ import javax.swing.JTextField;
 
 import itsix.bank_deposit.logic.ICurrency;
 import itsix.bank_deposit.logic.controller.IProductsController;
-import itsix.bank_deposit.logic.controller.ProductsController;
 
 public class UpdateProductView extends JFrame implements IUpdateProductView {
 
@@ -25,24 +26,9 @@ public class UpdateProductView extends JFrame implements IUpdateProductView {
 	private JButton updateButton;
 	private IProductsController productsController;
 
-	public UpdateProductView(ProductsController productsController, List<ICurrency> currencies, String name,
-			float interestRate, int period, ICurrency currency, int minSum, int maxSum) {
-		initializeGUI();
-		intializeData(productsController, currencies, name, interestRate, period, currency, minSum, maxSum);
-	}
-
-	private void intializeData(ProductsController productsController, List<ICurrency> currencies, String name,
-			float interestRate, int period, ICurrency currency, int minSum, int maxSum) {
+	public UpdateProductView(IProductsController productsController) {
 		this.productsController = productsController;
-		for (ICurrency c : currencies) {
-			currencyComboBox.addItem(c);
-		}
-		nameTextField.setText(name);
-		currencyComboBox.setSelectedItem(currency);
-		interestRateTextField.setText(String.valueOf(interestRate));
-		periodTextField.setText(String.valueOf(period));
-		minSumTextField.setText(String.valueOf(minSum));
-		maxSumTextField.setText(String.valueOf(maxSum));
+		initializeGUI();
 	}
 
 	private void initializeGUI() {
@@ -82,6 +68,7 @@ public class UpdateProductView extends JFrame implements IUpdateProductView {
 		getContentPane().add(currencyLabel);
 
 		currencyComboBox = new JComboBox<ICurrency>();
+		currencyComboBox.setEnabled(false);
 		currencyComboBox.setBounds(143, 129, 86, 20);
 		getContentPane().add(currencyComboBox);
 
@@ -114,7 +101,13 @@ public class UpdateProductView extends JFrame implements IUpdateProductView {
 		updateButton.setBounds(83, 262, 89, 23);
 		getContentPane().add(updateButton);
 
-		setVisible(true);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				clearTextFields();
+				setVisible(false);
+			}
+		});
 	}
 
 	@Override
@@ -150,6 +143,30 @@ public class UpdateProductView extends JFrame implements IUpdateProductView {
 	@Override
 	public void closeWindow() {
 		setVisible(false);
-		dispose();
+		clearTextFields();
+	}
+
+	@Override
+	public void show(List<ICurrency> currencies, String name, float interestRate, int period, ICurrency currency,
+			int minSum, int maxSum) {
+		for (ICurrency c : currencies) {
+			currencyComboBox.addItem(c);
+		}
+		nameTextField.setText(name);
+		currencyComboBox.setSelectedItem(currency);
+		interestRateTextField.setText(String.valueOf(interestRate));
+		periodTextField.setText(String.valueOf(period));
+		minSumTextField.setText(String.valueOf(minSum));
+		maxSumTextField.setText(String.valueOf(maxSum));
+
+		setVisible(true);
+	}
+
+	private void clearTextFields() {
+		interestRateTextField.setText("0.0");
+		maxSumTextField.setText("0");
+		minSumTextField.setText("0");
+		nameTextField.setText("");
+		periodTextField.setText("0");
 	}
 }

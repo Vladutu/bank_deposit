@@ -1,6 +1,7 @@
 package itsix.bank_deposit.logic.controller;
 
 import itsix.bank_deposit.views.IMainView;
+import itsix.bank_deposit.views.INewClientView;
 
 public interface IClientsController {
 
@@ -11,5 +12,7 @@ public interface IClientsController {
 	void saveClient();
 
 	void searchClient();
+
+	void setNewClientView(INewClientView newClientView);
 
 }
