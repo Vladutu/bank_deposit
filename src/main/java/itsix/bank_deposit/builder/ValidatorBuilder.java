@@ -3,17 +3,19 @@ package itsix.bank_deposit.builder;
 import itsix.bank_deposit.validator.IValidator;
 import itsix.bank_deposit.validator.Validator;
 
-public class ValidatorBuilder implements IValidatorBuilder {
+import java.io.Serializable;
 
-	private IValidationResultBuilder validationResultBuilder;
+public class ValidatorBuilder implements IValidatorBuilder, Serializable {
 
-	public ValidatorBuilder(IValidationResultBuilder validationResultBuilder) {
-		this.validationResultBuilder = validationResultBuilder;
-	}
+    private IValidationResultBuilder validationResultBuilder;
 
-	@Override
-	public IValidator build() {
-		return new Validator(validationResultBuilder);
-	}
+    public ValidatorBuilder(IValidationResultBuilder validationResultBuilder) {
+        this.validationResultBuilder = validationResultBuilder;
+    }
+
+    @Override
+    public IValidator build() {
+        return new Validator(validationResultBuilder);
+    }
 
 }

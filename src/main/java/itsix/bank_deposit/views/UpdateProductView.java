@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import itsix.bank_deposit.logic.ICurrency;
-import itsix.bank_deposit.logic.controller.IProductsController;
+import itsix.bank_deposit.controller.IProductsController;
 
 public class UpdateProductView extends JFrame implements IUpdateProductView {
 

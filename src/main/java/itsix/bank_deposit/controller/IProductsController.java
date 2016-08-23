@@ -1,4 +1,4 @@
-package itsix.bank_deposit.logic.controller;
+package itsix.bank_deposit.controller;
 
 import itsix.bank_deposit.views.IMainView;
 import itsix.bank_deposit.views.INewProductView;

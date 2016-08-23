@@ -36,9 +36,9 @@ import javax.swing.event.ListSelectionListener;
 
 import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IProduct;
-import itsix.bank_deposit.logic.controller.IClientsController;
-import itsix.bank_deposit.logic.controller.IProductsController;
-import itsix.bank_deposit.logic.controller.ISerializerController;
+import itsix.bank_deposit.controller.IClientsController;
+import itsix.bank_deposit.controller.IProductsController;
+import itsix.bank_deposit.controller.ISerializerController;
 
 public class MainView extends JFrame implements IMainView, Serializable {
 

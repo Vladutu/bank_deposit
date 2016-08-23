@@ -2,36 +2,38 @@ package itsix.bank_deposit.validator;
 
 import itsix.bank_deposit.builder.IValidatorBuilder;
 
-public class ClientValidator implements IClientValidator {
+import java.io.Serializable;
 
-	private IValidator validator;
+public class ClientValidator implements IClientValidator, Serializable {
 
-	private IValidatorBuilder validatorBuilder;
+    private IValidator validator;
 
-	public ClientValidator(IValidatorBuilder validatorBuilder) {
-		this.validatorBuilder = validatorBuilder;
-	}
+    private IValidatorBuilder validatorBuilder;
 
-	@Override
-	public IValidationResult validate(String ssn, String firstName, String lastName, String address) {
-		validator = validatorBuilder.build();
-		validator.checkNullOrEmpty("ssn", ssn);
-		validator.checkOnlyDigits("ssn", ssn);
-		validator.checkNullOrEmpty("first name", firstName);
-		validator.checkNullOrEmpty("last name", lastName);
-		validator.checkNullOrEmpty("address", address);
+    public ClientValidator(IValidatorBuilder validatorBuilder) {
+        this.validatorBuilder = validatorBuilder;
+    }
 
-		return validator.buildResult();
-	}
+    @Override
+    public IValidationResult validate(String ssn, String firstName, String lastName, String address) {
+        validator = validatorBuilder.build();
+        validator.checkNullOrEmpty("ssn", ssn);
+        validator.checkOnlyDigits("ssn", ssn);
+        validator.checkNullOrEmpty("first name", firstName);
+        validator.checkNullOrEmpty("last name", lastName);
+        validator.checkNullOrEmpty("address", address);
 
-	@Override
-	public IValidationResult validate(String firstName, String lastName, String address) {
-		validator = validatorBuilder.build();
-		validator.checkNullOrEmpty("firstName", firstName);
-		validator.checkNullOrEmpty("lastName", lastName);
-		validator.checkNullOrEmpty("address", address);
+        return validator.buildResult();
+    }
 
-		return validator.buildResult();
-	}
+    @Override
+    public IValidationResult validate(String firstName, String lastName, String address) {
+        validator = validatorBuilder.build();
+        validator.checkNullOrEmpty("firstName", firstName);
+        validator.checkNullOrEmpty("lastName", lastName);
+        validator.checkNullOrEmpty("address", address);
+
+        return validator.buildResult();
+    }
 
 }

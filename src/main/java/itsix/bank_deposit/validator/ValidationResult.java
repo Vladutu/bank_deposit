@@ -1,24 +1,26 @@
 package itsix.bank_deposit.validator;
 
-public class ValidationResult implements IValidationResult {
+import java.io.Serializable;
 
-	private boolean success;
+public class ValidationResult implements IValidationResult, Serializable {
 
-	private String errorMessage;
+    private boolean success;
 
-	public ValidationResult(boolean success, String errorMessage) {
-		this.success = success;
-		this.errorMessage = errorMessage;
-	}
+    private String errorMessage;
 
-	@Override
-	public boolean isValid() {
-		return success;
-	}
+    public ValidationResult(boolean success, String errorMessage) {
+        this.success = success;
+        this.errorMessage = errorMessage;
+    }
 
-	@Override
-	public String getErrorDescription() {
-		return errorMessage;
-	}
+    @Override
+    public boolean isValid() {
+        return success;
+    }
+
+    @Override
+    public String getErrorDescription() {
+        return errorMessage;
+    }
 
 }

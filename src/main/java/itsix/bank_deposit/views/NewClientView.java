@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import itsix.bank_deposit.logic.controller.IClientsController;
+import itsix.bank_deposit.controller.IClientsController;
 
 public class NewClientView extends JFrame implements INewClientView {
 	private JTextField ssnTextField;

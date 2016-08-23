@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import itsix.bank_deposit.logic.IAccount;
-import itsix.bank_deposit.logic.controller.IClientsController;
+import itsix.bank_deposit.controller.IClientsController;
 
 public class BankAccountView extends JFrame implements IBankAccountView, Serializable {
 

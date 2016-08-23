@@ -5,23 +5,25 @@ import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IClient;
 import itsix.bank_deposit.logic.IClientInformation;
 
-public class ClientBuilder implements IClientBuilder {
+import java.io.Serializable;
 
-	private IClientInformationBuilder clientInformationBuilder;
+public class ClientBuilder implements IClientBuilder, Serializable {
 
-	private IAccountBuilder accountBuilder;
+    private IClientInformationBuilder clientInformationBuilder;
 
-	public ClientBuilder(IClientInformationBuilder clientInformationBuilder, IAccountBuilder accountBuilder) {
-		this.clientInformationBuilder = clientInformationBuilder;
-		this.accountBuilder = accountBuilder;
-	}
+    private IAccountBuilder accountBuilder;
 
-	@Override
-	public IClient build(String ssn, String firstName, String lastName, String address) {
-		IClientInformation clientInformation = clientInformationBuilder.build(ssn, firstName, lastName, address);
-		IAccount defaultAccount = accountBuilder.buildDefaultAccount();
+    public ClientBuilder(IClientInformationBuilder clientInformationBuilder, IAccountBuilder accountBuilder) {
+        this.clientInformationBuilder = clientInformationBuilder;
+        this.accountBuilder = accountBuilder;
+    }
 
-		return new Client(clientInformation, defaultAccount);
-	}
+    @Override
+    public IClient build(String ssn, String firstName, String lastName, String address) {
+        IClientInformation clientInformation = clientInformationBuilder.build(ssn, firstName, lastName, address);
+        IAccount defaultAccount = accountBuilder.buildDefaultAccount();
+
+        return new Client(clientInformation, defaultAccount);
+    }
 
 }

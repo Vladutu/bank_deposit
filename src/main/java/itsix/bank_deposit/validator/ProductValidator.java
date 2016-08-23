@@ -3,30 +3,32 @@ package itsix.bank_deposit.validator;
 import itsix.bank_deposit.builder.IValidatorBuilder;
 import itsix.bank_deposit.logic.ICurrency;
 
-public class ProductValidator implements IProductValidator {
+import java.io.Serializable;
 
-	private IValidator validator;
+public class ProductValidator implements IProductValidator, Serializable {
 
-	private IValidatorBuilder validatorBuilder;
+    private IValidator validator;
 
-	public ProductValidator(IValidatorBuilder validatorBuilder) {
-		this.validatorBuilder = validatorBuilder;
-	}
+    private IValidatorBuilder validatorBuilder;
 
-	@Override
-	public IValidationResult validate(String name, float interestRate, int period, ICurrency currency, int minSum,
-			int maxSum) {
-		validator = validatorBuilder.build();
+    public ProductValidator(IValidatorBuilder validatorBuilder) {
+        this.validatorBuilder = validatorBuilder;
+    }
 
-		validator.checkNullOrEmpty("name", name);
-		validator.checkZero("interestRate", interestRate);
-		validator.checkZero("period", period);
-		validator.checkNull("currency", currency);
-		validator.checkZero("minSum", minSum);
-		validator.checkZero("maxSum", maxSum);
-		validator.checkGreaterThan("maxSum", "minSum", maxSum, minSum);
+    @Override
+    public IValidationResult validate(String name, float interestRate, int period, ICurrency currency, int minSum,
+                                      int maxSum) {
+        validator = validatorBuilder.build();
 
-		return validator.buildResult();
-	}
+        validator.checkNullOrEmpty("name", name);
+        validator.checkZero("interestRate", interestRate);
+        validator.checkZero("period", period);
+        validator.checkNull("currency", currency);
+        validator.checkZero("minSum", minSum);
+        validator.checkZero("maxSum", maxSum);
+        validator.checkGreaterThan("maxSum", "minSum", maxSum, minSum);
+
+        return validator.buildResult();
+    }
 
 }
