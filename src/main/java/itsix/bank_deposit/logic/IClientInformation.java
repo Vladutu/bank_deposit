@@ -12,4 +12,6 @@ public interface IClientInformation {
 
 	String getAddress();
 
+	void update(String firstName, String lastName, String address);
+
 }

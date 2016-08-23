@@ -8,13 +8,16 @@ public class AccountBuilder implements IAccountBuilder {
 
 	private ICurrencyRepository currencyRepository;
 
-	public AccountBuilder(ICurrencyRepository currencyRepository) {
+	private IInnerPublisherBuilder innerPublisherBuilder;
+
+	public AccountBuilder(ICurrencyRepository currencyRepository, IInnerPublisherBuilder innerPublisherBuilder) {
 		this.currencyRepository = currencyRepository;
+		this.innerPublisherBuilder = innerPublisherBuilder;
 	}
 
 	@Override
 	public IAccount buildDefaultAccount() {
-		return new Account(currencyRepository.getDefaultCurrency());
+		return new Account(currencyRepository.getDefaultCurrency(), innerPublisherBuilder.build());
 	}
 
 }

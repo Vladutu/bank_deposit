@@ -3,7 +3,6 @@ package itsix.bank_deposit.builder;
 import itsix.bank_deposit.logic.Client;
 import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IClient;
-import itsix.bank_deposit.logic.IClientBuilder;
 import itsix.bank_deposit.logic.IClientInformation;
 
 public class ClientBuilder implements IClientBuilder {

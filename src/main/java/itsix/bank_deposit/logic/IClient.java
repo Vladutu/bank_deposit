@@ -16,4 +16,6 @@ public interface IClient {
 
 	List<IAccount> getAccounts();
 
+	void update(String firstName, String lastName, String address);
+
 }

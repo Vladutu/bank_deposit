@@ -49,4 +49,13 @@ public class ClientAccountsTableModel extends AbstractTableModel {
 		this.accounts = accounts;
 		fireTableDataChanged();
 	}
+
+	public void clearAccounts() {
+		accounts = new ArrayList<>();
+		fireTableDataChanged();
+	}
+
+	public IAccount getAccountAtRow(int row) {
+		return accounts.get(row);
+	}
 }

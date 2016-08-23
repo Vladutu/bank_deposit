@@ -1,6 +1,8 @@
 package itsix.bank_deposit.logic;
 
-public class Currency implements ICurrency {
+import java.io.Serializable;
+
+public class Currency implements ICurrency, Serializable {
 
 	private String name;
 

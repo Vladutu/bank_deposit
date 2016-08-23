@@ -24,4 +24,14 @@ public class ClientValidator implements IClientValidator {
 		return validator.buildResult();
 	}
 
+	@Override
+	public IValidationResult validate(String firstName, String lastName, String address) {
+		validator = validatorBuilder.build();
+		validator.checkNullOrEmpty("firstName", firstName);
+		validator.checkNullOrEmpty("lastName", lastName);
+		validator.checkNullOrEmpty("address", address);
+
+		return validator.buildResult();
+	}
+
 }

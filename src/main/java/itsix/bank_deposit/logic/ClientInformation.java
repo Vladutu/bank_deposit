@@ -1,6 +1,8 @@
 package itsix.bank_deposit.logic;
 
-public class ClientInformation implements IClientInformation {
+import java.io.Serializable;
+
+public class ClientInformation implements IClientInformation, Serializable {
 
 	private String ssn;
 
@@ -40,6 +42,13 @@ public class ClientInformation implements IClientInformation {
 	@Override
 	public String getAddress() {
 		return address;
+	}
+
+	@Override
+	public void update(String firstName, String lastName, String address) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
 	}
 
 }

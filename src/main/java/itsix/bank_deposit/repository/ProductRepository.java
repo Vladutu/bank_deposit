@@ -1,5 +1,6 @@
 package itsix.bank_deposit.repository;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import itsix.bank_deposit.logic.IProduct;
 import itsix.bank_deposit.publisher_subscriber.IInnerPublisher;
 import itsix.bank_deposit.publisher_subscriber.ISubscriber;
 
-public class ProductRepository implements IProductRepository {
+public class ProductRepository implements IProductRepository, Serializable {
 
 	private List<IProduct> products;
 

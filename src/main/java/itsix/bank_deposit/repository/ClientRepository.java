@@ -1,12 +1,13 @@
 package itsix.bank_deposit.repository;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import itsix.bank_deposit.exception.EntityNotFoundException;
 import itsix.bank_deposit.logic.IClient;
 
-public class ClientRepository implements IClientRepository {
+public class ClientRepository implements IClientRepository, Serializable {
 
 	private List<IClient> clients;
 

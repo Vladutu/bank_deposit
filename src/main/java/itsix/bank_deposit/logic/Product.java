@@ -1,6 +1,8 @@
 package itsix.bank_deposit.logic;
 
-public class Product implements IProduct {
+import java.io.Serializable;
+
+public class Product implements IProduct, Serializable {
 
 	private String name;
 

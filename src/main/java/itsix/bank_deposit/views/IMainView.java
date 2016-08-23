@@ -14,7 +14,17 @@ public interface IMainView extends ISubscriber {
 
 	void clearScreen();
 
-	String getClientSsn();
+	String getSearchClientSsn();
 
 	void setClientFields(String ssn, String firstName, String lastName, String address, List<IAccount> accounts);
+
+	void clearClientFields();
+
+	String getClientFirstName();
+
+	String getClientLastName();
+
+	String getClientAddress();
+
+	IAccount getSelectedBankAccount();
 }

@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -35,8 +38,9 @@ import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IProduct;
 import itsix.bank_deposit.logic.controller.IClientsController;
 import itsix.bank_deposit.logic.controller.IProductsController;
+import itsix.bank_deposit.logic.controller.ISerializerController;
 
-public class MainView extends JFrame implements IMainView {
+public class MainView extends JFrame implements IMainView, Serializable {
 
 	private JTextField ssnSearchTextField;
 	private JTextField ssnTextField;
@@ -71,15 +75,17 @@ public class MainView extends JFrame implements IMainView {
 
 	private IProductsController productsController;
 	private IClientsController clientsController;
+	private ISerializerController serializerController;
 
 	private List<IProduct> products;
 
 	private ListSelectionListener productListSelectionListener;
 
 	public MainView(IProductsController productsController, IClientsController clientsController,
-			List<IProduct> products) {
+			ISerializerController serializerController, List<IProduct> products) {
 		this.productsController = productsController;
 		this.clientsController = clientsController;
+		this.serializerController = serializerController;
 		this.products = products;
 		productListSelectionListener = new MyListSelectionListener(productsController);
 		initialize();
@@ -229,6 +235,16 @@ public class MainView extends JFrame implements IMainView {
 		accountTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		accountTable.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(accountTable);
+		accountTable.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					clientsController.openBankAccountView();
+				}
+
+			}
+		});
 
 		accountTableModel = new ClientAccountsTableModel();
 		accountTable.setModel(accountTableModel);
@@ -276,6 +292,12 @@ public class MainView extends JFrame implements IMainView {
 		firstNameTextField.setColumns(20);
 
 		updateButton = new JButton("Update");
+		updateButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clientsController.updateClient();
+			}
+		});
 		updateButton.setBounds(282, 83, 67, 23);
 		panel_2.add(updateButton);
 
@@ -289,6 +311,16 @@ public class MainView extends JFrame implements IMainView {
 		panel_2.add(checkDepositButton);
 
 		setVisible(true);
+
+		addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				serializerController.serialize();
+				setVisible(false);
+				dispose();
+			}
+		});
 	}
 
 	@Override
@@ -321,7 +353,7 @@ public class MainView extends JFrame implements IMainView {
 	}
 
 	@Override
-	public String getClientSsn() {
+	public String getSearchClientSsn() {
 		return ssnSearchTextField.getText();
 	}
 
@@ -334,6 +366,38 @@ public class MainView extends JFrame implements IMainView {
 		lastNameTextField.setText(lastName);
 		addressTextField.setText(address);
 		accountTableModel.setAccounts(accounts);
+	}
+
+	@Override
+	public void clearClientFields() {
+		ssnTextField.setText("");
+		firstNameTextField.setText("");
+		lastNameTextField.setText("");
+		addressTextField.setText("");
+		accountTableModel.clearAccounts();
+
+	}
+
+	@Override
+	public String getClientFirstName() {
+		return firstNameTextField.getText();
+	}
+
+	@Override
+	public String getClientLastName() {
+		return lastNameTextField.getText();
+	}
+
+	@Override
+	public String getClientAddress() {
+		return addressTextField.getText();
+	}
+
+	@Override
+	public IAccount getSelectedBankAccount() {
+		int row = accountTable.getSelectedRow();
+
+		return accountTableModel.getAccountAtRow(row);
 	}
 
 }

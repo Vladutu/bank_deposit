@@ -1,9 +1,10 @@
 package itsix.bank_deposit.logic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client implements IClient {
+public class Client implements IClient, Serializable {
 
 	private IClientInformation clientInformation;
 
@@ -42,6 +43,12 @@ public class Client implements IClient {
 	@Override
 	public List<IAccount> getAccounts() {
 		return accounts;
+	}
+
+	@Override
+	public void update(String firstName, String lastName, String address) {
+		clientInformation.update(firstName, lastName, address);
+
 	}
 
 }

@@ -1,9 +1,11 @@
 package itsix.bank_deposit.logic;
 
+import java.io.Serializable;
+
 import itsix.bank_deposit.builder.IInnerProductBuilder;
 import itsix.bank_deposit.builder.InnerProductBuilder;
 
-public class VariableInterestProduct implements IProduct {
+public class VariableInterestProduct implements IProduct, Serializable {
 
 	private IProduct product;
 

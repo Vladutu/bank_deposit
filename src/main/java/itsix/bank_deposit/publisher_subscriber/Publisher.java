@@ -1,8 +1,9 @@
 package itsix.bank_deposit.publisher_subscriber;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Publisher implements IInnerPublisher {
+public class Publisher implements IInnerPublisher, Serializable {
 
 	private List<ISubscriber> subscribers;
 
