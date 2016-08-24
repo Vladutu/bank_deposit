@@ -35,6 +35,15 @@ public class Account implements IAccount, Serializable {
         creditBalance = 0;
     }
 
+    public Account(ICurrency currency, int initialDeposit, IInnerPublisher publisher, IOperationBuilder operationBuilder) {
+        this.currency = currency;
+        this.publisher = publisher;
+        this.operationBuilder = operationBuilder;
+        executedOperations = new ArrayList<>();
+        debitBalance = initialDeposit;
+        creditBalance = 0;
+    }
+
     @Override
     public String getCurrencyName() {
         return currency.getName();
@@ -96,5 +105,10 @@ public class Account implements IAccount, Serializable {
         creditBalance += money;
         executedOperations.add(operation);
         publisher.notifySubscribers();
+    }
+
+    @Override
+    public void populateCurrency(List<ICurrency> ownedCurrencies) {
+        ownedCurrencies.add(currency);
     }
 }

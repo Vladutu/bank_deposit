@@ -12,7 +12,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.Serializable;
 import java.util.List;
 
@@ -93,7 +96,7 @@ public class MainView extends JFrame implements IMainView, Serializable {
         JScrollPane scrollPane_1 = new JScrollPane();
         productListPanel.add(scrollPane_1);
 
-        productList = new JList<IProduct>();
+        productList = new JList<>();
         productList.addListSelectionListener(productListSelectionListener);
         productList.addMouseListener(new MouseAdapter() {
             @Override
@@ -118,12 +121,7 @@ public class MainView extends JFrame implements IMainView, Serializable {
         panel.add(productDescriptionTextArea);
 
         newProductButton = new JButton("New product");
-        newProductButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                productsController.openNewProductView();
-            }
-        });
+        newProductButton.addActionListener(arg0 -> productsController.openNewProductView());
         newProductButton.setBounds(533, 48, 111, 23);
         productsPanel.add(newProductButton);
 
@@ -136,13 +134,7 @@ public class MainView extends JFrame implements IMainView, Serializable {
         productsPanel.add(productDescriptionLabel);
 
         productDeleteButton = new JButton("Delete");
-        productDeleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                productsController.deleteSelectedProduct();
-
-            }
-        });
+        productDeleteButton.addActionListener(e -> productsController.deleteSelectedProduct());
         productDeleteButton.setBounds(190, 508, 73, 23);
         productsPanel.add(productDeleteButton);
 
@@ -167,26 +159,13 @@ public class MainView extends JFrame implements IMainView, Serializable {
         ssnSearchTextField.setColumns(20);
 
         searchButton = new JButton("Seach");
-        searchButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clientsController.searchClient();
-            }
-        });
+        searchButton.addActionListener(e -> clientsController.searchClient());
         searchButton.setBounds(216, 11, 81, 25);
         panel_1.add(searchButton);
         searchButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("search_icon.png")));
 
         newClientButton = new JButton("New client");
-        newClientButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clientsController.openNewClientView();
-
-            }
-        });
+        newClientButton.addActionListener(e -> clientsController.openNewClientView());
         newClientButton.setBounds(542, 12, 132, 23);
         panel_1.add(newClientButton);
 
@@ -268,16 +247,15 @@ public class MainView extends JFrame implements IMainView, Serializable {
         firstNameTextField.setColumns(20);
 
         updateButton = new JButton("Update");
-        updateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clientsController.updateClient();
-            }
-        });
+        updateButton.addActionListener(e -> clientsController.updateClient());
         updateButton.setBounds(282, 83, 67, 23);
         panel_2.add(updateButton);
 
         newAccountButton = new JButton("Create new account");
+        newAccountButton.addActionListener(e -> {
+            clientsController.openNewAccountView();
+
+        });
         newAccountButton.setBounds(342, 135, 129, 23);
         panel_2.add(newAccountButton);
         newAccountButton.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -292,7 +270,7 @@ public class MainView extends JFrame implements IMainView, Serializable {
 
             @Override
             public void windowClosing(WindowEvent e) {
-                //serializerController.serialize();
+                // serializerController.serialize();
                 setVisible(false);
                 dispose();
             }
@@ -374,6 +352,11 @@ public class MainView extends JFrame implements IMainView, Serializable {
         int row = accountTable.getSelectedRow();
 
         return accountTableModel.getAccountAtRow(row);
+    }
+
+    @Override
+    public void updateAccountsTable() {
+        accountTableModel.update();
     }
 
 }

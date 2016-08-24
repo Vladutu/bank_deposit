@@ -4,6 +4,7 @@ import itsix.bank_deposit.builder.IAccountBuilder;
 import itsix.bank_deposit.builder.IInnerPublisherBuilder;
 import itsix.bank_deposit.builder.IOperationBuilder;
 import itsix.bank_deposit.logic.IAccount;
+import itsix.bank_deposit.logic.ICurrency;
 import itsix.bank_deposit.logic.impl.Account;
 import itsix.bank_deposit.repository.ICurrencyRepository;
 
@@ -26,6 +27,11 @@ public class AccountBuilder implements IAccountBuilder, Serializable {
     @Override
     public IAccount buildDefaultAccount() {
         return new Account(currencyRepository.getDefaultCurrency(), innerPublisherBuilder.build(), operationBuilder);
+    }
+
+    @Override
+    public IAccount build(ICurrency currency, int initialDeposit) {
+        return new Account(currency, initialDeposit, innerPublisherBuilder.build(), operationBuilder);
     }
 
 }

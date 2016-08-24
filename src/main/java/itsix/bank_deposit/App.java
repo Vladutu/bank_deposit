@@ -7,6 +7,8 @@ import itsix.bank_deposit.controller.IProductsController;
 import itsix.bank_deposit.controller.ISerializerController;
 import itsix.bank_deposit.controller.impl.ClientsController;
 import itsix.bank_deposit.controller.impl.ProductsController;
+import itsix.bank_deposit.logic.ICurrencyDivider;
+import itsix.bank_deposit.logic.impl.CurrencyDivider;
 import itsix.bank_deposit.repository.IClientRepository;
 import itsix.bank_deposit.repository.ICurrencyRepository;
 import itsix.bank_deposit.repository.IProductRepository;
@@ -30,23 +32,25 @@ public class App {
             IllegalAccessException, UnsupportedLookAndFeelException {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-
-//        IMainRepositoryBuilder mainRepositoryBuilder = new MainRepositoryBuilder();
-//        IMainRepository mainRepository = null;
-//
-//        try {
-//            mainRepository = mainRepositoryBuilder.deserialize();
-//        } catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
+        // IMainRepositoryBuilder mainRepositoryBuilder = new
+        // MainRepositoryBuilder();
+        // IMainRepository mainRepository = null;
+        //
+        // try {
+        // mainRepository = mainRepositoryBuilder.deserialize();
+        // } catch (IOException e) {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
 
         IInnerPublisherBuilder innerPublisherBuilder = new InnerPublisherBuilder();
 
         IProductRepository productsRepository = new ProductRepository(innerPublisherBuilder.build());
-        //IProductRepository productsRepository = mainRepository.getProductRepository();
+        // IProductRepository productsRepository =
+        // mainRepository.getProductRepository();
         ICurrencyRepository currencyRepository = new CurrencyRepository();
-        //ICurrencyRepository currencyRepository = mainRepository.getCurrencyRepository();
+        // ICurrencyRepository currencyRepository =
+        // mainRepository.getCurrencyRepository();
 
         IProductBuilder fixedInterestProductBuilder = new FixedInterestProductBuilder();
         IProductBuilder variableInterestProductBuilder = new VariableInterestProductBuilder();
@@ -59,16 +63,19 @@ public class App {
                 variableInterestProductBuilder, productsRepository, currencyRepository, productValidator);
 
         IClientRepository clientRepository = new ClientRepository();
-        //IClientRepository clientRepository = mainRepository.getClientRepository();
+        // IClientRepository clientRepository =
+        // mainRepository.getClientRepository();
         IClientInformationBuilder clientInformationBuilder = new ClientInformationBuilder();
 
         IDateBuilder dateBuilder = new DateBuilder();
         IOperationBuilder operationBuilder = new OperationBuilder(dateBuilder);
-        IAccountBuilder accountBuilder = new AccountBuilder(currencyRepository, innerPublisherBuilder, operationBuilder);
+        IAccountBuilder accountBuilder = new AccountBuilder(currencyRepository, innerPublisherBuilder,
+                operationBuilder);
         IClientBuilder clientBuilder = new ClientBuilder(clientInformationBuilder, accountBuilder);
 
         IClientValidator clientValidator = new ClientValidator(validatorBuilder);
-        IClientsController clientsController = new ClientsController(clientRepository, clientBuilder, clientValidator);
+        ICurrencyDivider currencyDivider = new CurrencyDivider(currencyRepository);
+        IClientsController clientsController = new ClientsController(clientRepository, clientBuilder, clientValidator, currencyDivider, accountBuilder);
 
         INewProductView newProductView = new NewProductView(productsController);
         productsController.setNewProductView(newProductView);
@@ -82,32 +89,32 @@ public class App {
         IBankAccountView bankAccountView = new BankAccountView(clientsController);
         clientsController.setBankAccountView(bankAccountView);
 
+        INewAccountView newAccountView = new NewAccountView(clientsController);
+        clientsController.setNewAccountView(newAccountView);
 
-        //ISerializerController serializerController = new SerializerController(mainRepositoryBuilder);
+        // ISerializerController serializerController = new
+        // SerializerController(mainRepositoryBuilder);
         ISerializerController serializerController = null;
 
-        SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(() -> {
+            IMainView mainView = new MainView(productsController, clientsController, serializerController,
+                    productsRepository.getProducts());
+            productsRepository.subscribe(mainView);
+            productsController.setMainView(mainView);
+            clientsController.setMainView(mainView);
 
-            @Override
-            public void run() {
-                IMainView mainView = new MainView(productsController, clientsController, serializerController,
-                        productsRepository.getProducts());
-                productsRepository.subscribe(mainView);
-                productsController.setMainView(mainView);
-                clientsController.setMainView(mainView);
-
-//                IMainRepository mainRepository = new MainRepository();
-//                mainRepository.setClientRepository(clientRepository);
-//                mainRepository.setCurrencyRepository(currencyRepository);
-//                mainRepository.setProductRepository(productsRepository);
-//
-//                IMainRepositoryBuilder mainRepositoryBuilder = new MainRepositoryBuilder(mainRepository);
-//                try {
-//                    mainRepositoryBuilder.serialize();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-            }
+            // IMainRepository mainRepository = new MainRepository();
+            // mainRepository.setClientRepository(clientRepository);
+            // mainRepository.setCurrencyRepository(currencyRepository);
+            // mainRepository.setProductRepository(productsRepository);
+            //
+            // IMainRepositoryBuilder mainRepositoryBuilder = new
+            // MainRepositoryBuilder(mainRepository);
+            // try {
+            // mainRepositoryBuilder.serialize();
+            // } catch (IOException e) {
+            // e.printStackTrace();
+            // }
         });
     }
 }
