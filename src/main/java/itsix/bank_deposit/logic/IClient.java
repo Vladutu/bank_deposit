@@ -18,7 +18,7 @@ public interface IClient {
 
     void update(String firstName, String lastName, String address);
 
-    void populateCurrencies(List<ICurrency> ownedCurrencies);
-
     void addAccount(IAccount account);
+
+    void removeExistingCurrenciesFrom(List<ICurrency> currencies);
 }

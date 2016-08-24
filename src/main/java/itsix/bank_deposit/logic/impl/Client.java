@@ -57,16 +57,17 @@ public class Client implements IClient, Serializable {
     }
 
     @Override
-    public void populateCurrencies(List<ICurrency> ownedCurrencies) {
-        for (IAccount account : accounts) {
-            account.populateCurrency(ownedCurrencies);
-        }
-    }
-
-    @Override
     public void addAccount(IAccount account) {
         accounts.add(account);
 
     }
+
+    @Override
+    public void removeExistingCurrenciesFrom(List<ICurrency> currencies) {
+        for (IAccount account : accounts) {
+            account.removeExistingCurrencyFrom(currencies);
+        }
+    }
+
 
 }

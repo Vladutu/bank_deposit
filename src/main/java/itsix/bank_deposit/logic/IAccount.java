@@ -23,5 +23,5 @@ public interface IAccount extends IPublisher {
 
     void withdraw(int money) throws InvalidOperationException;
 
-    void populateCurrency(List<ICurrency> ownedCurrencies);
+    void removeExistingCurrencyFrom(List<ICurrency> currencies);
 }

@@ -22,11 +22,12 @@ public class CurrencyDivider implements ICurrencyDivider {
 
     @Override
     public List<ICurrency> getRemainingCurrencies(IClient selectedClient) {
-        List<ICurrency> ownedCurrencies = new ArrayList<>();
-        selectedClient.populateCurrencies(ownedCurrencies);
-        List<ICurrency> allCurrencies = currencyRepository.getCurrencies();
-        allCurrencies.removeAll(ownedCurrencies);
+        List<ICurrency> currencies = currencyRepository.getCurrencies();
+        List<ICurrency> notUsedCurrencies = new ArrayList<>();
+        notUsedCurrencies.addAll(currencies);
 
-        return allCurrencies;
+        selectedClient.removeExistingCurrenciesFrom(notUsedCurrencies);
+
+        return notUsedCurrencies;
     }
 }

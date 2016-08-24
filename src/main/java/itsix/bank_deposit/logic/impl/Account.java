@@ -108,7 +108,8 @@ public class Account implements IAccount, Serializable {
     }
 
     @Override
-    public void populateCurrency(List<ICurrency> ownedCurrencies) {
-        ownedCurrencies.add(currency);
+    public void removeExistingCurrencyFrom(List<ICurrency> currencies) {
+        currencies.remove(currency);
     }
+
 }
