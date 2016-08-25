@@ -1,10 +1,10 @@
 package itsix.bank_deposit.views;
 
-import java.util.List;
-
 import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IProduct;
 import itsix.bank_deposit.publisher_subscriber.ISubscriber;
+
+import java.util.List;
 
 public interface IMainView extends ISubscriber {
 
@@ -33,4 +33,6 @@ public interface IMainView extends ISubscriber {
 	void enableButtons();
 
 	void disableButtons();
+
+	void disableCreateNewAccountButton();
 }

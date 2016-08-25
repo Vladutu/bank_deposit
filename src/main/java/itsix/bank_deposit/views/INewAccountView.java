@@ -13,6 +13,4 @@ public interface INewAccountView {
     int getInitialDeposit();
 
     void closeWindow();
-
-    void showEmpty();
 }
