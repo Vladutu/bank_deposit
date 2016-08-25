@@ -387,4 +387,20 @@ public class MainView extends JFrame implements IMainView, Serializable {
 		accountTableModel.update();
 	}
 
+	@Override
+	public void enableButtons() {
+		updateButton.setEnabled(true);
+		newAccountButton.setEnabled(true);
+		checkDepositButton.setEnabled(true);
+		newDepositButton.setEnabled(true);
+	}
+
+	@Override
+	public void disableButtons() {
+		updateButton.setEnabled(false);
+		newAccountButton.setEnabled(false);
+		checkDepositButton.setEnabled(false);
+		newDepositButton.setEnabled(false);
+	}
+
 }

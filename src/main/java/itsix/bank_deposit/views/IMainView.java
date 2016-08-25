@@ -1,32 +1,36 @@
 package itsix.bank_deposit.views;
 
+import java.util.List;
+
 import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IProduct;
 import itsix.bank_deposit.publisher_subscriber.ISubscriber;
 
-import java.util.List;
-
 public interface IMainView extends ISubscriber {
 
-    IProduct getSelectedProduct();
+	IProduct getSelectedProduct();
 
-    void updateProductDescription(String description);
+	void updateProductDescription(String description);
 
-    void clearScreen();
+	void clearScreen();
 
-    String getSearchClientSsn();
+	String getSearchClientSsn();
 
-    void setClientFields(String ssn, String firstName, String lastName, String address, List<IAccount> accounts);
+	void setClientFields(String ssn, String firstName, String lastName, String address, List<IAccount> accounts);
 
-    void clearClientFields();
+	void clearClientFields();
 
-    String getClientFirstName();
+	String getClientFirstName();
 
-    String getClientLastName();
+	String getClientLastName();
 
-    String getClientAddress();
+	String getClientAddress();
 
-    IAccount getSelectedBankAccount();
+	IAccount getSelectedBankAccount();
 
-    void updateAccountsTable();
+	void updateAccountsTable();
+
+	void enableButtons();
+
+	void disableButtons();
 }

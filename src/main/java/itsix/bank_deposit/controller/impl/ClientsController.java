@@ -67,6 +67,7 @@ public class ClientsController implements IClientsController, Serializable {
 	@Override
 	public void setMainView(IMainView mainView) {
 		this.mainView = mainView;
+		mainView.disableButtons();
 
 	}
 
@@ -103,12 +104,14 @@ public class ClientsController implements IClientsController, Serializable {
 		try {
 			IClient client = clientRepository.findBySsn(ssn);
 			selectedClient = client;
-
 			mainView.setClientFields(client.getSsn(), client.getFirstName(), client.getLastName(), client.getAddress(),
 					client.getAccounts());
+			mainView.enableButtons();
+
 		} catch (EntityNotFoundException e) {
 			selectedClient = null;
 			mainView.clearClientFields();
+			mainView.disableButtons();
 			JOptionPane.showMessageDialog(null, "Client not found!");
 		}
 
@@ -126,7 +129,7 @@ public class ClientsController implements IClientsController, Serializable {
 
 			return;
 		}
-		
+
 		String firstName = mainView.getClientFirstName();
 		String lastName = mainView.getClientLastName();
 		String address = mainView.getClientAddress();
@@ -182,12 +185,6 @@ public class ClientsController implements IClientsController, Serializable {
 
 	@Override
 	public void openNewAccountView() {
-		if (selectedClient == null) {
-			JOptionPane.showMessageDialog(null, "No client available!");
-
-			return;
-		}
-
 		List<ICurrency> currencies = currencyDivider.getRemainingCurrencies(selectedClient);
 
 		if (currencies.size() == 0) {
@@ -218,12 +215,6 @@ public class ClientsController implements IClientsController, Serializable {
 
 	@Override
 	public void openNewDepositView() {
-		if (selectedClient == null) {
-			JOptionPane.showMessageDialog(null, "No client available!");
-
-			return;
-		}
-
 		List<IProduct> products = productsRepository.getProducts();
 		newDepositView.show(products);
 	}
