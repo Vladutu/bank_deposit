@@ -4,32 +4,39 @@ import itsix.bank_deposit.views.IBankAccountView;
 import itsix.bank_deposit.views.IMainView;
 import itsix.bank_deposit.views.INewAccountView;
 import itsix.bank_deposit.views.INewClientView;
+import itsix.bank_deposit.views.INewDepositView;
 
 public interface IClientsController {
 
-    void setMainView(IMainView mainView);
+	void setMainView(IMainView mainView);
 
-    void openNewClientView();
+	void openNewClientView();
 
-    void saveClient();
+	void saveClient();
 
-    void searchClient();
+	void searchClient();
 
-    void setNewClientView(INewClientView newClientView);
+	void setNewClientView(INewClientView newClientView);
 
-    void updateClient();
+	void updateClient();
 
-    void openBankAccountView();
+	void openBankAccountView();
 
-    void setBankAccountView(IBankAccountView bankAccountView);
+	void setBankAccountView(IBankAccountView bankAccountView);
 
-    void depositMoney();
+	void depositMoney();
 
-    void withdrawMoney();
+	void withdrawMoney();
 
-    void setNewAccountView(INewAccountView newAccountView);
+	void setNewAccountView(INewAccountView newAccountView);
 
-    void openNewAccountView();
+	void openNewAccountView();
 
-    void createNewAccount();
+	void createNewAccount();
+
+	void setNewDepositView(INewDepositView newDepositView);
+
+	void openNewDepositView();
+
+	void updateProductInfo();
 }

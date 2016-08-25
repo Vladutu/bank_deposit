@@ -1,5 +1,10 @@
 package itsix.bank_deposit.controller.impl;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import itsix.bank_deposit.builder.IAccountBuilder;
 import itsix.bank_deposit.builder.IClientBuilder;
 import itsix.bank_deposit.controller.IClientsController;
@@ -9,183 +14,226 @@ import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IClient;
 import itsix.bank_deposit.logic.ICurrency;
 import itsix.bank_deposit.logic.ICurrencyDivider;
+import itsix.bank_deposit.logic.IProduct;
 import itsix.bank_deposit.repository.IClientRepository;
+import itsix.bank_deposit.repository.IProductRepository;
 import itsix.bank_deposit.validator.IClientValidator;
 import itsix.bank_deposit.validator.IValidationResult;
 import itsix.bank_deposit.views.IBankAccountView;
 import itsix.bank_deposit.views.IMainView;
 import itsix.bank_deposit.views.INewAccountView;
 import itsix.bank_deposit.views.INewClientView;
-
-import javax.swing.*;
-import java.io.Serializable;
-import java.util.List;
+import itsix.bank_deposit.views.INewDepositView;
 
 public class ClientsController implements IClientsController, Serializable {
 
-    private transient IMainView mainView;
+	private transient IMainView mainView;
 
-    private transient INewClientView newClientView;
+	private transient INewClientView newClientView;
 
-    private transient IBankAccountView bankAccountView;
+	private transient IBankAccountView bankAccountView;
 
-    private transient INewAccountView newAccountView;
+	private transient INewAccountView newAccountView;
 
-    private IClientRepository clientRepository;
+	private transient INewDepositView newDepositView;
 
-    private IClientBuilder clientBuilder;
+	private IClientRepository clientRepository;
 
-    private IAccountBuilder accountBuilder;
+	private IProductRepository productsRepository;
 
-    private IClientValidator clientValidator;
+	private IClientBuilder clientBuilder;
 
-    private ICurrencyDivider currencyDivider;
+	private IAccountBuilder accountBuilder;
 
-    private IClient selectedClient = null;
+	private IClientValidator clientValidator;
 
-    private IAccount selectedAccount = null;
+	private ICurrencyDivider currencyDivider;
 
-    public ClientsController(IClientRepository clientRepository, IClientBuilder clientBuilder,
-                             IClientValidator clientValidator, ICurrencyDivider currencyDivider, IAccountBuilder accountBuilder) {
-        this.clientRepository = clientRepository;
-        this.clientBuilder = clientBuilder;
-        this.clientValidator = clientValidator;
-        this.currencyDivider = currencyDivider;
-        this.accountBuilder = accountBuilder;
-    }
+	private IClient selectedClient = null;
 
-    @Override
-    public void setMainView(IMainView mainView) {
-        this.mainView = mainView;
+	private IAccount selectedAccount = null;
 
-    }
+	public ClientsController(IClientRepository clientRepository, IProductRepository productsRepository,
+			IClientBuilder clientBuilder, IClientValidator clientValidator, ICurrencyDivider currencyDivider,
+			IAccountBuilder accountBuilder) {
+		this.clientRepository = clientRepository;
+		this.productsRepository = productsRepository;
+		this.clientBuilder = clientBuilder;
+		this.clientValidator = clientValidator;
+		this.currencyDivider = currencyDivider;
+		this.accountBuilder = accountBuilder;
+	}
 
-    @Override
-    public void openNewClientView() {
-        newClientView.showWindow();
-    }
+	@Override
+	public void setMainView(IMainView mainView) {
+		this.mainView = mainView;
 
-    @Override
-    public void saveClient() {
-        String ssn = newClientView.getSsn();
-        String firstName = newClientView.getFirstName();
-        String lastName = newClientView.getLastName();
-        String address = newClientView.getAddress();
+	}
 
-        IValidationResult result = clientValidator.validate(ssn, firstName, lastName, address);
+	@Override
+	public void openNewClientView() {
+		newClientView.showWindow();
+	}
 
-        if (!result.isValid()) {
-            JOptionPane.showMessageDialog(null, result.getErrorDescription());
+	@Override
+	public void saveClient() {
+		String ssn = newClientView.getSsn();
+		String firstName = newClientView.getFirstName();
+		String lastName = newClientView.getLastName();
+		String address = newClientView.getAddress();
 
-            return;
-        }
+		IValidationResult result = clientValidator.validate(ssn, firstName, lastName, address);
 
-        IClient client = clientBuilder.build(ssn, firstName, lastName, address);
+		if (!result.isValid()) {
+			JOptionPane.showMessageDialog(null, result.getErrorDescription());
 
-        clientRepository.save(client);
-        newClientView.closeWindow();
-    }
+			return;
+		}
 
-    @Override
-    public void searchClient() {
-        String ssn = mainView.getSearchClientSsn();
+		IClient client = clientBuilder.build(ssn, firstName, lastName, address);
 
-        try {
-            IClient client = clientRepository.findBySsn(ssn);
-            selectedClient = client;
+		clientRepository.save(client);
+		newClientView.closeWindow();
+	}
 
-            mainView.setClientFields(client.getSsn(), client.getFirstName(), client.getLastName(), client.getAddress(),
-                    client.getAccounts());
-        } catch (EntityNotFoundException e) {
-            selectedClient = null;
-            mainView.clearClientFields();
-            JOptionPane.showMessageDialog(null, "Client not found!");
-        }
+	@Override
+	public void searchClient() {
+		String ssn = mainView.getSearchClientSsn();
 
-    }
+		try {
+			IClient client = clientRepository.findBySsn(ssn);
+			selectedClient = client;
 
-    @Override
-    public void setNewClientView(INewClientView newClientView) {
-        this.newClientView = newClientView;
-    }
+			mainView.setClientFields(client.getSsn(), client.getFirstName(), client.getLastName(), client.getAddress(),
+					client.getAccounts());
+		} catch (EntityNotFoundException e) {
+			selectedClient = null;
+			mainView.clearClientFields();
+			JOptionPane.showMessageDialog(null, "Client not found!");
+		}
 
-    @Override
-    public void updateClient() {
-        String firstName = mainView.getClientFirstName();
-        String lastName = mainView.getClientLastName();
-        String address = mainView.getClientAddress();
+	}
 
-        IValidationResult result = clientValidator.validate(firstName, lastName, address);
+	@Override
+	public void setNewClientView(INewClientView newClientView) {
+		this.newClientView = newClientView;
+	}
 
-        if (!result.isValid()) {
-            JOptionPane.showMessageDialog(null, result.getErrorDescription());
+	@Override
+	public void updateClient() {
+		if (selectedClient == null) {
+			JOptionPane.showMessageDialog(null, "No client available!");
 
-            return;
-        }
+			return;
+		}
+		
+		String firstName = mainView.getClientFirstName();
+		String lastName = mainView.getClientLastName();
+		String address = mainView.getClientAddress();
 
-        selectedClient.update(firstName, lastName, address);
-    }
+		IValidationResult result = clientValidator.validate(firstName, lastName, address);
 
-    @Override
-    public void openBankAccountView() {
-        selectedAccount = mainView.getSelectedBankAccount();
-        bankAccountView.show(selectedAccount);
-        selectedAccount.subscribe(bankAccountView);
+		if (!result.isValid()) {
+			JOptionPane.showMessageDialog(null, result.getErrorDescription());
 
-    }
+			return;
+		}
 
-    @Override
-    public void setBankAccountView(IBankAccountView bankAccountView) {
-        this.bankAccountView = bankAccountView;
-    }
+		selectedClient.update(firstName, lastName, address);
+	}
 
-    @Override
-    public void depositMoney() {
-        int money = bankAccountView.getMoneyAmount();
-        selectedAccount.deposit(money);
+	@Override
+	public void openBankAccountView() {
+		selectedAccount = mainView.getSelectedBankAccount();
+		bankAccountView.show(selectedAccount);
+		selectedAccount.subscribe(bankAccountView);
 
-    }
+	}
 
-    @Override
-    public void withdrawMoney() {
-        int money = bankAccountView.getMoneyAmount();
+	@Override
+	public void setBankAccountView(IBankAccountView bankAccountView) {
+		this.bankAccountView = bankAccountView;
+	}
 
-        try {
-            selectedAccount.withdraw(money);
-        } catch (InvalidOperationException e) {
-            JOptionPane.showMessageDialog(null, "Founds not enough to withdaw");
-        }
+	@Override
+	public void depositMoney() {
+		int money = bankAccountView.getMoneyAmount();
+		selectedAccount.deposit(money);
 
-    }
+	}
 
-    @Override
-    public void setNewAccountView(INewAccountView newAccountView) {
-        this.newAccountView = newAccountView;
+	@Override
+	public void withdrawMoney() {
+		int money = bankAccountView.getMoneyAmount();
 
-    }
+		try {
+			selectedAccount.withdraw(money);
+		} catch (InvalidOperationException e) {
+			JOptionPane.showMessageDialog(null, "Founds not enough to withdaw");
+		}
 
-    @Override
-    public void openNewAccountView() {
-        List<ICurrency> currencies = currencyDivider.getRemainingCurrencies(selectedClient);
+	}
 
-        if (currencies.size() == 0) {
-            newAccountView.showEmpty();
-            return;
-        }
+	@Override
+	public void setNewAccountView(INewAccountView newAccountView) {
+		this.newAccountView = newAccountView;
 
-        newAccountView.show(currencies);
-    }
+	}
 
-    @Override
-    public void createNewAccount() {
-        ICurrency currency = newAccountView.getSelectedCurrency();
-        int initialDeposit = newAccountView.getInitialDeposit();
+	@Override
+	public void openNewAccountView() {
+		if (selectedClient == null) {
+			JOptionPane.showMessageDialog(null, "No client available!");
 
-        IAccount account = accountBuilder.build(currency, initialDeposit);
-        selectedClient.addAccount(account);
+			return;
+		}
 
-        mainView.updateAccountsTable();
-        newAccountView.closeWindow();
-    }
+		List<ICurrency> currencies = currencyDivider.getRemainingCurrencies(selectedClient);
+
+		if (currencies.size() == 0) {
+			newAccountView.showEmpty();
+			return;
+		}
+
+		newAccountView.show(currencies);
+	}
+
+	@Override
+	public void createNewAccount() {
+		ICurrency currency = newAccountView.getSelectedCurrency();
+		int initialDeposit = newAccountView.getInitialDeposit();
+
+		IAccount account = accountBuilder.build(currency, initialDeposit);
+		selectedClient.addAccount(account);
+
+		mainView.updateAccountsTable();
+		newAccountView.closeWindow();
+	}
+
+	@Override
+	public void setNewDepositView(INewDepositView newDepositView) {
+		this.newDepositView = newDepositView;
+
+	}
+
+	@Override
+	public void openNewDepositView() {
+		if (selectedClient == null) {
+			JOptionPane.showMessageDialog(null, "No client available!");
+
+			return;
+		}
+
+		List<IProduct> products = productsRepository.getProducts();
+		newDepositView.show(products);
+	}
+
+	@Override
+	public void updateProductInfo() {
+		IProduct product = newDepositView.getSelectedProduct();
+
+		newDepositView.updateProductInfo(product);
+
+	}
 
 }
