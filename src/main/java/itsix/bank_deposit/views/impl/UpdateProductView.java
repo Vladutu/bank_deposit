@@ -1,15 +1,21 @@
 package itsix.bank_deposit.views.impl;
 
-import itsix.bank_deposit.controller.IProductsController;
-import itsix.bank_deposit.logic.ICurrency;
-import itsix.bank_deposit.views.IUpdateProductView;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import itsix.bank_deposit.controller.IProductsController;
+import itsix.bank_deposit.logic.ICurrency;
+import itsix.bank_deposit.logic.IInterest;
+import itsix.bank_deposit.views.IUpdateProductView;
 
 public class UpdateProductView extends JFrame implements IUpdateProductView {
 
@@ -143,7 +149,7 @@ public class UpdateProductView extends JFrame implements IUpdateProductView {
 	}
 
 	@Override
-	public void show(List<ICurrency> currencies, String name, float interestRate, int period, ICurrency currency,
+	public void show(List<ICurrency> currencies, String name, IInterest interestRate, int period, ICurrency currency,
 			int minSum, int maxSum) {
 		for (ICurrency c : currencies) {
 			currencyComboBox.addItem(c);

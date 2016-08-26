@@ -3,18 +3,19 @@ package itsix.bank_deposit.logic.impl;
 import java.io.Serializable;
 
 import itsix.bank_deposit.builder.IInnerProductBuilder;
-import itsix.bank_deposit.builder.impl.InnerProductBuilder;
 import itsix.bank_deposit.logic.ICurrency;
+import itsix.bank_deposit.logic.IInterest;
 import itsix.bank_deposit.logic.IProduct;
 
 public class FixedInterestProduct implements IProduct, Serializable {
 
 	private IProduct product;
 
-	private IInnerProductBuilder innerProductBuilder = new InnerProductBuilder();
+	private IInnerProductBuilder innerProductBuilder;
 
-	public FixedInterestProduct(String name, float interestRate, int period, ICurrency currency, int minSum,
-                                int maxSum) {
+	public FixedInterestProduct(IInnerProductBuilder innerProductBuilder, String name, float interestRate, int period,
+			ICurrency currency, int minSum, int maxSum) {
+		this.innerProductBuilder = innerProductBuilder;
 		product = innerProductBuilder.build(name, interestRate, period, currency, minSum, maxSum);
 	}
 
@@ -37,7 +38,7 @@ public class FixedInterestProduct implements IProduct, Serializable {
 	}
 
 	@Override
-	public float getInterestRate() {
+	public IInterest getInterestRate() {
 		return product.getInterestRate();
 	}
 
@@ -62,7 +63,7 @@ public class FixedInterestProduct implements IProduct, Serializable {
 	}
 
 	@Override
-	public void update(String name, float interestRate, int period, ICurrency currency, int minSum, int maxSum) {
+	public void update(String name, IInterest interestRate, int period, ICurrency currency, int minSum, int maxSum) {
 		product.update(name, interestRate, period, currency, minSum, maxSum);
 
 	}

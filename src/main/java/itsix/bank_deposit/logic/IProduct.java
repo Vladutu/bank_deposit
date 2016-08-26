@@ -6,7 +6,7 @@ public interface IProduct {
 
 	String getName();
 
-	float getInterestRate();
+	IInterest getInterestRate();
 
 	int getPeriod();
 
@@ -16,6 +16,6 @@ public interface IProduct {
 
 	int getMaxSum();
 
-	void update(String name, float interestRate, int period, ICurrency currency, int minSum, int maxSum);
+	void update(String name, IInterest interestRate, int period, ICurrency currency, int minSum, int maxSum);
 
 }
