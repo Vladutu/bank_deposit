@@ -85,10 +85,17 @@ public class ClientsController implements IClientsController, Serializable {
 			return;
 		}
 
-		IClient client = clientBuilder.build(ssn, firstName, lastName, address);
+		try {
+			clientRepository.findBySsn(ssn);
+			JOptionPane.showMessageDialog(null, "Client already exists!");
+			return;
+		} catch (EntityNotFoundException e) {
+			IClient client = clientBuilder.build(ssn, firstName, lastName, address);
 
-		clientRepository.save(client);
-		newClientView.closeWindow();
+			clientRepository.save(client);
+			newClientView.closeWindow();
+		}
+
 	}
 
 	@Override
