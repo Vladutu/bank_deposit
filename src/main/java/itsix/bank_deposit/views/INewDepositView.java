@@ -12,4 +12,10 @@ public interface INewDepositView {
 
 	void updateProductInfo(IProduct product);
 
+	void disableCapitalizationButton();
+
+	void enableCapitalizationButton();
+
+	void uncheckCapitalizationButton();
+
 }

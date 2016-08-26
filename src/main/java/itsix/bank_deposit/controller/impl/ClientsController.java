@@ -19,6 +19,7 @@ import itsix.bank_deposit.repository.IProductRepository;
 import itsix.bank_deposit.validator.IClientValidator;
 import itsix.bank_deposit.validator.IValidationResult;
 import itsix.bank_deposit.views.IBankAccountView;
+import itsix.bank_deposit.views.ICapitalizationButtonState;
 import itsix.bank_deposit.views.IMainView;
 import itsix.bank_deposit.views.INewAccountView;
 import itsix.bank_deposit.views.INewClientView;
@@ -49,6 +50,8 @@ public class ClientsController implements IClientsController, Serializable {
 	private IClient selectedClient = null;
 
 	private IAccount selectedAccount = null;
+
+	private ICapitalizationButtonState capitalizationButtonState;
 
 	public ClientsController(IClientRepository clientRepository, IProductRepository productsRepository,
 			IClientBuilder clientBuilder, IClientValidator clientValidator, IAccountBuilder accountBuilder) {
@@ -228,6 +231,26 @@ public class ClientsController implements IClientsController, Serializable {
 		IProduct product = newDepositView.getSelectedProduct();
 
 		newDepositView.updateProductInfo(product);
+
+	}
+
+	@Override
+	public void changeRenewalState() {
+		capitalizationButtonState = capitalizationButtonState.nextState();
+		capitalizationButtonState.execute();
+
+	}
+
+	@Override
+	public void changeCapitalizationState() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void setCapitalizationButtonState(ICapitalizationButtonState capitalizationButtonState) {
+		this.capitalizationButtonState = capitalizationButtonState;
+		capitalizationButtonState.execute();
 
 	}
 

@@ -1,6 +1,7 @@
 package itsix.bank_deposit.controller;
 
 import itsix.bank_deposit.views.IBankAccountView;
+import itsix.bank_deposit.views.ICapitalizationButtonState;
 import itsix.bank_deposit.views.IMainView;
 import itsix.bank_deposit.views.INewAccountView;
 import itsix.bank_deposit.views.INewClientView;
@@ -39,4 +40,10 @@ public interface IClientsController {
 	void openNewDepositView();
 
 	void updateProductInfo();
+
+	void changeRenewalState();
+
+	void changeCapitalizationState();
+
+	void setCapitalizationButtonState(ICapitalizationButtonState capitalizationButtonState);
 }

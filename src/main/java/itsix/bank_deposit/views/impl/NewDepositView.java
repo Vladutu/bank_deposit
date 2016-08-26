@@ -69,10 +69,24 @@ public class NewDepositView extends JFrame implements INewDepositView {
 		sumTextField.setColumns(10);
 
 		renewalCheckButton = new JCheckBox("Renewal");
+		renewalCheckButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				clientsController.changeRenewalState();
+			}
+		});
 		renewalCheckButton.setBounds(28, 117, 97, 23);
 		getContentPane().add(renewalCheckButton);
 
 		capitalizationCheckButton = new JCheckBox("Capitalization");
+		capitalizationCheckButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clientsController.changeCapitalizationState();
+			}
+		});
 		capitalizationCheckButton.setBounds(28, 158, 97, 23);
 		getContentPane().add(capitalizationCheckButton);
 
@@ -99,5 +113,21 @@ public class NewDepositView extends JFrame implements INewDepositView {
 	@Override
 	public void updateProductInfo(IProduct product) {
 		productInfoTextArea.setText(product.description());
+	}
+
+	@Override
+	public void disableCapitalizationButton() {
+		capitalizationCheckButton.setEnabled(false);
+	}
+
+	@Override
+	public void enableCapitalizationButton() {
+		capitalizationCheckButton.setEnabled(true);
+	}
+
+	@Override
+	public void uncheckCapitalizationButton() {
+		capitalizationCheckButton.setSelected(false);
+
 	}
 }

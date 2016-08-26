@@ -5,6 +5,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import itsix.bank_deposit.builder.IAccountBuilder;
+import itsix.bank_deposit.builder.ICapitalizationButtonStateBuilder;
 import itsix.bank_deposit.builder.IClientBuilder;
 import itsix.bank_deposit.builder.IClientInformationBuilder;
 import itsix.bank_deposit.builder.IDateBuilder;
@@ -16,6 +17,7 @@ import itsix.bank_deposit.builder.IProductBuilder;
 import itsix.bank_deposit.builder.IValidationResultBuilder;
 import itsix.bank_deposit.builder.IValidatorBuilder;
 import itsix.bank_deposit.builder.impl.AccountBuilder;
+import itsix.bank_deposit.builder.impl.CapitalizationStateBuilder;
 import itsix.bank_deposit.builder.impl.ClientBuilder;
 import itsix.bank_deposit.builder.impl.ClientInformationBuilder;
 import itsix.bank_deposit.builder.impl.DateBuilder;
@@ -109,6 +111,7 @@ public class App {
 		IClientBuilder clientBuilder = new ClientBuilder(clientInformationBuilder, accountBuilder, currencyRepository);
 
 		IClientValidator clientValidator = new ClientValidator(validatorBuilder);
+
 		IClientsController clientsController = new ClientsController(clientRepository, productsRepository,
 				clientBuilder, clientValidator, accountBuilder);
 
@@ -129,6 +132,10 @@ public class App {
 
 		INewDepositView newDepositView = new NewDepositView(clientsController);
 		clientsController.setNewDepositView(newDepositView);
+
+		ICapitalizationButtonStateBuilder capitalizationButtonStateBuilder = new CapitalizationStateBuilder(
+				newDepositView);
+		clientsController.setCapitalizationButtonState(capitalizationButtonStateBuilder.build());
 
 		// ISerializerController serializerController = new
 		// SerializerController(mainRepositoryBuilder);
