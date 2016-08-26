@@ -18,4 +18,6 @@ public interface INewDepositView {
 
 	void uncheckCapitalizationButton();
 
+	void resetButtons();
+
 }

@@ -51,6 +51,8 @@ public class ClientsController implements IClientsController, Serializable {
 
 	private IAccount selectedAccount = null;
 
+	private IProduct selectedProduct = null;
+
 	private ICapitalizationButtonState capitalizationButtonState;
 
 	public ClientsController(IClientRepository clientRepository, IProductRepository productsRepository,
@@ -238,7 +240,6 @@ public class ClientsController implements IClientsController, Serializable {
 	public void changeRenewalState() {
 		capitalizationButtonState = capitalizationButtonState.nextState();
 		capitalizationButtonState.execute();
-
 	}
 
 	@Override
@@ -252,6 +253,16 @@ public class ClientsController implements IClientsController, Serializable {
 		this.capitalizationButtonState = capitalizationButtonState;
 		capitalizationButtonState.execute();
 
+	}
+
+	@Override
+	public void onProductSelect() {
+		// if (selectedProduct != null) {
+		// selectedProduct.resetState();
+		// }
+
+		selectedProduct = newDepositView.getSelectedProduct();
+		newDepositView.resetButtons();
 	}
 
 }

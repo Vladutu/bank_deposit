@@ -27,12 +27,22 @@ public class NewDepositView extends JFrame implements INewDepositView {
 
 	private IClientsController clientsController;
 
+	private ActionListener comboBoxActionListener;
+
 	public NewDepositView(IClientsController clientsController) {
 		this.clientsController = clientsController;
 		initialize();
 	}
 
 	private void initialize() {
+		comboBoxActionListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clientsController.updateProductInfo();
+			}
+
+		};
+
 		setBounds(100, 100, 505, 284);
 		getContentPane().setLayout(null);
 
@@ -41,15 +51,15 @@ public class NewDepositView extends JFrame implements INewDepositView {
 		getContentPane().add(depositTypeLabel);
 
 		productComboBox = new JComboBox<>();
+		productComboBox.addActionListener(comboBoxActionListener);
+		productComboBox.setBounds(124, 38, 91, 23);
 		productComboBox.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clientsController.updateProductInfo();
-
+				clientsController.onProductSelect();
 			}
 		});
-		productComboBox.setBounds(124, 38, 91, 23);
 		getContentPane().add(productComboBox);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -98,9 +108,14 @@ public class NewDepositView extends JFrame implements INewDepositView {
 
 	@Override
 	public void show(List<IProduct> products) {
+		productComboBox.removeActionListener(comboBoxActionListener);
+		productComboBox.removeAllItems();
+
 		for (IProduct product : products) {
 			productComboBox.addItem(product);
 		}
+		productComboBox.addActionListener(comboBoxActionListener);
+		clientsController.updateProductInfo();
 
 		setVisible(true);
 	}
@@ -129,5 +144,12 @@ public class NewDepositView extends JFrame implements INewDepositView {
 	public void uncheckCapitalizationButton() {
 		capitalizationCheckButton.setSelected(false);
 
+	}
+
+	@Override
+	public void resetButtons() {
+		capitalizationCheckButton.setSelected(false);
+		renewalCheckButton.setSelected(false);
+		capitalizationCheckButton.setEnabled(false);
 	}
 }

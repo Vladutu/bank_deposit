@@ -46,4 +46,6 @@ public interface IClientsController {
 	void changeCapitalizationState();
 
 	void setCapitalizationButtonState(ICapitalizationButtonState capitalizationButtonState);
+
+	void onProductSelect();
 }
