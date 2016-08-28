@@ -248,17 +248,17 @@ public class ClientsController implements IClientsController, Serializable {
     public void setCapitalizationButtonState(ICapitalizationButtonState capitalizationButtonState) {
         this.capitalizationButtonState = capitalizationButtonState;
         capitalizationButtonState.execute();
-
     }
 
     @Override
     public void onProductSelect() {
         // if (selectedProduct != null) {
-        // selectedProduct.resetState();
+        // selectedProduct.reset();
         // }
 
         selectedProduct = newDepositView.getSelectedProduct();
         newDepositView.resetButtons();
+        capitalizationButtonState = capitalizationButtonState.reset();
     }
 
 }
