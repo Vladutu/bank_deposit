@@ -24,4 +24,5 @@ public interface IAccount extends IPublisher {
 	void withdraw(int money) throws InvalidOperationException;
 
 	List<ICurrency> subtractOwnCurrency(List<ICurrency> remainingCurrencies);
+
 }

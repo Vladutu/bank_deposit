@@ -4,23 +4,25 @@ import java.util.List;
 
 public interface IClient {
 
-    boolean hasSsn(String ssn);
+	boolean hasSsn(String ssn);
 
-    String getSsn();
+	String getSsn();
 
-    String getFirstName();
+	String getFirstName();
 
-    String getLastName();
+	String getLastName();
 
-    String getAddress();
+	String getAddress();
 
-    List<IAccount> getAccounts();
+	List<IAccount> getAccounts();
 
-    void update(String firstName, String lastName, String address);
+	void update(String firstName, String lastName, String address);
 
-    void addAccount(IAccount account);
+	void addAccount(IAccount account);
 
-    boolean canCreateBankAccount();
+	boolean canCreateBankAccount();
 
-    List<ICurrency> getRemainingCurrenciesForAccounts();
+	List<ICurrency> getRemainingCurrenciesForAccounts();
+
+	void addDeposit(IDeposit deposit);
 }

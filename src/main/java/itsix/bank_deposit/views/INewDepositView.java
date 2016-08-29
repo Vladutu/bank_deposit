@@ -20,4 +20,6 @@ public interface INewDepositView {
 
 	void resetButtons();
 
+	int getSum();
+
 }

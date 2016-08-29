@@ -3,6 +3,9 @@ package itsix.bank_deposit.logic.impl;
 import java.io.Serializable;
 
 import itsix.bank_deposit.logic.ICurrency;
+import itsix.bank_deposit.logic.IDeposit;
+import itsix.bank_deposit.logic.IDepositGenerator;
+import itsix.bank_deposit.logic.IInterestCalculator;
 import itsix.bank_deposit.logic.IProduct;
 
 public class Product implements IProduct, Serializable {
@@ -18,6 +21,12 @@ public class Product implements IProduct, Serializable {
 	private int minSum;
 
 	private int maxSum;
+
+	private IInterestCalculator alwaysUpdatedInterestCalculator;
+
+	private IInterestCalculator interestCalculator;
+
+	private IDepositGenerator depositGenerator;
 
 	public Product(String name, float interestRate, int period, ICurrency currency, int minSum, int maxSum) {
 		this.name = name;
@@ -102,5 +111,28 @@ public class Product implements IProduct, Serializable {
 		this.currency = currency;
 		this.minSum = minSum;
 		this.maxSum = maxSum;
+	}
+
+	@Override
+	public void generatorRenewalState() {
+		depositGenerator = depositGenerator.getNextRenewalState();
+
+	}
+
+	@Override
+	public void generatorCapitalizationState() {
+		depositGenerator = depositGenerator.getNextCapitalizationState();
+
+	}
+
+	@Override
+	public void generatorReset() {
+		depositGenerator = depositGenerator.getInitialState();
+
+	}
+
+	@Override
+	public IDeposit createDeposit(int money) {
+		return depositGenerator.create(alwaysUpdatedInterestCalculator, interestCalculator, money);
 	}
 }

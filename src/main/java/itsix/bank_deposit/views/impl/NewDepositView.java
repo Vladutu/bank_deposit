@@ -101,6 +101,13 @@ public class NewDepositView extends JFrame implements INewDepositView {
 		getContentPane().add(capitalizationCheckButton);
 
 		createButton = new JButton("Create");
+		createButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clientsController.createDeposit();
+
+			}
+		});
 		createButton.setBounds(177, 205, 89, 23);
 		getContentPane().add(createButton);
 
@@ -151,5 +158,10 @@ public class NewDepositView extends JFrame implements INewDepositView {
 		capitalizationCheckButton.setSelected(false);
 		renewalCheckButton.setSelected(false);
 		capitalizationCheckButton.setEnabled(false);
+	}
+
+	@Override
+	public int getSum() {
+		return Integer.valueOf(sumTextField.getText());
 	}
 }

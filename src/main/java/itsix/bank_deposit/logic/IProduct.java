@@ -18,4 +18,12 @@ public interface IProduct {
 
 	void update(String name, float interestRate, int period, ICurrency currency, int minSum, int maxSum);
 
+	void generatorRenewalState();
+
+	void generatorCapitalizationState();
+
+	void generatorReset();
+
+	IDeposit createDeposit(int money);
+
 }

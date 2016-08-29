@@ -3,6 +3,7 @@ package itsix.bank_deposit.logic.impl;
 import java.io.Serializable;
 
 import itsix.bank_deposit.logic.ICurrency;
+import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IProduct;
 
 public class FixedInterestProduct implements IProduct, Serializable {
@@ -60,5 +61,25 @@ public class FixedInterestProduct implements IProduct, Serializable {
 	public void update(String name, float interestRate, int period, ICurrency currency, int minSum, int maxSum) {
 		product.update(name, interestRate, period, currency, minSum, maxSum);
 
+	}
+
+	@Override
+	public void generatorRenewalState() {
+		product.generatorRenewalState();
+	}
+
+	@Override
+	public void generatorCapitalizationState() {
+		product.generatorCapitalizationState();
+	}
+
+	@Override
+	public void generatorReset() {
+		product.generatorReset();
+	}
+
+	@Override
+	public IDeposit createDeposit(int money) {
+		return product.createDeposit(money);
 	}
 }

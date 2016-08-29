@@ -1,86 +1,93 @@
 package itsix.bank_deposit.logic.impl;
 
-import itsix.bank_deposit.logic.IAccount;
-import itsix.bank_deposit.logic.IClient;
-import itsix.bank_deposit.logic.IClientInformation;
-import itsix.bank_deposit.logic.ICurrency;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import itsix.bank_deposit.logic.IAccount;
+import itsix.bank_deposit.logic.IClient;
+import itsix.bank_deposit.logic.IClientInformation;
+import itsix.bank_deposit.logic.ICurrency;
+import itsix.bank_deposit.logic.IDeposit;
+
 public class Client implements IClient, Serializable {
 
-    private IClientInformation clientInformation;
+	private IClientInformation clientInformation;
 
-    private List<IAccount> accounts = new ArrayList<>();
+	private List<IAccount> accounts = new ArrayList<>();
 
-    private List<ICurrency> allCurrencies;
+	private List<IDeposit> deposits = new ArrayList<>();
 
-    public Client(IClientInformation clientInformation, IAccount defaultAccount, List<ICurrency> allCurrencies) {
-        this.clientInformation = clientInformation;
-        this.allCurrencies = allCurrencies;
-        accounts.add(defaultAccount);
-    }
+	private List<ICurrency> allCurrencies;
 
-    @Override
-    public boolean hasSsn(String ssn) {
-        return clientInformation.hasSsn(ssn);
-    }
+	public Client(IClientInformation clientInformation, IAccount defaultAccount, List<ICurrency> allCurrencies) {
+		this.clientInformation = clientInformation;
+		this.allCurrencies = allCurrencies;
+		accounts.add(defaultAccount);
+	}
 
-    @Override
-    public String getSsn() {
-        return clientInformation.getSsn();
-    }
+	@Override
+	public boolean hasSsn(String ssn) {
+		return clientInformation.hasSsn(ssn);
+	}
 
-    @Override
-    public String getFirstName() {
-        return clientInformation.getFirstName();
-    }
+	@Override
+	public String getSsn() {
+		return clientInformation.getSsn();
+	}
 
-    @Override
-    public String getLastName() {
-        return clientInformation.getLastName();
-    }
+	@Override
+	public String getFirstName() {
+		return clientInformation.getFirstName();
+	}
 
-    @Override
-    public String getAddress() {
-        return clientInformation.getAddress();
-    }
+	@Override
+	public String getLastName() {
+		return clientInformation.getLastName();
+	}
 
-    @Override
-    public List<IAccount> getAccounts() {
-        return accounts;
-    }
+	@Override
+	public String getAddress() {
+		return clientInformation.getAddress();
+	}
 
-    @Override
-    public void update(String firstName, String lastName, String address) {
-        clientInformation.update(firstName, lastName, address);
+	@Override
+	public List<IAccount> getAccounts() {
+		return accounts;
+	}
 
-    }
+	@Override
+	public void update(String firstName, String lastName, String address) {
+		clientInformation.update(firstName, lastName, address);
 
-    @Override
-    public void addAccount(IAccount account) {
-        accounts.add(account);
+	}
 
-    }
+	@Override
+	public void addAccount(IAccount account) {
+		accounts.add(account);
 
-    @Override
-    public boolean canCreateBankAccount() {
-        return accounts.size() < allCurrencies.size();
-    }
+	}
 
-    @Override
-    public List<ICurrency> getRemainingCurrenciesForAccounts() {
-        List<ICurrency> remainingCurrencies = new ArrayList<>();
-        remainingCurrencies.addAll(allCurrencies);
+	@Override
+	public boolean canCreateBankAccount() {
+		return accounts.size() < allCurrencies.size();
+	}
 
-        for (IAccount account : accounts) {
-            remainingCurrencies = account.subtractOwnCurrency(remainingCurrencies);
-        }
+	@Override
+	public List<ICurrency> getRemainingCurrenciesForAccounts() {
+		List<ICurrency> remainingCurrencies = new ArrayList<>();
+		remainingCurrencies.addAll(allCurrencies);
 
+		for (IAccount account : accounts) {
+			remainingCurrencies = account.subtractOwnCurrency(remainingCurrencies);
+		}
 
-        return remainingCurrencies;
-    }
+		return remainingCurrencies;
+	}
+
+	@Override
+	public void addDeposit(IDeposit deposit) {
+		deposits.add(deposit);
+	}
 
 }
