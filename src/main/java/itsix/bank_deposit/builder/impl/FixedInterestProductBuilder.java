@@ -18,7 +18,8 @@ public class FixedInterestProductBuilder implements IProductBuilder, Serializabl
 
 	@Override
 	public IProduct build(String name, float interestRate, int period, ICurrency currency, int minSum, int maxSum) {
-		return new FixedInterestProduct(innerProductBuilder, name, interestRate, period, currency, minSum, maxSum);
+		return new FixedInterestProduct(
+				innerProductBuilder.build(name, interestRate, period, currency, minSum, maxSum));
 	}
 
 }

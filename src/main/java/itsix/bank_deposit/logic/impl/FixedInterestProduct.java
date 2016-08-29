@@ -2,7 +2,6 @@ package itsix.bank_deposit.logic.impl;
 
 import java.io.Serializable;
 
-import itsix.bank_deposit.builder.IInnerProductBuilder;
 import itsix.bank_deposit.logic.ICurrency;
 import itsix.bank_deposit.logic.IInterest;
 import itsix.bank_deposit.logic.IProduct;
@@ -11,12 +10,8 @@ public class FixedInterestProduct implements IProduct, Serializable {
 
 	private IProduct product;
 
-	private IInnerProductBuilder innerProductBuilder;
-
-	public FixedInterestProduct(IInnerProductBuilder innerProductBuilder, String name, float interestRate, int period,
-			ICurrency currency, int minSum, int maxSum) {
-		this.innerProductBuilder = innerProductBuilder;
-		product = innerProductBuilder.build(name, interestRate, period, currency, minSum, maxSum);
+	public FixedInterestProduct(IProduct product) {
+		this.product = product;
 	}
 
 	@Override
