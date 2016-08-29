@@ -14,7 +14,6 @@ import javax.swing.JTextField;
 
 import itsix.bank_deposit.controller.IProductsController;
 import itsix.bank_deposit.logic.ICurrency;
-import itsix.bank_deposit.logic.IInterest;
 import itsix.bank_deposit.views.IUpdateProductView;
 
 public class UpdateProductView extends JFrame implements IUpdateProductView {
@@ -149,7 +148,7 @@ public class UpdateProductView extends JFrame implements IUpdateProductView {
 	}
 
 	@Override
-	public void show(List<ICurrency> currencies, String name, IInterest interestRate, int period, ICurrency currency,
+	public void show(List<ICurrency> currencies, String name, float interestRate, int period, ICurrency currency,
 			int minSum, int maxSum) {
 		for (ICurrency c : currencies) {
 			currencyComboBox.addItem(c);

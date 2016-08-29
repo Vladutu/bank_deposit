@@ -3,7 +3,6 @@ package itsix.bank_deposit.logic.impl;
 import java.io.Serializable;
 
 import itsix.bank_deposit.logic.ICurrency;
-import itsix.bank_deposit.logic.IInterest;
 import itsix.bank_deposit.logic.IProduct;
 
 public class VariableInterestProduct implements IProduct, Serializable {
@@ -33,7 +32,7 @@ public class VariableInterestProduct implements IProduct, Serializable {
 	}
 
 	@Override
-	public IInterest getInterestRate() {
+	public float getInterestRate() {
 		return product.getInterestRate();
 	}
 
@@ -58,7 +57,7 @@ public class VariableInterestProduct implements IProduct, Serializable {
 	}
 
 	@Override
-	public void update(String name, IInterest interestRate, int period, ICurrency currency, int minSum, int maxSum) {
+	public void update(String name, float interestRate, int period, ICurrency currency, int minSum, int maxSum) {
 		product.update(name, interestRate, period, currency, minSum, maxSum);
 
 	}
