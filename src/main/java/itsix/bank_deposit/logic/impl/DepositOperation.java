@@ -8,15 +8,15 @@ import itsix.bank_deposit.logic.IOperation;
  */
 public class DepositOperation implements IOperation {
 
-    private int debitBefore;
+	private float debitBefore;
 
-    private int debitAfter;
+	private float debitAfter;
 
-    private IDate date;
+	private IDate date;
 
-    public DepositOperation(int debitBefore, int debitAfter, IDate date) {
-        this.debitBefore = debitBefore;
-        this.debitAfter = debitAfter;
-        this.date = date;
-    }
+	public DepositOperation(float debitBefore, float debitAfter, IDate date) {
+		this.debitBefore = debitBefore;
+		this.debitAfter = debitAfter;
+		this.date = date;
+	}
 }

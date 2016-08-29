@@ -1,15 +1,21 @@
 package itsix.bank_deposit.views.impl;
 
-import itsix.bank_deposit.controller.IClientsController;
-import itsix.bank_deposit.logic.IAccount;
-import itsix.bank_deposit.views.IBankAccountView;
-
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.Serializable;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import itsix.bank_deposit.controller.IClientsController;
+import itsix.bank_deposit.logic.IAccount;
+import itsix.bank_deposit.views.IBankAccountView;
 
 public class BankAccountView extends JFrame implements IBankAccountView, Serializable {
 
@@ -64,6 +70,9 @@ public class BankAccountView extends JFrame implements IBankAccountView, Seriali
 		debitBalanceTextField.setColumns(10);
 
 		balanceTextField = new JTextField();
+		balanceTextField.setFont(new Font("Tahoma", Font.BOLD, 11));
+		balanceTextField.setDisabledTextColor(new Color(0, 0, 0));
+		balanceTextField.setBackground(Color.WHITE);
 		balanceTextField.setEnabled(false);
 		balanceTextField.setBounds(121, 133, 86, 20);
 		getContentPane().add(balanceTextField);

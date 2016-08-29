@@ -8,13 +8,15 @@ import itsix.bank_deposit.logic.IOperation;
  */
 public class WithdrawOperation implements IOperation {
 
-    private int creditBefore;
-    private int creditAfter;
-    private IDate iDate;
+	private float creditBefore;
 
-    public WithdrawOperation(int creditBefore, int creditAfter, IDate iDate) {
-        this.creditBefore = creditBefore;
-        this.creditAfter = creditAfter;
-        this.iDate = iDate;
-    }
+	private float creditAfter;
+
+	private IDate iDate;
+
+	public WithdrawOperation(float creditBefore, float creditAfter, IDate iDate) {
+		this.creditBefore = creditBefore;
+		this.creditAfter = creditAfter;
+		this.iDate = iDate;
+	}
 }

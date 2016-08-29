@@ -1,27 +1,27 @@
 package itsix.bank_deposit.logic;
 
+import java.util.List;
+
 import itsix.bank_deposit.exception.InvalidOperationException;
 import itsix.bank_deposit.publisher_subscriber.IPublisher;
 
-import java.util.List;
-
 public interface IAccount extends IPublisher {
 
-    String getCurrencyName();
+	String getCurrencyName();
 
-    String getCurrencySymbol();
+	String getCurrencySymbol();
 
-    int getBalance();
+	float getBalance();
 
-    int getCreditBalance();
+	float getCreditBalance();
 
-    int getDebitBalance();
+	float getDebitBalance();
 
-    ICurrency getCurrency();
+	ICurrency getCurrency();
 
-    void deposit(int money);
+	void deposit(int money);
 
-    void withdraw(int money) throws InvalidOperationException;
+	void withdraw(int money) throws InvalidOperationException;
 
-    List<ICurrency> subtractOwnCurrency(List<ICurrency> remainingCurrencies);
+	List<ICurrency> subtractOwnCurrency(List<ICurrency> remainingCurrencies);
 }
