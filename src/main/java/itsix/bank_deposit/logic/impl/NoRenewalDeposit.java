@@ -4,10 +4,15 @@ import itsix.bank_deposit.logic.IDeposit;
 
 public class NoRenewalDeposit implements IDeposit {
 
-	private IDeposit innerDeposit;
+    private IDeposit innerDeposit;
 
-	public NoRenewalDeposit(IDeposit innerDeposit) {
-		this.innerDeposit = innerDeposit;
-	}
+    public NoRenewalDeposit(IDeposit innerDeposit) {
+        this.innerDeposit = innerDeposit;
+    }
 
+    @Override
+    public void update() {
+        innerDeposit.update();
+        //TODO: add termination for this deposit
+    }
 }

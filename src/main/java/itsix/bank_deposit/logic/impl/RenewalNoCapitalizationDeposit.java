@@ -10,4 +10,9 @@ public class RenewalNoCapitalizationDeposit implements IDeposit {
         this.innerDeposit = innerDeposit;
     }
 
+    @Override
+    public void update() {
+        innerDeposit.update();
+        //TODO: add termination for this deposit
+    }
 }

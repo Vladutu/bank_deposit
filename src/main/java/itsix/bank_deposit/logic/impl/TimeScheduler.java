@@ -16,8 +16,7 @@ public class TimeScheduler implements ITimeScheduler {
     @Override
     public void start() {
         for (IDeposit deposit : deposits) {
-            //TODO: uncomment below
-            //deposit.update();
+            deposit.update();
         }
     }
 

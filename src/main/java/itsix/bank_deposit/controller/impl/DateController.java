@@ -7,28 +7,30 @@ import itsix.bank_deposit.views.IDayChangerView;
 
 public class DateController implements IDateController {
 
-	private IDayChangerView dayChangerView;
+    private IDayChangerView dayChangerView;
 
-	private IDate currentDate;
+    private IDate currentDate;
 
-	private ITimeScheduler timeScheduler;
+    private ITimeScheduler timeScheduler;
 
-	public DateController(IDate currentDate) {
-		this.currentDate = currentDate;
-	}
+    public DateController(IDate currentDate, ITimeScheduler timeScheduler) {
+        this.currentDate = currentDate;
+        this.timeScheduler = timeScheduler;
+    }
 
-	@Override
-	public void setDateChangerView(IDayChangerView dayChangerView) {
-		this.dayChangerView = dayChangerView;
-	}
+    @Override
+    public void setDateChangerView(IDayChangerView dayChangerView) {
+        this.dayChangerView = dayChangerView;
+        this.currentDate = currentDate;
+    }
 
-	@Override
-	public void incrementDays(Integer value) {
-		for (int i = 0; i < value; i++) {
-			currentDate.increment();
-			timeScheduler.start();
-		}
+    @Override
+    public void incrementDays(Integer value) {
+        for (int i = 0; i < value; i++) {
+            currentDate.increment();
+            timeScheduler.start();
+        }
 
-	}
+    }
 
 }

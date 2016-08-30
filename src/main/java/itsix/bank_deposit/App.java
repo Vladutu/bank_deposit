@@ -10,7 +10,9 @@ import itsix.bank_deposit.controller.impl.ClientsController;
 import itsix.bank_deposit.controller.impl.DateController;
 import itsix.bank_deposit.controller.impl.ProductsController;
 import itsix.bank_deposit.logic.IDate;
+import itsix.bank_deposit.logic.ITimeScheduler;
 import itsix.bank_deposit.logic.impl.Date;
+import itsix.bank_deposit.logic.impl.TimeScheduler;
 import itsix.bank_deposit.repository.IClientRepository;
 import itsix.bank_deposit.repository.ICurrencyRepository;
 import itsix.bank_deposit.repository.IDepositRepository;
@@ -112,7 +114,9 @@ public class App {
         INewDepositView newDepositView = new NewDepositView(clientsController);
         clientsController.setNewDepositView(newDepositView);
 
-        IDateController dateController = new DateController(currentDate);
+
+        ITimeScheduler timeScheduler = new TimeScheduler(depositsRepository.getDeposits());
+        IDateController dateController = new DateController(currentDate, timeScheduler);
         IDayChangerView dayChangerView = new DayChangerView(dateController);
         dateController.setDateChangerView(dayChangerView);
 
