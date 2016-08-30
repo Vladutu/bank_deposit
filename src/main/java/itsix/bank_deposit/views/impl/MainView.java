@@ -1,45 +1,23 @@
 package itsix.bank_deposit.views.impl;
 
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.Serializable;
-import java.util.List;
-
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SpringLayout;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.event.ListSelectionListener;
-
 import itsix.bank_deposit.controller.IClientsController;
 import itsix.bank_deposit.controller.IProductsController;
 import itsix.bank_deposit.controller.ISerializerController;
 import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IProduct;
 import itsix.bank_deposit.views.IMainView;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.Serializable;
+import java.util.List;
 
 public class MainView extends JFrame implements IMainView, Serializable {
 
@@ -167,7 +145,7 @@ public class MainView extends JFrame implements IMainView, Serializable {
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(SystemColor.menu);
-		panel_1.setBounds(10, 11, 684, 47);
+		panel_1.setBounds(10, 11, 694, 47);
 		clientsPanel.add(panel_1);
 		panel_1.setLayout(null);
 
@@ -187,13 +165,14 @@ public class MainView extends JFrame implements IMainView, Serializable {
 		searchButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("search_icon.png")));
 
 		newClientButton = new JButton("New client");
+		newClientButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("new_client.png")));
 		newClientButton.addActionListener(e -> clientsController.openNewClientView());
-		newClientButton.setBounds(542, 12, 132, 23);
+		newClientButton.setBounds(552, 12, 132, 23);
 		panel_1.add(newClientButton);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.DARK_GRAY, Color.LIGHT_GRAY));
-		panel_2.setBounds(10, 69, 684, 472);
+		panel_2.setBounds(10, 69, 694, 482);
 		clientsPanel.add(panel_2);
 		panel_2.setLayout(null);
 
@@ -202,7 +181,7 @@ public class MainView extends JFrame implements IMainView, Serializable {
 		panel_2.add(ssnLabel);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(200, 169, 271, 173);
+		scrollPane.setBounds(200, 169, 293, 173);
 		panel_2.add(scrollPane);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setViewportBorder(new EmptyBorder(0, 0, 0, 0));
@@ -252,13 +231,9 @@ public class MainView extends JFrame implements IMainView, Serializable {
 		lastNameTextField.setColumns(20);
 
 		newDepositButton = new JButton("Create new deposit");
-		newDepositButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				clientsController.openNewDepositView();
-			}
-		});
-		newDepositButton.setBounds(344, 391, 127, 23);
+		newDepositButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("deposit.png")));
+		newDepositButton.addActionListener(e -> clientsController.openNewDepositView());
+		newDepositButton.setBounds(344, 353, 149, 23);
 		panel_2.add(newDepositButton);
 
 		accountLabel = new JLabel("Accounts : ");
@@ -275,21 +250,24 @@ public class MainView extends JFrame implements IMainView, Serializable {
 		firstNameTextField.setColumns(20);
 
 		updateButton = new JButton("Update");
+		updateButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("edit.png")));
 		updateButton.addActionListener(e -> clientsController.updateClient());
-		updateButton.setBounds(282, 83, 67, 23);
+		updateButton.setBounds(281, 69, 97, 23);
 		panel_2.add(updateButton);
 
 		newAccountButton = new JButton("Create new account");
+		newAccountButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("new_account.png")));
 		newAccountButton.addActionListener(e -> {
 			clientsController.openNewAccountView();
 
 		});
-		newAccountButton.setBounds(342, 135, 129, 23);
+		newAccountButton.setBounds(344, 135, 149, 23);
 		panel_2.add(newAccountButton);
 		newAccountButton.setHorizontalAlignment(SwingConstants.TRAILING);
 
 		checkDepositButton = new JButton("Check deposits");
-		checkDepositButton.setBounds(200, 391, 105, 23);
+		checkDepositButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("browse.png")));
+		checkDepositButton.setBounds(200, 353, 134, 23);
 		panel_2.add(checkDepositButton);
 
 		setVisible(true);
