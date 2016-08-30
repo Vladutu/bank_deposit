@@ -1,21 +1,13 @@
 package itsix.bank_deposit.logic.impl;
 
 import itsix.bank_deposit.logic.IDeposit;
-import itsix.bank_deposit.logic.IInterestCalculator;
 
 public class RenewalCapitalizationDeposit implements IDeposit {
 
-	private IInterestCalculator alwaysUpdatedInterestCalculator;
+    private IDeposit innerDeposit;
 
-	private IInterestCalculator interestCalculator;
-
-	private int money;
-
-	public RenewalCapitalizationDeposit(IInterestCalculator alwaysUpdatedInterestCalculator,
-			IInterestCalculator interestCalculator, int money) {
-		this.alwaysUpdatedInterestCalculator = alwaysUpdatedInterestCalculator;
-		this.interestCalculator = interestCalculator;
-		this.money = money;
-	}
+    public RenewalCapitalizationDeposit(IDeposit innerDeposit) {
+        this.innerDeposit = innerDeposit;
+    }
 
 }
