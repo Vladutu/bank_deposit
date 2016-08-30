@@ -1,25 +1,26 @@
 package itsix.bank_deposit.views;
 
-import java.util.List;
-
 import itsix.bank_deposit.logic.IProduct;
+
+import java.util.List;
 
 public interface INewDepositView {
 
-	void show(List<IProduct> products);
+    void show(List<IProduct> products);
 
-	IProduct getSelectedProduct();
+    IProduct getSelectedProduct();
 
-	void updateProductInfo(IProduct product);
+    void updateProductInfo(IProduct product);
 
-	void disableCapitalizationButton();
+    void disableCapitalizationButton();
 
-	void enableCapitalizationButton();
+    void enableCapitalizationButton();
 
-	void uncheckCapitalizationButton();
+    void uncheckCapitalizationButton();
 
-	void resetButtons();
+    void resetButtons();
 
-	int getSum();
+    int getSum();
 
+    void closeWindow();
 }

@@ -283,6 +283,8 @@ public class ClientsController implements IClientsController, Serializable {
         IDeposit deposit = selectedProduct.createDeposit(selectedClient, money);
         selectedClient.addDeposit(deposit);
         depositsRepository.addDeposit(deposit);
+
+        newDepositView.closeWindow();
     }
 
 }
