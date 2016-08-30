@@ -1,10 +1,11 @@
 package itsix.bank_deposit.logic.impl;
 
-import java.io.Serializable;
-
+import itsix.bank_deposit.logic.IClient;
 import itsix.bank_deposit.logic.ICurrency;
 import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IProduct;
+
+import java.io.Serializable;
 
 public class VariableInterestProduct implements IProduct, Serializable {
 
@@ -79,8 +80,8 @@ public class VariableInterestProduct implements IProduct, Serializable {
 	}
 
 	@Override
-	public IDeposit createDeposit(int money) {
-		return product.createDeposit(money);
+	public IDeposit createDeposit(IClient selectedClient, int money) {
+		return product.createDeposit(selectedClient, money);
 	}
 
 	@Override

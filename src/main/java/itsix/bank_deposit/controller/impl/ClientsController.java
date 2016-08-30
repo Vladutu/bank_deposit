@@ -280,7 +280,7 @@ public class ClientsController implements IClientsController, Serializable {
         }
 
         selectedClient.withdrawMoney(selectedProduct.getCurrency(), money);
-        IDeposit deposit = selectedProduct.createDeposit(money);
+        IDeposit deposit = selectedProduct.createDeposit(selectedClient, money);
         selectedClient.addDeposit(deposit);
         depositsRepository.addDeposit(deposit);
     }
