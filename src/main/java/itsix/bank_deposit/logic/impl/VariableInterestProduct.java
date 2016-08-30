@@ -82,4 +82,9 @@ public class VariableInterestProduct implements IProduct, Serializable {
 	public IDeposit createDeposit(int money) {
 		return product.createDeposit(money);
 	}
+
+	@Override
+	public boolean canCreateWith(int money) {
+		return product.canCreateWith(money);
+	}
 }

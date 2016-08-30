@@ -110,7 +110,7 @@ public class NewDepositView extends JFrame implements INewDepositView {
 		});
 		createButton.setBounds(177, 205, 89, 23);
 		getContentPane().add(createButton);
-
+		setLocationRelativeTo(null);
 	}
 
 	@Override

@@ -92,6 +92,8 @@ public class NewClientView extends JFrame implements INewClientView {
 			}
 
 		});
+
+		setLocationRelativeTo(null);
 	}
 
 	@Override

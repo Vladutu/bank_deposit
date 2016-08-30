@@ -120,6 +120,8 @@ public class BankAccountView extends JFrame implements IBankAccountView, Seriali
 				setVisible(false);
 			}
 		});
+
+		setLocationRelativeTo(null);
 	}
 
 	@Override

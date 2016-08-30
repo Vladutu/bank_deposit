@@ -109,6 +109,8 @@ public class UpdateProductView extends JFrame implements IUpdateProductView {
 				setVisible(false);
 			}
 		});
+
+		setLocationRelativeTo(null);
 	}
 
 	@Override

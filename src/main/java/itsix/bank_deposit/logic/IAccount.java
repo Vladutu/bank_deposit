@@ -25,4 +25,8 @@ public interface IAccount extends IPublisher {
 
 	List<ICurrency> subtractOwnCurrency(List<ICurrency> remainingCurrencies);
 
+	boolean hasCurrency(ICurrency currency);
+
+	boolean hasFunds(int money);
+
 }

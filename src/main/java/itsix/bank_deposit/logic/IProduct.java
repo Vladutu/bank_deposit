@@ -26,4 +26,6 @@ public interface IProduct {
 
 	IDeposit createDeposit(int money);
 
+	boolean canCreateWith(int money);
+
 }

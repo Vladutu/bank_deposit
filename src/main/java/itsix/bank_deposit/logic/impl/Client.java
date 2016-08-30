@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import itsix.bank_deposit.exception.InvalidOperationException;
 import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IClient;
 import itsix.bank_deposit.logic.IClientInformation;
@@ -88,6 +89,31 @@ public class Client implements IClient, Serializable {
 	@Override
 	public void addDeposit(IDeposit deposit) {
 		deposits.add(deposit);
+	}
+
+	@Override
+	public boolean canCreateDeposit(ICurrency currency, int money) {
+		for (IAccount account : accounts) {
+			if (account.hasCurrency(currency) && account.hasFunds(money)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public void withdrawMoney(ICurrency currency, int money) {
+		for (IAccount account : accounts) {
+			if (account.hasCurrency(currency)) {
+				try {
+					account.withdraw(money);
+				} catch (InvalidOperationException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
 	}
 
 }

@@ -115,4 +115,14 @@ public class Account implements IAccount, Serializable {
 		return remainingCurrencies;
 	}
 
+	@Override
+	public boolean hasCurrency(ICurrency currency) {
+		return currency.equals(this.currency);
+	}
+
+	@Override
+	public boolean hasFunds(int money) {
+		return getBalance() >= money;
+	}
+
 }

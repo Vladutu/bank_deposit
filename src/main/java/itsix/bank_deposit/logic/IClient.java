@@ -25,4 +25,8 @@ public interface IClient {
 	List<ICurrency> getRemainingCurrenciesForAccounts();
 
 	void addDeposit(IDeposit deposit);
+
+	boolean canCreateDeposit(ICurrency currency, int money);
+
+	void withdrawMoney(ICurrency currency, int money);
 }

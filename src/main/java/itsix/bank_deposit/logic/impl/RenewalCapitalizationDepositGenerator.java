@@ -28,7 +28,7 @@ public class RenewalCapitalizationDepositGenerator implements IDepositGenerator 
 	}
 
 	@Override
-	public IDeposit create(IInterestCalculator alwaysUpdatedInterestCalculator, IInterestCalculator interestCalculator,
+	public IDeposit build(IInterestCalculator alwaysUpdatedInterestCalculator, IInterestCalculator interestCalculator,
 			int money) {
 		return new RenewalCapitalizationDeposit(alwaysUpdatedInterestCalculator, interestCalculator, money);
 	}

@@ -16,8 +16,10 @@ import itsix.bank_deposit.logic.ICurrency;
 import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IProduct;
 import itsix.bank_deposit.repository.IClientRepository;
+import itsix.bank_deposit.repository.IDepositRepository;
 import itsix.bank_deposit.repository.IProductRepository;
 import itsix.bank_deposit.validator.IClientValidator;
+import itsix.bank_deposit.validator.IDepositValidator;
 import itsix.bank_deposit.validator.IValidationResult;
 import itsix.bank_deposit.views.IBankAccountView;
 import itsix.bank_deposit.views.ICapitalizationButtonState;
@@ -42,11 +44,15 @@ public class ClientsController implements IClientsController, Serializable {
 
 	private IProductRepository productsRepository;
 
+	private IDepositRepository depositsRepository;
+
 	private IClientBuilder clientBuilder;
 
 	private IAccountBuilder accountBuilder;
 
 	private IClientValidator clientValidator;
+
+	private IDepositValidator depositValidator;
 
 	private IClient selectedClient = null;
 
@@ -56,13 +62,16 @@ public class ClientsController implements IClientsController, Serializable {
 
 	private ICapitalizationButtonState capitalizationButtonState;
 
-	public ClientsController(IClientRepository clientRepository, IProductRepository productsRepository,
-			IClientBuilder clientBuilder, IClientValidator clientValidator, IAccountBuilder accountBuilder) {
+	public ClientsController(IDepositRepository depositsRepository, IClientRepository clientRepository,
+			IProductRepository productsRepository, IClientBuilder clientBuilder, IClientValidator clientValidator,
+			IDepositValidator depositValidator, IAccountBuilder accountBuilder) {
 		this.clientRepository = clientRepository;
 		this.productsRepository = productsRepository;
 		this.clientBuilder = clientBuilder;
 		this.clientValidator = clientValidator;
 		this.accountBuilder = accountBuilder;
+		this.depositValidator = depositValidator;
+		this.depositsRepository = depositsRepository;
 	}
 
 	@Override
@@ -273,11 +282,17 @@ public class ClientsController implements IClientsController, Serializable {
 	@Override
 	public void createDeposit() {
 		int money = newDepositView.getSum();
-		// TODO: withdraw money from the account having the same currency as the
-		// product. No money -> error; No account -> error
 
+		IValidationResult result = depositValidator.validate(selectedProduct, selectedClient, money);
+		if (!result.isValid()) {
+			JOptionPane.showMessageDialog(null, result.getErrorDescription());
+			return;
+		}
+
+		selectedClient.withdrawMoney(selectedProduct.getCurrency(), money);
 		IDeposit deposit = selectedProduct.createDeposit(money);
 		selectedClient.addDeposit(deposit);
+		depositsRepository.addDeposit(deposit);
 	}
 
 }

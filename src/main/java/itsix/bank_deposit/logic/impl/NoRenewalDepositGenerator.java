@@ -28,7 +28,7 @@ public class NoRenewalDepositGenerator implements IDepositGenerator {
 	}
 
 	@Override
-	public IDeposit create(IInterestCalculator alwaysUpdatedInterestCalculator, IInterestCalculator interestCalculator,
+	public IDeposit build(IInterestCalculator alwaysUpdatedInterestCalculator, IInterestCalculator interestCalculator,
 			int money) {
 		return new NoRenewalDeposit(alwaysUpdatedInterestCalculator, interestCalculator, money);
 	}

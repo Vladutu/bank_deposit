@@ -85,6 +85,7 @@ public class ClientAccountView extends JFrame {
 		JButton btnSubmit_1 = new JButton("Submit");
 		btnSubmit_1.setBounds(362, 69, 89, 23);
 		getContentPane().add(btnSubmit_1);
+		setLocationRelativeTo(null);
 	}
 
 }

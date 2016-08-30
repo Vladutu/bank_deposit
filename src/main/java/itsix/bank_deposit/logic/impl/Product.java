@@ -28,13 +28,18 @@ public class Product implements IProduct, Serializable {
 
 	private IDepositGenerator depositGenerator;
 
-	public Product(String name, float interestRate, int period, ICurrency currency, int minSum, int maxSum) {
+	public Product(String name, float interestRate, int period, ICurrency currency, int minSum, int maxSum,
+			IDepositGenerator depositGenerator, IInterestCalculator alwaysUpdatedInterestCalculator,
+			IInterestCalculator interestCalculator) {
 		this.name = name;
 		this.interestRate = interestRate;
 		this.period = period;
 		this.currency = currency;
 		this.minSum = minSum;
 		this.maxSum = maxSum;
+		this.depositGenerator = depositGenerator;
+		this.alwaysUpdatedInterestCalculator = alwaysUpdatedInterestCalculator;
+		this.interestCalculator = interestCalculator;
 	}
 
 	@Override
@@ -133,6 +138,11 @@ public class Product implements IProduct, Serializable {
 
 	@Override
 	public IDeposit createDeposit(int money) {
-		return depositGenerator.create(alwaysUpdatedInterestCalculator, interestCalculator, money);
+		return depositGenerator.build(alwaysUpdatedInterestCalculator, interestCalculator, money);
+	}
+
+	@Override
+	public boolean canCreateWith(int money) {
+		return (minSum <= money && maxSum >= money);
 	}
 }
