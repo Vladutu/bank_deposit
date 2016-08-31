@@ -13,7 +13,6 @@ import itsix.bank_deposit.exception.InvalidOperationException;
 import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IClient;
 import itsix.bank_deposit.logic.ICurrency;
-import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IProduct;
 import itsix.bank_deposit.repository.IClientRepository;
 import itsix.bank_deposit.repository.IDepositRepository;
@@ -292,10 +291,7 @@ public class ClientsController implements IClientsController, Serializable {
 			return;
 		}
 
-		selectedClient.withdrawMoney(selectedProduct.getCurrency(), money);
-		IDeposit deposit = selectedProduct.createDeposit(selectedClient, money);
-		selectedClient.addDeposit(deposit);
-		depositsRepository.addDeposit(deposit);
+		selectedProduct.createDeposit(selectedClient, money);
 
 		newDepositView.closeWindow();
 	}

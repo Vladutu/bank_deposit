@@ -9,8 +9,8 @@ import itsix.bank_deposit.builder.ICapitalizationButtonStateBuilder;
 import itsix.bank_deposit.builder.IClientBuilder;
 import itsix.bank_deposit.builder.IClientInformationBuilder;
 import itsix.bank_deposit.builder.IDateBuilder;
-import itsix.bank_deposit.builder.IInnerDepositBuilder;
 import itsix.bank_deposit.builder.IDepositGeneratorBuilder;
+import itsix.bank_deposit.builder.IInnerDepositBuilder;
 import itsix.bank_deposit.builder.IInnerProductBuilder;
 import itsix.bank_deposit.builder.IInnerPublisherBuilder;
 import itsix.bank_deposit.builder.IInterestCalculatorBuilder;
@@ -23,9 +23,9 @@ import itsix.bank_deposit.builder.impl.CapitalizationStateBuilder;
 import itsix.bank_deposit.builder.impl.ClientBuilder;
 import itsix.bank_deposit.builder.impl.ClientInformationBuilder;
 import itsix.bank_deposit.builder.impl.DateBuilder;
-import itsix.bank_deposit.builder.impl.InnerDepositBuilder;
 import itsix.bank_deposit.builder.impl.DepositGeneratorBuilder;
 import itsix.bank_deposit.builder.impl.FixedInterestProductBuilder;
+import itsix.bank_deposit.builder.impl.InnerDepositBuilder;
 import itsix.bank_deposit.builder.impl.InnerProductBuilder;
 import itsix.bank_deposit.builder.impl.InnerPublisherBuilder;
 import itsix.bank_deposit.builder.impl.InterestCalculatorBuilder;
@@ -99,6 +99,8 @@ public class App {
 		IDate currentDate = new Date(1);
 		IDateBuilder dateBuilder = new DateBuilder(currentDate);
 
+		IDepositRepository depositsRepository = new DepositRepository();
+
 		IInnerPublisherBuilder innerPublisherBuilder = new InnerPublisherBuilder();
 
 		IProductRepository productsRepository = new ProductRepository(innerPublisherBuilder.build());
@@ -112,7 +114,7 @@ public class App {
 		IDepositGeneratorBuilder depositGeneratorBuilder = new DepositGeneratorBuilder(depositBuilder, currentDate);
 		IInterestCalculatorBuilder interestCalculatorBuilder = new InterestCalculatorBuilder();
 		IInnerProductBuilder innerProductBuilder = new InnerProductBuilder(depositGeneratorBuilder,
-				interestCalculatorBuilder);
+				interestCalculatorBuilder, depositsRepository);
 		IProductBuilder fixedInterestProductBuilder = new FixedInterestProductBuilder(innerProductBuilder);
 		IProductBuilder variableInterestProductBuilder = new VariableInterestProductBuilder(innerProductBuilder);
 
@@ -136,7 +138,6 @@ public class App {
 
 		IClientValidator clientValidator = new ClientValidator(validatorBuilder);
 
-		IDepositRepository depositsRepository = new DepositRepository();
 		IClientsController clientsController = new ClientsController(depositsRepository, clientRepository,
 				productsRepository, clientBuilder, clientValidator, depositValidator, accountBuilder);
 

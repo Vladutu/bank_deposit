@@ -24,7 +24,7 @@ public interface IProduct {
 
 	void generatorReset();
 
-	IDeposit createDeposit(IClient selectedClient, int money);
+	void createDeposit(IClient selectedClient, int money);
 
 	boolean canCreateWith(int money);
 

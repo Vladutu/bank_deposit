@@ -8,6 +8,7 @@ import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IDepositGenerator;
 import itsix.bank_deposit.logic.IInterestCalculator;
 import itsix.bank_deposit.logic.IProduct;
+import itsix.bank_deposit.repository.IDepositRepository;
 
 public class Product implements IProduct, Serializable {
 
@@ -27,8 +28,11 @@ public class Product implements IProduct, Serializable {
 
 	private IDepositGenerator depositGenerator;
 
+	private IDepositRepository depositRepository;
+
 	public Product(String name, float interestRate, int period, ICurrency currency, int minSum, int maxSum,
-			IDepositGenerator depositGenerator, IInterestCalculator interestCalculator) {
+			IDepositGenerator depositGenerator, IInterestCalculator interestCalculator,
+			IDepositRepository depositRepository) {
 		this.name = name;
 		this.interestRate = interestRate;
 		this.period = period;
@@ -37,6 +41,7 @@ public class Product implements IProduct, Serializable {
 		this.maxSum = maxSum;
 		this.depositGenerator = depositGenerator;
 		this.interestCalculator = interestCalculator;
+		this.depositRepository = depositRepository;
 	}
 
 	@Override
@@ -134,8 +139,11 @@ public class Product implements IProduct, Serializable {
 	}
 
 	@Override
-	public IDeposit createDeposit(IClient selectedClient, int money) {
-		return depositGenerator.build(selectedClient, currency, interestCalculator, money, period);
+	public void createDeposit(IClient selectedClient, int money) {
+		selectedClient.withdrawMoney(getCurrency(), money);
+		IDeposit deposit = depositGenerator.build(selectedClient, currency, interestCalculator, money, period);
+		selectedClient.addDeposit(deposit);
+		depositRepository.addDeposit(deposit);
 	}
 
 	@Override
