@@ -9,7 +9,7 @@ import itsix.bank_deposit.builder.ICapitalizationButtonStateBuilder;
 import itsix.bank_deposit.builder.IClientBuilder;
 import itsix.bank_deposit.builder.IClientInformationBuilder;
 import itsix.bank_deposit.builder.IDateBuilder;
-import itsix.bank_deposit.builder.IDepositBuilder;
+import itsix.bank_deposit.builder.IInnerDepositBuilder;
 import itsix.bank_deposit.builder.IDepositGeneratorBuilder;
 import itsix.bank_deposit.builder.IInnerProductBuilder;
 import itsix.bank_deposit.builder.IInnerPublisherBuilder;
@@ -23,7 +23,7 @@ import itsix.bank_deposit.builder.impl.CapitalizationStateBuilder;
 import itsix.bank_deposit.builder.impl.ClientBuilder;
 import itsix.bank_deposit.builder.impl.ClientInformationBuilder;
 import itsix.bank_deposit.builder.impl.DateBuilder;
-import itsix.bank_deposit.builder.impl.DepositBuilder;
+import itsix.bank_deposit.builder.impl.InnerDepositBuilder;
 import itsix.bank_deposit.builder.impl.DepositGeneratorBuilder;
 import itsix.bank_deposit.builder.impl.FixedInterestProductBuilder;
 import itsix.bank_deposit.builder.impl.InnerProductBuilder;
@@ -108,7 +108,7 @@ public class App {
 		// ICurrencyRepository currencyRepository =
 		// mainRepository.getCurrencyRepository();
 
-		IDepositBuilder depositBuilder = new DepositBuilder();
+		IInnerDepositBuilder depositBuilder = new InnerDepositBuilder();
 		IDepositGeneratorBuilder depositGeneratorBuilder = new DepositGeneratorBuilder(depositBuilder, currentDate);
 		IInterestCalculatorBuilder interestCalculatorBuilder = new InterestCalculatorBuilder();
 		IInnerProductBuilder innerProductBuilder = new InnerProductBuilder(depositGeneratorBuilder,

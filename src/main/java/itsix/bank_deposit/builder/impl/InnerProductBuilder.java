@@ -24,7 +24,7 @@ public class InnerProductBuilder implements IInnerProductBuilder, Serializable {
 	@Override
 	public IProduct build(String name, float interestRate, int period, ICurrency currency, int minSum, int maxSum) {
 		return new Product(name, interestRate, period, currency, minSum, maxSum, depositGeneratorBuilder.build(),
-				interestCalculatorBuilder.build(interestRate), interestCalculatorBuilder.build(interestRate));
+				interestCalculatorBuilder.build(interestRate));
 	}
 
 }

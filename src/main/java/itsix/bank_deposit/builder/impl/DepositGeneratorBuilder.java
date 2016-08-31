@@ -1,6 +1,6 @@
 package itsix.bank_deposit.builder.impl;
 
-import itsix.bank_deposit.builder.IDepositBuilder;
+import itsix.bank_deposit.builder.IInnerDepositBuilder;
 import itsix.bank_deposit.builder.IDepositGeneratorBuilder;
 import itsix.bank_deposit.logic.IDate;
 import itsix.bank_deposit.logic.IDepositGenerator;
@@ -16,11 +16,11 @@ public class DepositGeneratorBuilder implements IDepositGeneratorBuilder {
 
     private IDepositGenerator renewalCap;
 
-    private IDepositBuilder depositBuilder;
+    private IInnerDepositBuilder depositBuilder;
 
     private IDate currentDate;
 
-    public DepositGeneratorBuilder(IDepositBuilder depositBuilder, IDate currentDate) {
+    public DepositGeneratorBuilder(IInnerDepositBuilder depositBuilder, IDate currentDate) {
         this.depositBuilder = depositBuilder;
         this.currentDate = currentDate;
     }

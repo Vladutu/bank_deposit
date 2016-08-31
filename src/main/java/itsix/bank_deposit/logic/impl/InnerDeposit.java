@@ -1,15 +1,11 @@
 package itsix.bank_deposit.logic.impl;
 
-import itsix.bank_deposit.logic.IClient;
 import itsix.bank_deposit.logic.ICurrency;
 import itsix.bank_deposit.logic.IDate;
 import itsix.bank_deposit.logic.IInnerDeposit;
 import itsix.bank_deposit.logic.IInterestCalculator;
 
-public class Deposit implements IInnerDeposit {
-
-	@SuppressWarnings("unused")
-	private IInterestCalculator alwaysUpdatedInterestCalculator;
+public class InnerDeposit implements IInnerDeposit {
 
 	private IInterestCalculator interestCalculator;
 
@@ -21,22 +17,18 @@ public class Deposit implements IInnerDeposit {
 
 	private int daysLeft;
 
-	private IClient client;
-
 	private ICurrency currency;
 
 	private float gainedMoney;
 
-	public Deposit(IClient client, ICurrency currency, IInterestCalculator alwaysUpdatedInterestCalculator,
-			IInterestCalculator interestCalculator, IDate creationDate, int money, int period) {
-		this.alwaysUpdatedInterestCalculator = alwaysUpdatedInterestCalculator;
+	public InnerDeposit(ICurrency currency, IInterestCalculator interestCalculator, IDate creationDate, int money,
+			int period) {
 		this.interestCalculator = interestCalculator;
 		this.creationDate = creationDate;
 		this.money = money;
 		this.period = period;
 		this.daysLeft = period;
 		this.currency = currency;
-		this.client = client;
 		gainedMoney = 0;
 	}
 

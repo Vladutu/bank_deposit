@@ -1,6 +1,6 @@
 package itsix.bank_deposit.logic.impl;
 
-import itsix.bank_deposit.builder.IDepositBuilder;
+import itsix.bank_deposit.builder.IInnerDepositBuilder;
 import itsix.bank_deposit.logic.IClient;
 import itsix.bank_deposit.logic.ICurrency;
 import itsix.bank_deposit.logic.IDate;
@@ -17,11 +17,11 @@ public class RenewalNoCapitalizationDepositGenerator implements IDepositGenerato
 
 	private IDepositGenerator initialState;
 
-	private IDepositBuilder depositBuilder;
+	private IInnerDepositBuilder depositBuilder;
 
 	private IDate currentDate;
 
-	public RenewalNoCapitalizationDepositGenerator(IDepositBuilder depositBuilder, IDate currentDate) {
+	public RenewalNoCapitalizationDepositGenerator(IInnerDepositBuilder depositBuilder, IDate currentDate) {
 		this.depositBuilder = depositBuilder;
 		this.currentDate = currentDate;
 	}
@@ -42,12 +42,11 @@ public class RenewalNoCapitalizationDepositGenerator implements IDepositGenerato
 	}
 
 	@Override
-	public IDeposit build(IClient selectedClient, ICurrency currency,
-			IInterestCalculator alwaysUpdatedInterestCalculator, IInterestCalculator interestCalculator, int money,
+	public IDeposit build(IClient selectedClient, ICurrency currency, IInterestCalculator interestCalculator, int money,
 			int period) {
-		IInnerDeposit innerDeposit = depositBuilder.build(selectedClient, currency, alwaysUpdatedInterestCalculator,
-				interestCalculator, money, currentDate.createClone(), period);
-		return new RenewalNoCapitalizationDeposit(innerDeposit);
+		IInnerDeposit innerDeposit = depositBuilder.build(currency, interestCalculator, money,
+				currentDate.createClone(), period);
+		return new RenewalNoCapitalizationDeposit(selectedClient, innerDeposit);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package itsix.bank_deposit.logic.impl;
 
+import itsix.bank_deposit.logic.IClient;
 import itsix.bank_deposit.logic.ICurrency;
 import itsix.bank_deposit.logic.IDate;
 import itsix.bank_deposit.logic.IDeposit;
@@ -9,8 +10,11 @@ public class RenewalNoCapitalizationDeposit implements IDeposit {
 
 	private IInnerDeposit innerDeposit;
 
-	public RenewalNoCapitalizationDeposit(IInnerDeposit innerDeposit) {
+	private IClient client;
+
+	public RenewalNoCapitalizationDeposit(IClient client, IInnerDeposit innerDeposit) {
 		this.innerDeposit = innerDeposit;
+		this.client = client;
 	}
 
 	@Override

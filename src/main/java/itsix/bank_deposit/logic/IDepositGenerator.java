@@ -2,19 +2,19 @@ package itsix.bank_deposit.logic;
 
 public interface IDepositGenerator {
 
-    IDepositGenerator getNextRenewalState();
+	IDepositGenerator getNextRenewalState();
 
-    IDepositGenerator getNextCapitalizationState();
+	IDepositGenerator getNextCapitalizationState();
 
-    IDepositGenerator getInitialState();
+	IDepositGenerator getInitialState();
 
-    void setNextRenewalState(IDepositGenerator generator);
+	void setNextRenewalState(IDepositGenerator generator);
 
-    void setNextCapitalizationlState(IDepositGenerator generator);
+	void setNextCapitalizationlState(IDepositGenerator generator);
 
-    void setInitialState(IDepositGenerator generator);
+	void setInitialState(IDepositGenerator generator);
 
-    IDeposit build(IClient selectedClient, ICurrency currency, IInterestCalculator alwaysUpdatedInterestCalculator, IInterestCalculator interestCalculator,
-                   int money, int period);
+	IDeposit build(IClient selectedClient, ICurrency currency, IInterestCalculator interestCalculator, int money,
+			int period);
 
 }
