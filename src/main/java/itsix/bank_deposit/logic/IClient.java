@@ -29,4 +29,6 @@ public interface IClient {
 	boolean canCreateDeposit(ICurrency currency, int money);
 
 	void withdrawMoney(ICurrency currency, int money);
+
+	List<IDeposit> getDeposits();
 }

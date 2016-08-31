@@ -116,4 +116,9 @@ public class Client implements IClient, Serializable {
 
 	}
 
+	@Override
+	public List<IDeposit> getDeposits() {
+		return deposits;
+	}
+
 }

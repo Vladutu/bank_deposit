@@ -1,23 +1,45 @@
 package itsix.bank_deposit.views.impl;
 
-import itsix.bank_deposit.controller.IClientsController;
-import itsix.bank_deposit.controller.IProductsController;
-import itsix.bank_deposit.controller.ISerializerController;
-import itsix.bank_deposit.logic.IAccount;
-import itsix.bank_deposit.logic.IProduct;
-import itsix.bank_deposit.views.IMainView;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.event.ListSelectionListener;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.SystemColor;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.Serializable;
 import java.util.List;
+
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.event.ListSelectionListener;
+
+import itsix.bank_deposit.controller.IClientsController;
+import itsix.bank_deposit.controller.IProductsController;
+import itsix.bank_deposit.controller.ISerializerController;
+import itsix.bank_deposit.logic.IAccount;
+import itsix.bank_deposit.logic.IProduct;
+import itsix.bank_deposit.views.IMainView;
 
 public class MainView extends JFrame implements IMainView, Serializable {
 
@@ -266,6 +288,14 @@ public class MainView extends JFrame implements IMainView, Serializable {
 		newAccountButton.setHorizontalAlignment(SwingConstants.TRAILING);
 
 		checkDepositButton = new JButton("Check deposits");
+		checkDepositButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clientsController.openCheckDepositsView();
+
+			}
+		});
 		checkDepositButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("browse.png")));
 		checkDepositButton.setBounds(200, 353, 134, 23);
 		panel_2.add(checkDepositButton);

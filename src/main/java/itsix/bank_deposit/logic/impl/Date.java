@@ -23,4 +23,9 @@ public class Date implements IDate, Cloneable {
 		dayNumber++;
 	}
 
+	@Override
+	public String toString() {
+		return "Day " + dayNumber;
+	}
+
 }

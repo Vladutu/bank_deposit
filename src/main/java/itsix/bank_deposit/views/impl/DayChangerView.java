@@ -28,6 +28,7 @@ public class DayChangerView extends JFrame implements IDayChangerView {
 	private void initialize() {
 		setBounds(100, 100, 297, 124);
 		getContentPane().setLayout(null);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
 		daysIncrementButton = new JButton("Add 0 day");
 		daysIncrementButton.addActionListener(new ActionListener() {

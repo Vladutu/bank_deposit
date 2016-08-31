@@ -1,62 +1,70 @@
 package itsix.bank_deposit.logic.impl;
 
 import itsix.bank_deposit.builder.IDepositBuilder;
-import itsix.bank_deposit.logic.*;
+import itsix.bank_deposit.logic.IClient;
+import itsix.bank_deposit.logic.ICurrency;
+import itsix.bank_deposit.logic.IDate;
+import itsix.bank_deposit.logic.IDeposit;
+import itsix.bank_deposit.logic.IDepositGenerator;
+import itsix.bank_deposit.logic.IInnerDeposit;
+import itsix.bank_deposit.logic.IInterestCalculator;
 
 public class RenewalNoCapitalizationDepositGenerator implements IDepositGenerator {
 
-    private IDepositGenerator renewalState;
+	private IDepositGenerator renewalState;
 
-    private IDepositGenerator capitalizationState;
+	private IDepositGenerator capitalizationState;
 
-    private IDepositGenerator initialState;
+	private IDepositGenerator initialState;
 
-    private IDepositBuilder depositBuilder;
+	private IDepositBuilder depositBuilder;
 
-    private IDate currentDate;
+	private IDate currentDate;
 
-    public RenewalNoCapitalizationDepositGenerator(IDepositBuilder depositBuilder, IDate currentDate) {
-        this.depositBuilder = depositBuilder;
-        this.currentDate = currentDate;
-    }
+	public RenewalNoCapitalizationDepositGenerator(IDepositBuilder depositBuilder, IDate currentDate) {
+		this.depositBuilder = depositBuilder;
+		this.currentDate = currentDate;
+	}
 
-    @Override
-    public IDepositGenerator getNextRenewalState() {
-        return renewalState;
-    }
+	@Override
+	public IDepositGenerator getNextRenewalState() {
+		return renewalState;
+	}
 
-    @Override
-    public IDepositGenerator getNextCapitalizationState() {
-        return capitalizationState;
-    }
+	@Override
+	public IDepositGenerator getNextCapitalizationState() {
+		return capitalizationState;
+	}
 
-    @Override
-    public IDepositGenerator getInitialState() {
-        return initialState;
-    }
+	@Override
+	public IDepositGenerator getInitialState() {
+		return initialState;
+	}
 
-    @Override
-    public IDeposit build(IClient selectedClient, ICurrency currency, IInterestCalculator alwaysUpdatedInterestCalculator, IInterestCalculator interestCalculator,
-                          int money, int period) {
-        IDeposit innerDeposit = depositBuilder.build(selectedClient, currency, alwaysUpdatedInterestCalculator, interestCalculator, money, currentDate.createClone(), period);
-        return new RenewalNoCapitalizationDeposit(innerDeposit);
-    }
+	@Override
+	public IDeposit build(IClient selectedClient, ICurrency currency,
+			IInterestCalculator alwaysUpdatedInterestCalculator, IInterestCalculator interestCalculator, int money,
+			int period) {
+		IInnerDeposit innerDeposit = depositBuilder.build(selectedClient, currency, alwaysUpdatedInterestCalculator,
+				interestCalculator, money, currentDate.createClone(), period);
+		return new RenewalNoCapitalizationDeposit(innerDeposit);
+	}
 
-    @Override
-    public void setNextRenewalState(IDepositGenerator generator) {
-        this.renewalState = generator;
-    }
+	@Override
+	public void setNextRenewalState(IDepositGenerator generator) {
+		this.renewalState = generator;
+	}
 
-    @Override
-    public void setNextCapitalizationlState(IDepositGenerator generator) {
-        this.capitalizationState = generator;
+	@Override
+	public void setNextCapitalizationlState(IDepositGenerator generator) {
+		this.capitalizationState = generator;
 
-    }
+	}
 
-    @Override
-    public void setInitialState(IDepositGenerator generator) {
-        this.initialState = generator;
+	@Override
+	public void setInitialState(IDepositGenerator generator) {
+		this.initialState = generator;
 
-    }
+	}
 
 }

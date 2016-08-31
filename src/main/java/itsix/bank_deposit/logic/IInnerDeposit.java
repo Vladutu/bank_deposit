@@ -1,6 +1,6 @@
 package itsix.bank_deposit.logic;
 
-public interface IDeposit {
+public interface IInnerDeposit {
 
 	void update();
 
@@ -16,10 +16,5 @@ public interface IDeposit {
 
 	float getMoneyGained();
 
-	boolean getRenewal();
-
-	boolean getCapitalization();
-
 	ICurrency getCurrency();
-
 }
