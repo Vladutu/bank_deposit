@@ -4,12 +4,10 @@ import java.io.Serializable;
 
 import javax.swing.JOptionPane;
 
-import itsix.bank_deposit.builder.IInterestBuilder;
 import itsix.bank_deposit.builder.IProductBuilder;
 import itsix.bank_deposit.controller.IProductsController;
 import itsix.bank_deposit.exception.InvalidFieldsException;
 import itsix.bank_deposit.logic.ICurrency;
-import itsix.bank_deposit.logic.IInterest;
 import itsix.bank_deposit.logic.IProduct;
 import itsix.bank_deposit.repository.ICurrencyRepository;
 import itsix.bank_deposit.repository.IProductRepository;
@@ -28,7 +26,6 @@ public class ProductsController implements IProductsController, Serializable {
 	private IProductBuilder fixedInterestProductBuilder;
 	private IProductBuilder variableInterestProductBuilder;
 	private IProductBuilder currentProductBuilder;
-	private IInterestBuilder interestBuilder;
 
 	private IProductRepository productsRepository;
 	private ICurrencyRepository currenciesRepository;
@@ -37,10 +34,9 @@ public class ProductsController implements IProductsController, Serializable {
 
 	private IProductValidator productValidator;
 
-	public ProductsController(IInterestBuilder interestBuilder, IProductBuilder fixedInterestProductBuilder,
+	public ProductsController(IProductBuilder fixedInterestProductBuilder,
 			IProductBuilder variableInterestProductBuilder, IProductRepository productsRepository,
 			ICurrencyRepository currenciesRepository, IProductValidator productValidator) {
-		this.interestBuilder = interestBuilder;
 		this.fixedInterestProductBuilder = fixedInterestProductBuilder;
 		this.variableInterestProductBuilder = variableInterestProductBuilder;
 		this.productsRepository = productsRepository;
@@ -123,7 +119,7 @@ public class ProductsController implements IProductsController, Serializable {
 		selectedProduct = mainView.getSelectedProduct();
 
 		String name = selectedProduct.getName();
-		IInterest interestRate = selectedProduct.getInterestRate();
+		float interestRate = selectedProduct.getInterestRate();
 		int period = selectedProduct.getPeriod();
 		ICurrency currency = selectedProduct.getCurrency();
 		int minSum = selectedProduct.getMinSum();
@@ -148,7 +144,7 @@ public class ProductsController implements IProductsController, Serializable {
 			return;
 		}
 
-		selectedProduct.update(name, interestBuilder.build(interestRate), period, currency, minSum, maxSum);
+		selectedProduct.update(name, interestRate, period, currency, minSum, maxSum);
 
 		mainView.clearScreen();
 		updateProductView.closeWindow();

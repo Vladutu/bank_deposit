@@ -18,7 +18,8 @@ public class VariableInterestProductBuilder implements IProductBuilder, Serializ
 
 	@Override
 	public IProduct build(String name, float interestRate, int period, ICurrency currency, int minSum, int maxSum) {
-		return new VariableInterestProduct(innerProductBuilder, name, interestRate, period, currency, minSum, maxSum);
+		return new VariableInterestProduct(
+				innerProductBuilder.build(name, interestRate, period, currency, minSum, maxSum));
 	}
 
 }

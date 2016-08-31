@@ -1,9 +1,7 @@
 package itsix.bank_deposit.logic.impl;
 
-import itsix.bank_deposit.logic.IAccount;
-import itsix.bank_deposit.logic.IClient;
-import itsix.bank_deposit.logic.IClientInformation;
-import itsix.bank_deposit.logic.ICurrency;
+import itsix.bank_deposit.exception.InvalidOperationException;
+import itsix.bank_deposit.logic.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,6 +12,8 @@ public class Client implements IClient, Serializable {
     private IClientInformation clientInformation;
 
     private List<IAccount> accounts = new ArrayList<>();
+
+    private List<IDeposit> deposits = new ArrayList<>();
 
     private List<ICurrency> allCurrencies;
 
@@ -79,8 +79,56 @@ public class Client implements IClient, Serializable {
             remainingCurrencies = account.subtractOwnCurrency(remainingCurrencies);
         }
 
-
         return remainingCurrencies;
+    }
+
+    @Override
+    public void addDeposit(IDeposit deposit) {
+        deposits.add(deposit);
+    }
+
+    @Override
+    public boolean canCreateDeposit(ICurrency currency, int money) {
+        for (IAccount account : accounts) {
+            if (account.hasCurrency(currency) && account.hasFunds(money)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public void withdrawMoney(ICurrency currency, int money) {
+        for (IAccount account : accounts) {
+            if (account.hasCurrency(currency)) {
+                try {
+                    account.withdraw(money);
+                } catch (InvalidOperationException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public List<IDeposit> getDeposits() {
+        return deposits;
+    }
+
+    @Override
+    public void removeDeposit(IDeposit deposit) {
+        deposits.remove(deposit);
+    }
+
+    @Override
+    public void depositMoney(ICurrency currency, float money) {
+        for (IAccount account : accounts) {
+            if (account.hasCurrency(currency)) {
+                account.deposit(money);
+            }
+        }
     }
 
 }

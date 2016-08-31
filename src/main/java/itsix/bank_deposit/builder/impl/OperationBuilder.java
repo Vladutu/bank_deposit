@@ -11,19 +11,19 @@ import itsix.bank_deposit.logic.impl.WithdrawOperation;
  */
 public class OperationBuilder implements IOperationBuilder {
 
-    private IDateBuilder dateBuilder;
+	private IDateBuilder dateBuilder;
 
-    public OperationBuilder(IDateBuilder dateBuilder) {
-        this.dateBuilder = dateBuilder;
-    }
+	public OperationBuilder(IDateBuilder dateBuilder) {
+		this.dateBuilder = dateBuilder;
+	}
 
-    @Override
-    public IOperation buildDepositOperation(int debitBefore, int debitAfter) {
-        return new DepositOperation(debitBefore, debitAfter, dateBuilder.buildCurrentDate());
-    }
+	@Override
+	public IOperation buildDepositOperation(float debitBefore, float debitAfter) {
+		return new DepositOperation(debitBefore, debitAfter, dateBuilder.buildCurrentDate());
+	}
 
-    @Override
-    public IOperation buildWithdrawOperation(int creditBefore, int creditAfter) {
-        return new WithdrawOperation(creditBefore, creditAfter, dateBuilder.buildCurrentDate());
-    }
+	@Override
+	public IOperation buildWithdrawOperation(float creditBefore, float creditAfter) {
+		return new WithdrawOperation(creditBefore, creditAfter, dateBuilder.buildCurrentDate());
+	}
 }

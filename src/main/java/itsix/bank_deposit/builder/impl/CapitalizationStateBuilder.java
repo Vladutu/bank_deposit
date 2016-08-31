@@ -8,25 +8,28 @@ import itsix.bank_deposit.views.impl.OnCapitalizationButtonState;
 
 public class CapitalizationStateBuilder implements ICapitalizationButtonStateBuilder {
 
-	private ICapitalizationButtonState onState;
+    private ICapitalizationButtonState onState;
 
-	private ICapitalizationButtonState offState;
+    private ICapitalizationButtonState offState;
 
-	private INewDepositView newDepositView;
+    private INewDepositView newDepositView;
 
-	public CapitalizationStateBuilder(INewDepositView newDepositView) {
-		this.newDepositView = newDepositView;
+    public CapitalizationStateBuilder(INewDepositView newDepositView) {
+        this.newDepositView = newDepositView;
 
-		onState = new OnCapitalizationButtonState(newDepositView);
-		offState = new OffCapitalizationButtonState(newDepositView);
+        onState = new OnCapitalizationButtonState(newDepositView);
+        offState = new OffCapitalizationButtonState(newDepositView);
 
-		onState.setNextState(offState);
-		offState.setNextState(onState);
-	}
+        onState.setNextState(offState);
+        offState.setNextState(onState);
 
-	@Override
-	public ICapitalizationButtonState build() {
-		return offState;
-	}
+        offState.setInitialState(offState);
+        onState.setInitialState(offState);
+    }
+
+    @Override
+    public ICapitalizationButtonState build() {
+        return offState;
+    }
 
 }

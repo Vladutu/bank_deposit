@@ -2,26 +2,30 @@ package itsix.bank_deposit.logic.impl;
 
 import itsix.bank_deposit.logic.IDate;
 
-import java.time.Month;
-
 /**
  * Created by Geo on 24.08.2016.
  */
-public class Date implements IDate {
+public class Date implements IDate, Cloneable {
 
-    private int hour;
-    private int minute;
-    private int second;
-    private int dayOfMonth;
-    private Month month;
-    private int year;
+	private int dayNumber;
 
-    public Date(int hour, int minute, int second, int dayOfMonth, Month month, int year) {
-        this.hour = hour;
-        this.minute = minute;
-        this.second = second;
-        this.dayOfMonth = dayOfMonth;
-        this.month = month;
-        this.year = year;
-    }
+	public Date(int dayNumber) {
+		this.dayNumber = dayNumber;
+	}
+
+	@Override
+	public IDate createClone() {
+		return new Date(dayNumber);
+	}
+
+	@Override
+	public void increment() {
+		dayNumber++;
+	}
+
+	@Override
+	public String toString() {
+		return "Day " + dayNumber;
+	}
+
 }

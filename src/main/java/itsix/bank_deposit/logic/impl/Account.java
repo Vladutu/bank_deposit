@@ -16,9 +16,9 @@ public class Account implements IAccount, Serializable {
 
     private ICurrency currency;
 
-    private int debitBalance;
+    private float debitBalance;
 
-    private int creditBalance;
+    private float creditBalance;
 
     private IInnerPublisher publisher;
 
@@ -35,7 +35,8 @@ public class Account implements IAccount, Serializable {
         creditBalance = 0;
     }
 
-    public Account(ICurrency currency, int initialDeposit, IInnerPublisher publisher, IOperationBuilder operationBuilder) {
+    public Account(ICurrency currency, int initialDeposit, IInnerPublisher publisher,
+                   IOperationBuilder operationBuilder) {
         this.currency = currency;
         this.publisher = publisher;
         this.operationBuilder = operationBuilder;
@@ -55,17 +56,17 @@ public class Account implements IAccount, Serializable {
     }
 
     @Override
-    public int getBalance() {
+    public float getBalance() {
         return debitBalance - creditBalance;
     }
 
     @Override
-    public int getCreditBalance() {
+    public float getCreditBalance() {
         return creditBalance;
     }
 
     @Override
-    public int getDebitBalance() {
+    public float getDebitBalance() {
         return debitBalance;
     }
 
@@ -87,7 +88,7 @@ public class Account implements IAccount, Serializable {
     }
 
     @Override
-    public void deposit(int money) {
+    public void deposit(float money) {
         IOperation operation = operationBuilder.buildDepositOperation(debitBalance, debitBalance + money);
         debitBalance += money;
         executedOperations.add(operation);
@@ -96,7 +97,7 @@ public class Account implements IAccount, Serializable {
     }
 
     @Override
-    public void withdraw(int money) throws InvalidOperationException {
+    public void withdraw(float money) throws InvalidOperationException {
         if (getBalance() < money) {
             throw new InvalidOperationException();
         }
@@ -112,6 +113,16 @@ public class Account implements IAccount, Serializable {
         remainingCurrencies.remove(currency);
 
         return remainingCurrencies;
+    }
+
+    @Override
+    public boolean hasCurrency(ICurrency currency) {
+        return currency.equals(this.currency);
+    }
+
+    @Override
+    public boolean hasFunds(float money) {
+        return getBalance() >= money;
     }
 
 }

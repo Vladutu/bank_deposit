@@ -1,11 +1,12 @@
 package itsix.bank_deposit.repository.impl;
 
+import java.io.Serializable;
+
+import itsix.bank_deposit.logic.IDate;
 import itsix.bank_deposit.repository.IClientRepository;
 import itsix.bank_deposit.repository.ICurrencyRepository;
 import itsix.bank_deposit.repository.IMainRepository;
 import itsix.bank_deposit.repository.IProductRepository;
-
-import java.io.Serializable;
 
 public class MainRepository implements IMainRepository, Serializable {
 
@@ -14,6 +15,8 @@ public class MainRepository implements IMainRepository, Serializable {
 	private IClientRepository clientRepository;
 
 	private IProductRepository productRepository;
+
+	private IDate currentDate;
 
 	@Override
 	public void setProductRepository(IProductRepository productsRepository) {
@@ -44,6 +47,16 @@ public class MainRepository implements IMainRepository, Serializable {
 	@Override
 	public IProductRepository getProductRepository() {
 		return productRepository;
+	}
+
+	@Override
+	public IDate getCurrentDate() {
+		return currentDate;
+	}
+
+	@Override
+	public void setCurrentDate(IDate currentDate) {
+		this.currentDate = currentDate;
 	}
 
 }
