@@ -1,6 +1,8 @@
 package itsix.bank_deposit.logic;
 
-public interface IDeposit {
+import itsix.bank_deposit.publisher_subscriber.IPublisher;
+
+public interface IDeposit extends IPublisher {
 
 	void update();
 

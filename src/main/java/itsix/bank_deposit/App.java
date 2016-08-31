@@ -110,7 +110,7 @@ public class App {
 		// ICurrencyRepository currencyRepository =
 		// mainRepository.getCurrencyRepository();
 
-		IInnerDepositBuilder depositBuilder = new InnerDepositBuilder();
+		IInnerDepositBuilder depositBuilder = new InnerDepositBuilder(innerPublisherBuilder);
 		IDepositGeneratorBuilder depositGeneratorBuilder = new DepositGeneratorBuilder(depositBuilder, currentDate);
 		IInterestCalculatorBuilder interestCalculatorBuilder = new InterestCalculatorBuilder();
 		IInnerProductBuilder innerProductBuilder = new InnerProductBuilder(depositGeneratorBuilder,

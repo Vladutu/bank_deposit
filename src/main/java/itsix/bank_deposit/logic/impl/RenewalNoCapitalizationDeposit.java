@@ -6,6 +6,7 @@ import itsix.bank_deposit.logic.IDate;
 import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IInnerDeposit;
 import itsix.bank_deposit.logic.IProduct;
+import itsix.bank_deposit.publisher_subscriber.ISubscriber;
 
 public class RenewalNoCapitalizationDeposit implements IDeposit {
 
@@ -70,5 +71,17 @@ public class RenewalNoCapitalizationDeposit implements IDeposit {
 	@Override
 	public ICurrency getCurrency() {
 		return innerDeposit.getCurrency();
+	}
+
+	@Override
+	public void subscribe(ISubscriber subscriber) {
+		innerDeposit.subscribe(subscriber);
+
+	}
+
+	@Override
+	public void unsubscribe(ISubscriber subscriber) {
+		innerDeposit.unsubscribe(subscriber);
+
 	}
 }

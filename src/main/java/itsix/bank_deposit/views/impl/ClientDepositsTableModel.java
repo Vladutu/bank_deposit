@@ -6,8 +6,9 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import itsix.bank_deposit.logic.IDeposit;
+import itsix.bank_deposit.publisher_subscriber.ISubscriber;
 
-public class ClientDepositsTableModel extends AbstractTableModel {
+public class ClientDepositsTableModel extends AbstractTableModel implements ISubscriber {
 
 	private String[] columns = { "No.", "Currency", "Creation Date", "Period(days)", "Days left", "Interest (%)",
 			"Deposit amount", "Money gained", "Renewal", "Capitalization" };
@@ -22,6 +23,34 @@ public class ClientDepositsTableModel extends AbstractTableModel {
 	@Override
 	public int getRowCount() {
 		return deposits.size();
+	}
+
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+		switch (columnIndex) {
+		case 0:
+			return String.class;
+		case 1:
+			return String.class;
+		case 2:
+			return String.class;
+		case 3:
+			return String.class;
+		case 4:
+			return String.class;
+		case 5:
+			return String.class;
+		case 6:
+			return String.class;
+		case 7:
+			return String.class;
+		case 8:
+			return Boolean.class;
+		case 9:
+			return Boolean.class;
+		default:
+			return String.class;
+		}
 	}
 
 	@Override
@@ -63,17 +92,37 @@ public class ClientDepositsTableModel extends AbstractTableModel {
 	}
 
 	public void setDeposits(List<IDeposit> deposits) {
+		unsubscribe(deposits);
+
 		this.deposits = deposits;
+
+		subscribe(deposits);
+
 		fireTableDataChanged();
 	}
 
 	public void clearDeposits() {
+		unsubscribe(deposits);
+
 		deposits = new ArrayList<>();
 		fireTableDataChanged();
 	}
 
+	@Override
 	public void update() {
 		fireTableDataChanged();
+	}
+
+	private void unsubscribe(List<IDeposit> deposits) {
+		for (IDeposit deposit : deposits) {
+			deposit.unsubscribe(this);
+		}
+	}
+
+	private void subscribe(List<IDeposit> deposits) {
+		for (IDeposit deposit : deposits) {
+			deposit.subscribe(this);
+		}
 	}
 
 }

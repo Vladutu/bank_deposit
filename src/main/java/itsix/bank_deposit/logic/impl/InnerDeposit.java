@@ -4,6 +4,8 @@ import itsix.bank_deposit.logic.ICurrency;
 import itsix.bank_deposit.logic.IDate;
 import itsix.bank_deposit.logic.IInnerDeposit;
 import itsix.bank_deposit.logic.IInterestCalculator;
+import itsix.bank_deposit.publisher_subscriber.IInnerPublisher;
+import itsix.bank_deposit.publisher_subscriber.ISubscriber;
 
 public class InnerDeposit implements IInnerDeposit {
 
@@ -21,9 +23,12 @@ public class InnerDeposit implements IInnerDeposit {
 
 	private float gainedMoney;
 
-	public InnerDeposit(ICurrency currency, IInterestCalculator interestCalculator, IDate creationDate, int money,
-			int period) {
+	private IInnerPublisher publisher;
+
+	public InnerDeposit(IInnerPublisher publisher, ICurrency currency, IInterestCalculator interestCalculator,
+			IDate creationDate, int money, int period) {
 		this.interestCalculator = interestCalculator;
+		this.publisher = publisher;
 		this.creationDate = creationDate;
 		this.money = money;
 		this.period = period;
@@ -36,6 +41,8 @@ public class InnerDeposit implements IInnerDeposit {
 	public void update() {
 		gainedMoney += interestCalculator.calculateDailyIncome(money);
 		daysLeft--;
+
+		publisher.notifySubscribers();
 	}
 
 	@Override
@@ -71,5 +78,17 @@ public class InnerDeposit implements IInnerDeposit {
 	@Override
 	public ICurrency getCurrency() {
 		return currency;
+	}
+
+	@Override
+	public void subscribe(ISubscriber subscriber) {
+		publisher.subscribe(subscriber);
+
+	}
+
+	@Override
+	public void unsubscribe(ISubscriber subscriber) {
+		publisher.unsubscribe(subscriber);
+
 	}
 }
