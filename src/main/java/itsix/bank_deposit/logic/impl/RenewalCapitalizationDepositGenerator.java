@@ -8,6 +8,7 @@ import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IDepositGenerator;
 import itsix.bank_deposit.logic.IInnerDeposit;
 import itsix.bank_deposit.logic.IInterestCalculator;
+import itsix.bank_deposit.logic.IProduct;
 
 public class RenewalCapitalizationDepositGenerator implements IDepositGenerator {
 
@@ -42,11 +43,11 @@ public class RenewalCapitalizationDepositGenerator implements IDepositGenerator 
 	}
 
 	@Override
-	public IDeposit build(IClient selectedClient, ICurrency currency, IInterestCalculator interestCalculator, int money,
-			int period) {
+	public IDeposit build(IProduct product, IClient selectedClient, ICurrency currency,
+			IInterestCalculator interestCalculator, int money, int period) {
 		IInnerDeposit innerDeposit = depositBuilder.build(currency, interestCalculator, money,
 				currentDate.createClone(), period);
-		return new RenewalCapitalizationDeposit(selectedClient, innerDeposit);
+		return new RenewalCapitalizationDeposit(product, selectedClient, innerDeposit);
 	}
 
 	@Override

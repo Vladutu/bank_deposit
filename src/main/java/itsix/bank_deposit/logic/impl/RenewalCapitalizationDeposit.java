@@ -5,6 +5,7 @@ import itsix.bank_deposit.logic.ICurrency;
 import itsix.bank_deposit.logic.IDate;
 import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IInnerDeposit;
+import itsix.bank_deposit.logic.IProduct;
 
 public class RenewalCapitalizationDeposit implements IDeposit {
 
@@ -12,8 +13,11 @@ public class RenewalCapitalizationDeposit implements IDeposit {
 
 	private IClient client;
 
-	public RenewalCapitalizationDeposit(IClient client, IInnerDeposit innerDeposit) {
+	private IProduct product;
+
+	public RenewalCapitalizationDeposit(IProduct product, IClient client, IInnerDeposit innerDeposit) {
 		this.innerDeposit = innerDeposit;
+		this.product = product;
 		this.client = client;
 	}
 

@@ -5,6 +5,7 @@ import itsix.bank_deposit.logic.ICurrency;
 import itsix.bank_deposit.logic.IDate;
 import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IInnerDeposit;
+import itsix.bank_deposit.logic.IProduct;
 
 public class NoRenewalDeposit implements IDeposit {
 
@@ -12,8 +13,11 @@ public class NoRenewalDeposit implements IDeposit {
 
 	private IClient client;
 
-	public NoRenewalDeposit(IClient client, IInnerDeposit innerDeposit) {
+	private IProduct product;
+
+	public NoRenewalDeposit(IProduct product, IClient client, IInnerDeposit innerDeposit) {
 		this.innerDeposit = innerDeposit;
+		this.product = product;
 		this.client = client;
 	}
 

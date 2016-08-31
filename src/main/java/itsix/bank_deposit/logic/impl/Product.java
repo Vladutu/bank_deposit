@@ -141,7 +141,7 @@ public class Product implements IProduct, Serializable {
 	@Override
 	public void createDeposit(IClient selectedClient, int money) {
 		selectedClient.withdrawMoney(getCurrency(), money);
-		IDeposit deposit = depositGenerator.build(selectedClient, currency, interestCalculator, money, period);
+		IDeposit deposit = depositGenerator.build(this, selectedClient, currency, interestCalculator, money, period);
 		selectedClient.addDeposit(deposit);
 		depositRepository.addDeposit(deposit);
 	}
