@@ -2,30 +2,33 @@ package itsix.bank_deposit.logic;
 
 public interface IProduct {
 
-	String description();
+    String description();
 
-	String getName();
+    String getName();
 
-	float getInterestRate();
+    float getInterestRate();
 
-	int getPeriod();
+    int getPeriod();
 
-	ICurrency getCurrency();
+    ICurrency getCurrency();
 
-	int getMinSum();
+    int getMinSum();
 
-	int getMaxSum();
+    int getMaxSum();
 
-	void update(String name, float interestRate, int period, ICurrency currency, int minSum, int maxSum);
+    void update(String name, float interestRate, int period, ICurrency currency, int minSum, int maxSum);
 
-	void generatorRenewalState();
+    void generatorRenewalState();
 
-	void generatorCapitalizationState();
+    void generatorCapitalizationState();
 
-	void generatorReset();
+    void generatorReset();
 
-	void createDeposit(IClient selectedClient, int money);
+    void createDeposit(IClient selectedClient, int money);
 
-	boolean canCreateWith(int money);
+    boolean canCreateWith(int money);
 
+    void removeDeposit(IDeposit deposit);
+
+    void renew(IDeposit deposit);
 }

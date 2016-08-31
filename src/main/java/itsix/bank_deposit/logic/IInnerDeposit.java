@@ -4,19 +4,29 @@ import itsix.bank_deposit.publisher_subscriber.IPublisher;
 
 public interface IInnerDeposit extends IPublisher {
 
-	void update();
+    void update();
 
-	IDate getCreationDate();
+    IDate getCreationDate();
 
-	int getPeriod();
+    int getPeriod();
 
-	int getDaysLeft();
+    int getDaysLeft();
 
-	float getInterest();
+    float getInterest();
 
-	int getDepositAmount();
+    float getDepositAmount();
 
-	float getMoneyGained();
+    float getMoneyGained();
 
-	ICurrency getCurrency();
+    ICurrency getCurrency();
+
+    boolean hasMaturated();
+
+    void depositAllMoney(IClient client);
+
+    void depositInterest(IClient client);
+
+    void restart(IInterestCalculator interestCalculator);
+
+    void accumulateInterest();
 }

@@ -9,4 +9,6 @@ public interface IDepositRepository {
     void addDeposit(IDeposit deposit);
 
     List<IDeposit> getDeposits();
+
+    void remove(IDeposit deposit);
 }

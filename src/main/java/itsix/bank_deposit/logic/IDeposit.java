@@ -14,7 +14,7 @@ public interface IDeposit extends IPublisher {
 
 	float getInterest();
 
-	int getDepositAmount();
+	float getDepositAmount();
 
 	float getMoneyGained();
 
@@ -24,4 +24,5 @@ public interface IDeposit extends IPublisher {
 
 	ICurrency getCurrency();
 
+	void restart(IInterestCalculator interestCalculator);
 }

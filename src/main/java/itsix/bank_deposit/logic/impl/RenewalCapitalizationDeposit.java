@@ -1,87 +1,91 @@
 package itsix.bank_deposit.logic.impl;
 
-import itsix.bank_deposit.logic.IClient;
-import itsix.bank_deposit.logic.ICurrency;
-import itsix.bank_deposit.logic.IDate;
-import itsix.bank_deposit.logic.IDeposit;
-import itsix.bank_deposit.logic.IInnerDeposit;
-import itsix.bank_deposit.logic.IProduct;
+import itsix.bank_deposit.logic.*;
 import itsix.bank_deposit.publisher_subscriber.ISubscriber;
 
 public class RenewalCapitalizationDeposit implements IDeposit {
 
-	private IInnerDeposit innerDeposit;
+    private IInnerDeposit innerDeposit;
 
-	private IClient client;
+    private IClient client;
 
-	private IProduct product;
+    private IProduct product;
 
-	public RenewalCapitalizationDeposit(IProduct product, IClient client, IInnerDeposit innerDeposit) {
-		this.innerDeposit = innerDeposit;
-		this.product = product;
-		this.client = client;
-	}
+    public RenewalCapitalizationDeposit(IProduct product, IClient client, IInnerDeposit innerDeposit) {
+        this.innerDeposit = innerDeposit;
+        this.product = product;
+        this.client = client;
+    }
 
-	@Override
-	public void update() {
-		innerDeposit.update();
-		// TODO: add termination for this deposit
-	}
+    @Override
+    public void update() {
+        innerDeposit.update();
 
-	@Override
-	public IDate getCreationDate() {
-		return innerDeposit.getCreationDate();
-	}
+        if(innerDeposit.hasMaturated()){
+            innerDeposit.accumulateInterest();
+            product.renew(this);
+        }
+    }
 
-	@Override
-	public int getPeriod() {
-		return innerDeposit.getPeriod();
-	}
+    @Override
+    public IDate getCreationDate() {
+        return innerDeposit.getCreationDate();
+    }
 
-	@Override
-	public int getDaysLeft() {
-		return innerDeposit.getDaysLeft();
-	}
+    @Override
+    public int getPeriod() {
+        return innerDeposit.getPeriod();
+    }
 
-	@Override
-	public float getInterest() {
-		return innerDeposit.getInterest();
-	}
+    @Override
+    public int getDaysLeft() {
+        return innerDeposit.getDaysLeft();
+    }
 
-	@Override
-	public int getDepositAmount() {
-		return innerDeposit.getDepositAmount();
-	}
+    @Override
+    public float getInterest() {
+        return innerDeposit.getInterest();
+    }
 
-	@Override
-	public float getMoneyGained() {
-		return innerDeposit.getMoneyGained();
-	}
+    @Override
+    public float getDepositAmount() {
+        return innerDeposit.getDepositAmount();
+    }
 
-	@Override
-	public boolean getRenewal() {
-		return true;
-	}
+    @Override
+    public float getMoneyGained() {
+        return innerDeposit.getMoneyGained();
+    }
 
-	@Override
-	public boolean getCapitalization() {
-		return true;
-	}
+    @Override
+    public boolean getRenewal() {
+        return true;
+    }
 
-	@Override
-	public ICurrency getCurrency() {
-		return innerDeposit.getCurrency();
-	}
+    @Override
+    public boolean getCapitalization() {
+        return true;
+    }
 
-	@Override
-	public void subscribe(ISubscriber subscriber) {
-		innerDeposit.subscribe(subscriber);
+    @Override
+    public ICurrency getCurrency() {
+        return innerDeposit.getCurrency();
+    }
 
-	}
+    @Override
+    public void restart(IInterestCalculator interestCalculator) {
+        innerDeposit.restart(interestCalculator);
+    }
 
-	@Override
-	public void unsubscribe(ISubscriber subscriber) {
-		innerDeposit.unsubscribe(subscriber);
+    @Override
+    public void subscribe(ISubscriber subscriber) {
+        innerDeposit.subscribe(subscriber);
 
-	}
+    }
+
+    @Override
+    public void unsubscribe(ISubscriber subscriber) {
+        innerDeposit.unsubscribe(subscriber);
+
+    }
 }

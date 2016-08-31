@@ -11,7 +11,7 @@ public class InterestCalculator implements IInterestCalculator {
 	}
 
 	@Override
-	public float calculateDailyIncome(int money) {
+	public float calculateDailyIncome(float money) {
 		return (interestRate / 100 / 360) * money;
 	}
 

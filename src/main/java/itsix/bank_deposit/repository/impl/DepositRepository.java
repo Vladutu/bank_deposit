@@ -23,4 +23,9 @@ public class DepositRepository implements IDepositRepository {
         return deposits;
     }
 
+    @Override
+    public void remove(IDeposit deposit) {
+        deposits.remove(deposit);
+    }
+
 }

@@ -3,6 +3,7 @@ package itsix.bank_deposit.logic.impl;
 import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.ITimeScheduler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TimeScheduler implements ITimeScheduler {
@@ -15,7 +16,7 @@ public class TimeScheduler implements ITimeScheduler {
 
     @Override
     public void start() {
-        for (IDeposit deposit : deposits) {
+        for (IDeposit deposit : new ArrayList<>(deposits)) {
             deposit.update();
         }
     }
