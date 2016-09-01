@@ -101,6 +101,9 @@ public class ProductsController implements IProductsController, Serializable {
 	@Override
 	public void updateProductInformation() {
 		IProduct product = mainView.getSelectedProduct();
+		if (product == null) {
+			return;
+		}
 
 		mainView.updateProductDescription(product.description());
 	}

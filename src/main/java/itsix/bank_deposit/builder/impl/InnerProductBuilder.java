@@ -6,8 +6,8 @@ import itsix.bank_deposit.builder.IDepositGeneratorBuilder;
 import itsix.bank_deposit.builder.IInnerProductBuilder;
 import itsix.bank_deposit.builder.IInterestCalculatorBuilder;
 import itsix.bank_deposit.logic.ICurrency;
-import itsix.bank_deposit.logic.IProduct;
-import itsix.bank_deposit.logic.impl.Product;
+import itsix.bank_deposit.logic.IInnerProduct;
+import itsix.bank_deposit.logic.impl.InnerProduct;
 import itsix.bank_deposit.repository.IDepositRepository;
 
 public class InnerProductBuilder implements IInnerProductBuilder, Serializable {
@@ -26,9 +26,10 @@ public class InnerProductBuilder implements IInnerProductBuilder, Serializable {
 	}
 
 	@Override
-	public IProduct build(String name, float interestRate, int period, ICurrency currency, int minSum, int maxSum) {
-		return new Product(name, interestRate, period, currency, minSum, maxSum, depositGeneratorBuilder.build(),
-				interestCalculatorBuilder.build(interestRate), depositRepository);
+	public IInnerProduct build(String name, float interestRate, int period, ICurrency currency, int minSum,
+			int maxSum) {
+		return new InnerProduct(name, interestRate, period, currency, minSum, maxSum, depositGeneratorBuilder.build(),
+				interestCalculatorBuilder.build(interestRate), depositRepository, interestCalculatorBuilder);
 	}
 
 }

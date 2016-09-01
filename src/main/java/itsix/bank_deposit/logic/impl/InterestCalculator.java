@@ -19,4 +19,9 @@ public class InterestCalculator implements IInterestCalculator {
 	public float getInterest() {
 		return interestRate;
 	}
+
+	@Override
+	public void update(float interestRate) {
+		this.interestRate = interestRate;
+	}
 }

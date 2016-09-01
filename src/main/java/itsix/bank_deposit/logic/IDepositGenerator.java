@@ -14,7 +14,7 @@ public interface IDepositGenerator {
 
 	void setInitialState(IDepositGenerator generator);
 
-	IDeposit build(IProduct product, IClient selectedClient, ICurrency currency, IInterestCalculator interestCalculator,
-			int money, int period);
+	IDeposit build(IInnerProduct product, IClient selectedClient, ICurrency currency,
+			IInterestCalculator interestCalculator, int money, int period);
 
 }
