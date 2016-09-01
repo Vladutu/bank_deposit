@@ -7,9 +7,10 @@ import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IInnerDeposit;
 import itsix.bank_deposit.logic.IInnerProduct;
 import itsix.bank_deposit.logic.IInterestCalculator;
+import itsix.bank_deposit.logic.IRenewableDeposit;
 import itsix.bank_deposit.publisher_subscriber.ISubscriber;
 
-public class RenewalNoCapitalizationDeposit implements IDeposit {
+public class RenewalNoCapitalizationDeposit implements IDeposit, IRenewableDeposit {
 
 	private IInnerDeposit innerDeposit;
 

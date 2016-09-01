@@ -9,6 +9,7 @@ import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IDepositGenerator;
 import itsix.bank_deposit.logic.IInnerProduct;
 import itsix.bank_deposit.logic.IInterestCalculator;
+import itsix.bank_deposit.logic.IRenewableDeposit;
 import itsix.bank_deposit.repository.IDepositRepository;
 
 public class InnerProduct implements IInnerProduct, Serializable {
@@ -154,7 +155,7 @@ public class InnerProduct implements IInnerProduct, Serializable {
 	}
 
 	@Override
-	public void renew(IDeposit deposit) {
+	public void renew(IRenewableDeposit deposit) {
 		deposit.restart(interestCalculator);
 	}
 

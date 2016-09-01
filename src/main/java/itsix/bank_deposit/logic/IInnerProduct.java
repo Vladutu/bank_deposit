@@ -16,7 +16,8 @@ public interface IInnerProduct {
 
 	int getMaxSum();
 
-	void updateWithInterestCalculator(String name, float interestRate, int period, ICurrency currency, int minSum, int maxSum);
+	void updateWithInterestCalculator(String name, float interestRate, int period, ICurrency currency, int minSum,
+			int maxSum);
 
 	void generatorRenewalState();
 
@@ -30,7 +31,7 @@ public interface IInnerProduct {
 
 	void removeDeposit(IDeposit deposit);
 
-	void renew(IDeposit deposit);
+	void renew(IRenewableDeposit deposit);
 
 	void updateAndReplaceInterestCalculator(String name, float interestRate, int period, ICurrency currency, int minSum,
 			int maxSum);

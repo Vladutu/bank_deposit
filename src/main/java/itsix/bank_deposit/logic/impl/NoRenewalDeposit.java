@@ -6,7 +6,6 @@ import itsix.bank_deposit.logic.IDate;
 import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IInnerDeposit;
 import itsix.bank_deposit.logic.IInnerProduct;
-import itsix.bank_deposit.logic.IInterestCalculator;
 import itsix.bank_deposit.publisher_subscriber.ISubscriber;
 
 public class NoRenewalDeposit implements IDeposit {
@@ -77,11 +76,6 @@ public class NoRenewalDeposit implements IDeposit {
 	@Override
 	public ICurrency getCurrency() {
 		return innerDeposit.getCurrency();
-	}
-
-	@Override
-	public void restart(IInterestCalculator interestCalculator) {
-		// TODO: ask professor what to do here
 	}
 
 	@Override

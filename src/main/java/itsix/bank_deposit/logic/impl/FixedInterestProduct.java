@@ -7,6 +7,7 @@ import itsix.bank_deposit.logic.ICurrency;
 import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IInnerProduct;
 import itsix.bank_deposit.logic.IProduct;
+import itsix.bank_deposit.logic.IRenewableDeposit;
 
 public class FixedInterestProduct implements IProduct, Serializable {
 
@@ -96,7 +97,7 @@ public class FixedInterestProduct implements IProduct, Serializable {
 	}
 
 	@Override
-	public void renew(IDeposit deposit) {
+	public void renew(IRenewableDeposit deposit) {
 		product.renew(deposit);
 	}
 }
