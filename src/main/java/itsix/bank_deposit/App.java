@@ -68,8 +68,9 @@ public class App {
         // mainRepository.getCurrencyRepository();
 
         IDecimalFormatter decimalFormatter = new DecimalFormatter();
-        IInnerDepositBuilder depositBuilder = new InnerDepositBuilder(innerPublisherBuilder, decimalFormatter);
-        IDepositGeneratorBuilder depositGeneratorBuilder = new DepositGeneratorBuilder(depositBuilder, currentDate);
+        IInnerDepositBuilder innerDepositBuilder = new InnerDepositBuilder(innerPublisherBuilder, decimalFormatter);
+        IDepositBuilder depositBuilder = new DepositBuilder(innerDepositBuilder, currentDate);
+        IDepositGeneratorBuilder depositGeneratorBuilder = new DepositGeneratorBuilder(depositBuilder);
         IInterestCalculatorBuilder interestCalculatorBuilder = new InterestCalculatorBuilder();
         IInnerProductBuilder innerProductBuilder = new InnerProductBuilder(depositGeneratorBuilder,
                 interestCalculatorBuilder, depositsRepository);
