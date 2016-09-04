@@ -4,6 +4,7 @@ import itsix.bank_deposit.builder.IDepositBuilder;
 import itsix.bank_deposit.builder.IInnerDepositBuilder;
 import itsix.bank_deposit.logic.*;
 import itsix.bank_deposit.logic.impl.NoRenewalDeposit;
+import itsix.bank_deposit.logic.impl.RenewableDeposit;
 import itsix.bank_deposit.logic.impl.RenewalCapitalizationDeposit;
 import itsix.bank_deposit.logic.impl.RenewalNoCapitalizationDeposit;
 
@@ -30,15 +31,27 @@ public class DepositBuilder implements IDepositBuilder {
 
     @Override
     public IDeposit buildRenewalNoCapitalizationDeposit(IInnerProduct product, IClient selectedClient, ICurrency currency, IInterestCalculator interestCalculator, int money, int period) {
+//        IInnerDeposit innerDeposit = innerDepositBuilder.build(currency, interestCalculator, money,
+//                currentDate.createClone(), period);
+//        return new RenewalNoCapitalizationDeposit(product, selectedClient, innerDeposit);
+
         IInnerDeposit innerDeposit = innerDepositBuilder.build(currency, interestCalculator, money,
                 currentDate.createClone(), period);
-        return new RenewalNoCapitalizationDeposit(product, selectedClient, innerDeposit);
+        IRenewableDeposit renewalNoCapitalizationDeposit = new RenewalNoCapitalizationDeposit(product, selectedClient, innerDeposit);
+
+        return new RenewableDeposit(renewalNoCapitalizationDeposit);
     }
 
     @Override
     public IDeposit buildRenewalCapitalizationDeposit(IInnerProduct product, IClient selectedClient, ICurrency currency, IInterestCalculator interestCalculator, int money, int period) {
+//        IInnerDeposit innerDeposit = innerDepositBuilder.build(currency, interestCalculator, money,
+//                currentDate.createClone(), period);
+//        return new RenewalCapitalizationDeposit(product, selectedClient, innerDeposit);
+
         IInnerDeposit innerDeposit = innerDepositBuilder.build(currency, interestCalculator, money,
                 currentDate.createClone(), period);
-        return new RenewalCapitalizationDeposit(product, selectedClient, innerDeposit);
+        IRenewableDeposit renewalCapitalizationDeposit = new RenewalCapitalizationDeposit(product, selectedClient, innerDeposit);
+
+        return new RenewableDeposit(renewalCapitalizationDeposit);
     }
 }
