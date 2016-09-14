@@ -31,27 +31,24 @@ public class DepositBuilder implements IDepositBuilder {
 
     @Override
     public IDeposit buildRenewalNoCapitalizationDeposit(IInnerProduct product, IClient selectedClient, ICurrency currency, IInterestCalculator interestCalculator, int money, int period) {
-//        IInnerDeposit innerDeposit = innerDepositBuilder.build(currency, interestCalculator, money,
-//                currentDate.createClone(), period);
-//        return new RenewalNoCapitalizationDeposit(product, selectedClient, innerDeposit);
-
         IInnerDeposit innerDeposit = innerDepositBuilder.build(currency, interestCalculator, money,
                 currentDate.createClone(), period);
-        IRenewableDeposit renewalNoCapitalizationDeposit = new RenewalNoCapitalizationDeposit(product, selectedClient, innerDeposit);
+        IRenewableDeposit renewalNoCapitalizationDeposit = new RenewalNoCapitalizationDeposit(product, selectedClient, innerDeposit, this);
 
         return new RenewableDeposit(renewalNoCapitalizationDeposit);
     }
 
     @Override
     public IDeposit buildRenewalCapitalizationDeposit(IInnerProduct product, IClient selectedClient, ICurrency currency, IInterestCalculator interestCalculator, int money, int period) {
-//        IInnerDeposit innerDeposit = innerDepositBuilder.build(currency, interestCalculator, money,
-//                currentDate.createClone(), period);
-//        return new RenewalCapitalizationDeposit(product, selectedClient, innerDeposit);
-
         IInnerDeposit innerDeposit = innerDepositBuilder.build(currency, interestCalculator, money,
                 currentDate.createClone(), period);
-        IRenewableDeposit renewalCapitalizationDeposit = new RenewalCapitalizationDeposit(product, selectedClient, innerDeposit);
+        IRenewableDeposit renewalCapitalizationDeposit = new RenewalCapitalizationDeposit(product, selectedClient, innerDeposit, this);
 
         return new RenewableDeposit(renewalCapitalizationDeposit);
+    }
+
+    @Override
+    public IDeposit buildNoRenewalDeposit(IInnerDeposit innerDeposit, IClient client, IInnerProduct product, IDeposit parent) {
+        return new NoRenewalDeposit(innerDeposit, client, product, parent);
     }
 }

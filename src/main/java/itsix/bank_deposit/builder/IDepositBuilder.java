@@ -15,4 +15,6 @@ public interface IDepositBuilder {
 
     IDeposit buildRenewalCapitalizationDeposit(IInnerProduct product, IClient selectedClient, ICurrency currency,
                                                IInterestCalculator interestCalculator, int money, int period);
+
+    IDeposit buildNoRenewalDeposit(IInnerDeposit innerDeposit, IClient client, IInnerProduct product, IDeposit parent);
 }

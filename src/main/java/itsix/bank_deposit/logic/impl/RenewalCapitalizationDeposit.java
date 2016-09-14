@@ -1,5 +1,6 @@
 package itsix.bank_deposit.logic.impl;
 
+import itsix.bank_deposit.builder.IDepositBuilder;
 import itsix.bank_deposit.logic.*;
 import itsix.bank_deposit.publisher_subscriber.ISubscriber;
 
@@ -11,10 +12,13 @@ public class RenewalCapitalizationDeposit implements IRenewableDeposit {
 
     private IInnerProduct product;
 
-    public RenewalCapitalizationDeposit(IInnerProduct product, IClient client, IInnerDeposit innerDeposit) {
+    private IDepositBuilder depositBuilder;
+
+    public RenewalCapitalizationDeposit(IInnerProduct product, IClient client, IInnerDeposit innerDeposit, IDepositBuilder depositBuilder) {
         this.innerDeposit = innerDeposit;
         this.product = product;
         this.client = client;
+        this.depositBuilder = depositBuilder;
     }
 
     @Override
@@ -78,6 +82,11 @@ public class RenewalCapitalizationDeposit implements IRenewableDeposit {
     }
 
     @Override
+    public IDeposit createNoRenewalClone(IDeposit parent) {
+        return depositBuilder.buildNoRenewalDeposit(innerDeposit, client, product, parent);
+    }
+
+    @Override
     public void subscribe(ISubscriber subscriber) {
         innerDeposit.subscribe(subscriber);
 
@@ -86,6 +95,5 @@ public class RenewalCapitalizationDeposit implements IRenewableDeposit {
     @Override
     public void unsubscribe(ISubscriber subscriber) {
         innerDeposit.unsubscribe(subscriber);
-
     }
 }
