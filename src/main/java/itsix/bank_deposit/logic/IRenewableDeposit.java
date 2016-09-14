@@ -1,6 +1,6 @@
 package itsix.bank_deposit.logic;
 
-public interface IRenewableDeposit {
+public interface IRenewableDeposit extends IDeposit {
 
-	void markForTermination();
+    void restart(IInterestCalculator interestCalculator);
 }

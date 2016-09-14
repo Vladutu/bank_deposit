@@ -22,10 +22,6 @@ public class NoRenewalDeposit implements IDeposit {
 		this.client = client;
 	}
 
-	public NoRenewalDeposit(IDeposit deposit) {
-		deposit.copyFields(innerDeposit, client, product, this);
-	}
-
 	@Override
 	public void update() {
 		innerDeposit.update();
@@ -91,14 +87,6 @@ public class NoRenewalDeposit implements IDeposit {
 	@Override
 	public void unsubscribe(ISubscriber subscriber) {
 		innerDeposit.unsubscribe(subscriber);
-
-	}
-
-	@Override
-	public void copyFields(IInnerDeposit innerDeposit, IClient client, IInnerProduct product, IDeposit deposit) {
-		innerDeposit = this.innerDeposit;
-		client = this.client;
-		product = this.product;
 
 	}
 }

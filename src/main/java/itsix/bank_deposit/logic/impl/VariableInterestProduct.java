@@ -5,9 +5,9 @@ import java.io.Serializable;
 import itsix.bank_deposit.logic.IClient;
 import itsix.bank_deposit.logic.ICurrency;
 import itsix.bank_deposit.logic.IDeposit;
-import itsix.bank_deposit.logic.IInnerDeposit;
 import itsix.bank_deposit.logic.IInnerProduct;
 import itsix.bank_deposit.logic.IProduct;
+import itsix.bank_deposit.logic.IRenewableDeposit;
 
 public class VariableInterestProduct implements IProduct, Serializable {
 
@@ -97,7 +97,7 @@ public class VariableInterestProduct implements IProduct, Serializable {
 	}
 
 	@Override
-	public void renew(IInnerDeposit innerDeposit) {
-		product.renew(innerDeposit);
+	public void renew(IRenewableDeposit deposit) {
+		product.renew(deposit);
 	}
 }

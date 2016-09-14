@@ -13,9 +13,7 @@ import itsix.bank_deposit.exception.InvalidOperationException;
 import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IClient;
 import itsix.bank_deposit.logic.ICurrency;
-import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IProduct;
-import itsix.bank_deposit.logic.IRenewableDeposit;
 import itsix.bank_deposit.repository.IClientRepository;
 import itsix.bank_deposit.repository.IDepositRepository;
 import itsix.bank_deposit.repository.IProductRepository;
@@ -307,24 +305,6 @@ public class ClientsController implements IClientsController, Serializable {
 	@Override
 	public void openCheckDepositsView() {
 		checkDepositsView.show(selectedClient.getDeposits());
-	}
-
-	@Override
-	public void terminateSelectedDepositWhenMaturated() {
-		IRenewableDeposit renewableDeposit = checkDepositsView.getSelectedRenewableDeposit();
-
-		renewableDeposit.markForTermination();
-	}
-
-	@Override
-	public void onDepositSelect() {
-		IDeposit deposit = checkDepositsView.getSelectedDeposit();
-
-		if (!deposit.getRenewal()) {
-			checkDepositsView.disableTerminationButton();
-		} else {
-			checkDepositsView.enableTerminationButton();
-		}
 	}
 
 }

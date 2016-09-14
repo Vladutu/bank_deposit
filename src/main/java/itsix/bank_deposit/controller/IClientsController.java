@@ -55,8 +55,4 @@ public interface IClientsController {
 	void setCheckDepositsView(ICheckDepositsView checkDepositsView);
 
 	void openCheckDepositsView();
-
-	void terminateSelectedDepositWhenMaturated();
-
-	void onDepositSelect();
 }
