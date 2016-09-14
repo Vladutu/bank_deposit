@@ -1,11 +1,12 @@
 package itsix.bank_deposit.views.impl;
 
-import itsix.bank_deposit.logic.IDeposit;
-import itsix.bank_deposit.publisher_subscriber.ISubscriber;
-
-import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.table.AbstractTableModel;
+
+import itsix.bank_deposit.logic.IDeposit;
+import itsix.bank_deposit.publisher_subscriber.ISubscriber;
 
 public class ClientDepositsTableModel extends AbstractTableModel implements ISubscriber {
 
@@ -90,8 +91,6 @@ public class ClientDepositsTableModel extends AbstractTableModel implements ISub
 		return columns[column];
 	}
 
-
-
 	public void setDeposits(List<IDeposit> deposits) {
 		unsubscribe(deposits);
 
@@ -124,6 +123,10 @@ public class ClientDepositsTableModel extends AbstractTableModel implements ISub
 		for (IDeposit deposit : deposits) {
 			deposit.subscribe(this);
 		}
+	}
+
+	public IDeposit getDeposit(int selectedRow) {
+		return deposits.get(selectedRow);
 	}
 
 }

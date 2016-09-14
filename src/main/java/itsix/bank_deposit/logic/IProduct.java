@@ -30,5 +30,5 @@ public interface IProduct {
 
 	void removeDeposit(IDeposit deposit);
 
-	void renew(IRenewableDeposit deposit);
+	void renew(IInnerDeposit deposit);
 }

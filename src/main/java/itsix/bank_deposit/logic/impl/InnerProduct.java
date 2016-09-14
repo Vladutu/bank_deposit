@@ -7,9 +7,9 @@ import itsix.bank_deposit.logic.IClient;
 import itsix.bank_deposit.logic.ICurrency;
 import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IDepositGenerator;
+import itsix.bank_deposit.logic.IInnerDeposit;
 import itsix.bank_deposit.logic.IInnerProduct;
 import itsix.bank_deposit.logic.IInterestCalculator;
-import itsix.bank_deposit.logic.IRenewableDeposit;
 import itsix.bank_deposit.repository.IDepositRepository;
 
 public class InnerProduct implements IInnerProduct, Serializable {
@@ -155,11 +155,6 @@ public class InnerProduct implements IInnerProduct, Serializable {
 	}
 
 	@Override
-	public void renew(IRenewableDeposit deposit) {
-		deposit.restart(interestCalculator);
-	}
-
-	@Override
 	public void updateAndReplaceInterestCalculator(String name, float interestRate, int period, ICurrency currency,
 			int minSum, int maxSum) {
 		update(name, interestRate, period, currency, minSum, maxSum);
@@ -175,6 +170,11 @@ public class InnerProduct implements IInnerProduct, Serializable {
 		this.currency = currency;
 		this.minSum = minSum;
 		this.maxSum = maxSum;
+	}
+
+	@Override
+	public void renew(IInnerDeposit innerDeposit) {
+		innerDeposit.restart(interestCalculator);
 	}
 
 }

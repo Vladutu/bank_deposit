@@ -23,4 +23,6 @@ public interface IDeposit extends IPublisher {
 	boolean getCapitalization();
 
 	ICurrency getCurrency();
+
+	void copyFields(IInnerDeposit innerDeposit, IClient client, IInnerProduct product, IDeposit noRenewalDeposit);
 }
