@@ -1,92 +1,97 @@
 package itsix.bank_deposit.logic.impl;
 
-import itsix.bank_deposit.logic.IClient;
-import itsix.bank_deposit.logic.ICurrency;
-import itsix.bank_deposit.logic.IDate;
-import itsix.bank_deposit.logic.IDeposit;
-import itsix.bank_deposit.logic.IInnerDeposit;
-import itsix.bank_deposit.logic.IInnerProduct;
+import itsix.bank_deposit.logic.*;
 import itsix.bank_deposit.publisher_subscriber.ISubscriber;
 
 public class NoRenewalDeposit implements IDeposit {
 
-	private IInnerDeposit innerDeposit;
+    private IInnerDeposit innerDeposit;
 
-	private IClient client;
+    private IClient client;
 
-	private IInnerProduct product;
+    private IInnerProduct product;
 
-	public NoRenewalDeposit(IInnerProduct product, IClient client, IInnerDeposit innerDeposit) {
-		this.innerDeposit = innerDeposit;
-		this.product = product;
-		this.client = client;
-	}
+    private IDeposit whichToClose;
 
-	@Override
-	public void update() {
-		innerDeposit.update();
+    public NoRenewalDeposit(IInnerProduct product, IClient client, IInnerDeposit innerDeposit) {
+        this.innerDeposit = innerDeposit;
+        this.product = product;
+        this.client = client;
+        whichToClose = this;
+    }
 
-		if (innerDeposit.hasMaturated()) {
-			innerDeposit.depositAllMoney(client);
-			client.removeDeposit(this);
-			product.removeDeposit(this);
-		}
-	}
+    public NoRenewalDeposit(IInnerDeposit innerDeposit, IClient client, IInnerProduct product, IDeposit parent) {
+        this.innerDeposit = innerDeposit;
+        this.client = client;
+        this.product = product;
+        whichToClose = parent;
+    }
 
-	@Override
-	public IDate getCreationDate() {
-		return innerDeposit.getCreationDate();
-	}
+    @Override
+    public void update() {
+        innerDeposit.update();
 
-	@Override
-	public int getPeriod() {
-		return innerDeposit.getPeriod();
-	}
+        if (innerDeposit.hasMaturated()) {
+            innerDeposit.depositAllMoney(client);
+            client.removeDeposit(whichToClose);
+            product.removeDeposit(whichToClose);
+        }
+    }
 
-	@Override
-	public int getDaysLeft() {
-		return innerDeposit.getDaysLeft();
-	}
+    @Override
+    public IDate getCreationDate() {
+        return innerDeposit.getCreationDate();
+    }
 
-	@Override
-	public float getInterest() {
-		return innerDeposit.getInterest();
-	}
+    @Override
+    public int getPeriod() {
+        return innerDeposit.getPeriod();
+    }
 
-	@Override
-	public float getDepositAmount() {
-		return innerDeposit.getDepositAmount();
-	}
+    @Override
+    public int getDaysLeft() {
+        return innerDeposit.getDaysLeft();
+    }
 
-	@Override
-	public float getMoneyGained() {
-		return innerDeposit.getMoneyGained();
-	}
+    @Override
+    public float getInterest() {
+        return innerDeposit.getInterest();
+    }
 
-	@Override
-	public boolean getRenewal() {
-		return false;
-	}
+    @Override
+    public float getDepositAmount() {
+        return innerDeposit.getDepositAmount();
+    }
 
-	@Override
-	public boolean getCapitalization() {
-		return false;
-	}
+    @Override
+    public float getMoneyGained() {
+        return innerDeposit.getMoneyGained();
+    }
 
-	@Override
-	public ICurrency getCurrency() {
-		return innerDeposit.getCurrency();
-	}
+    @Override
+    public boolean getRenewal() {
+        return false;
+    }
 
-	@Override
-	public void subscribe(ISubscriber subscriber) {
-		innerDeposit.subscribe(subscriber);
+    @Override
+    public boolean getCapitalization() {
+        return false;
+    }
 
-	}
+    @Override
+    public ICurrency getCurrency() {
+        return innerDeposit.getCurrency();
+    }
 
-	@Override
-	public void unsubscribe(ISubscriber subscriber) {
-		innerDeposit.unsubscribe(subscriber);
+    @Override
+    public void subscribe(ISubscriber subscriber) {
+        innerDeposit.subscribe(subscriber);
 
-	}
+    }
+
+    @Override
+    public void unsubscribe(ISubscriber subscriber) {
+        innerDeposit.unsubscribe(subscriber);
+
+    }
 }

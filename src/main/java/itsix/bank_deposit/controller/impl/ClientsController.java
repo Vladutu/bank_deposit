@@ -12,7 +12,9 @@ import itsix.bank_deposit.exception.EntityNotFoundException;
 import itsix.bank_deposit.exception.InvalidOperationException;
 import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IClient;
+import itsix.bank_deposit.logic.ICloseableDeposit;
 import itsix.bank_deposit.logic.ICurrency;
+import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IProduct;
 import itsix.bank_deposit.repository.IClientRepository;
 import itsix.bank_deposit.repository.IDepositRepository;
@@ -171,7 +173,7 @@ public class ClientsController implements IClientsController, Serializable {
 	@Override
 	public void openBankAccountView() {
 		selectedAccount = mainView.getSelectedBankAccount();
-		bankAccountView.show(selectedAccount);
+		bankAccountView.show(selectedAccount, selectedClient.getLastName());
 		selectedAccount.subscribe(bankAccountView);
 
 	}
@@ -305,6 +307,18 @@ public class ClientsController implements IClientsController, Serializable {
 	@Override
 	public void openCheckDepositsView() {
 		checkDepositsView.show(selectedClient.getDeposits());
+	}
+
+	@Override
+	public void terminateDeposit() {
+		ICloseableDeposit closeableDeposit = checkDepositsView.getSelectedCloseableDeposit();
+		closeableDeposit.markForTermination();
+	}
+
+	@Override
+	public void onSelectedDepositRow() {
+		IDeposit selectedDeposit = checkDepositsView.getSelectedDeposit();
+		checkDepositsView.changeTerminationButtonState(selectedDeposit.getRenewal());
 	}
 
 }

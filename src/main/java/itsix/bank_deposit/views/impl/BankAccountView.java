@@ -2,6 +2,7 @@ package itsix.bank_deposit.views.impl;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -37,9 +38,10 @@ public class BankAccountView extends JFrame implements IBankAccountView, Seriali
 	}
 
 	private void initialize() {
-		setBounds(100, 100, 327, 278);
+		setBounds(100, 100, 327, 254);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		getContentPane().setLayout(null);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("account.png")));
 
 		JLabel creditBalanceLabel = new JLabel("Credit balance:");
 		creditBalanceLabel.setBounds(16, 61, 80, 14);
@@ -59,13 +61,13 @@ public class BankAccountView extends JFrame implements IBankAccountView, Seriali
 
 		creditBalanceTextField = new JTextField();
 		creditBalanceTextField.setEditable(false);
-		creditBalanceTextField.setBounds(121, 58, 86, 20);
+		creditBalanceTextField.setBounds(211, 61, 86, 20);
 		getContentPane().add(creditBalanceTextField);
 		creditBalanceTextField.setColumns(10);
 
 		debitBalanceTextField = new JTextField();
 		debitBalanceTextField.setEnabled(false);
-		debitBalanceTextField.setBounds(121, 95, 86, 20);
+		debitBalanceTextField.setBounds(211, 98, 86, 20);
 		getContentPane().add(debitBalanceTextField);
 		debitBalanceTextField.setColumns(10);
 
@@ -74,13 +76,13 @@ public class BankAccountView extends JFrame implements IBankAccountView, Seriali
 		balanceTextField.setDisabledTextColor(new Color(0, 0, 0));
 		balanceTextField.setBackground(Color.WHITE);
 		balanceTextField.setEnabled(false);
-		balanceTextField.setBounds(121, 133, 86, 20);
+		balanceTextField.setBounds(211, 136, 86, 20);
 		getContentPane().add(balanceTextField);
 		balanceTextField.setColumns(10);
 
 		moneyTextField = new IntegerJTextField();
 		moneyTextField.setText("0");
-		moneyTextField.setBounds(10, 209, 86, 20);
+		moneyTextField.setBounds(10, 182, 86, 20);
 		getContentPane().add(moneyTextField);
 		moneyTextField.setColumns(10);
 
@@ -91,7 +93,7 @@ public class BankAccountView extends JFrame implements IBankAccountView, Seriali
 				clientsController.depositMoney();
 			}
 		});
-		depositButton.setBounds(118, 208, 80, 23);
+		depositButton.setBounds(118, 181, 80, 23);
 		getContentPane().add(depositButton);
 
 		withdrawButton = new JButton("Withdraw");
@@ -103,12 +105,12 @@ public class BankAccountView extends JFrame implements IBankAccountView, Seriali
 
 			}
 		});
-		withdrawButton.setBounds(208, 208, 89, 23);
+		withdrawButton.setBounds(208, 181, 89, 23);
 		getContentPane().add(withdrawButton);
 
 		currencyTextField = new JTextField();
 		currencyTextField.setEditable(false);
-		currencyTextField.setBounds(121, 22, 86, 20);
+		currencyTextField.setBounds(211, 25, 86, 20);
 		getContentPane().add(currencyTextField);
 		currencyTextField.setColumns(10);
 
@@ -137,8 +139,9 @@ public class BankAccountView extends JFrame implements IBankAccountView, Seriali
 	}
 
 	@Override
-	public void show(IAccount selectedAccount) {
+	public void show(IAccount selectedAccount, String lastName) {
 		account = selectedAccount;
+		setTitle(lastName + " Account");
 		setVisible(true);
 	}
 

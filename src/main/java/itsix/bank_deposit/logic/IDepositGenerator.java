@@ -10,7 +10,7 @@ public interface IDepositGenerator {
 
 	void setNextRenewalState(IDepositGenerator generator);
 
-	void setNextCapitalizationlState(IDepositGenerator generator);
+	void setNextCapitalizationState(IDepositGenerator generator);
 
 	void setInitialState(IDepositGenerator generator);
 

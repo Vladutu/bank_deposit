@@ -1,10 +1,12 @@
 package itsix.bank_deposit.views.impl;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,6 +37,9 @@ public class NewClientView extends JFrame implements INewClientView {
 		setBounds(100, 100, 249, 274);
 		setResizable(false);
 		getContentPane().setLayout(null);
+
+		setTitle("New client");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("new_client2.png")));
 
 		JLabel ssnLabel = new JLabel("SSN:");
 		ssnLabel.setBounds(34, 39, 46, 14);
@@ -73,6 +78,7 @@ public class NewClientView extends JFrame implements INewClientView {
 		addressTextField.setColumns(10);
 
 		saveButton = new JButton("Save");
+		saveButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("accept.png")));
 		saveButton.addActionListener(new ActionListener() {
 
 			@Override

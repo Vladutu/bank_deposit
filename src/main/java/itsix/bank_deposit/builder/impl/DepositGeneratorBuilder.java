@@ -1,8 +1,7 @@
 package itsix.bank_deposit.builder.impl;
 
-import itsix.bank_deposit.builder.IInnerDepositBuilder;
+import itsix.bank_deposit.builder.IDepositBuilder;
 import itsix.bank_deposit.builder.IDepositGeneratorBuilder;
-import itsix.bank_deposit.logic.IDate;
 import itsix.bank_deposit.logic.IDepositGenerator;
 import itsix.bank_deposit.logic.impl.NoRenewalDepositGenerator;
 import itsix.bank_deposit.logic.impl.RenewalCapitalizationDepositGenerator;
@@ -16,20 +15,17 @@ public class DepositGeneratorBuilder implements IDepositGeneratorBuilder {
 
     private IDepositGenerator renewalCap;
 
-    private IInnerDepositBuilder depositBuilder;
+    private IDepositBuilder depositBuilder;
 
-    private IDate currentDate;
-
-    public DepositGeneratorBuilder(IInnerDepositBuilder depositBuilder, IDate currentDate) {
+    public DepositGeneratorBuilder(IDepositBuilder depositBuilder) {
         this.depositBuilder = depositBuilder;
-        this.currentDate = currentDate;
     }
 
     @Override
     public IDepositGenerator build() {
-        noRenewal = new NoRenewalDepositGenerator(depositBuilder, currentDate);
-        renewalNoCap = new RenewalNoCapitalizationDepositGenerator(depositBuilder, currentDate);
-        renewalCap = new RenewalCapitalizationDepositGenerator(depositBuilder, currentDate);
+        noRenewal = new NoRenewalDepositGenerator(depositBuilder);
+        renewalNoCap = new RenewalNoCapitalizationDepositGenerator(depositBuilder);
+        renewalCap = new RenewalCapitalizationDepositGenerator(depositBuilder);
 
         configureStates(noRenewal, noRenewal, renewalNoCap, noRenewal);
         configureStates(renewalNoCap, noRenewal, noRenewal, renewalCap);
@@ -42,7 +38,7 @@ public class DepositGeneratorBuilder implements IDepositGeneratorBuilder {
                                  IDepositGenerator renewalState, IDepositGenerator capitalizationState) {
         source.setInitialState(initialState);
         source.setNextRenewalState(renewalState);
-        source.setNextCapitalizationlState(capitalizationState);
+        source.setNextCapitalizationState(capitalizationState);
     }
 
 }
