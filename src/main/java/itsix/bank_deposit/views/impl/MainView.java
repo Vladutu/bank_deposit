@@ -143,8 +143,9 @@ public class MainView extends JFrame implements IMainView, Serializable {
 		panel.add(productDescriptionTextArea);
 
 		newProductButton = new JButton("New product");
+		newProductButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("new_product.png")));
 		newProductButton.addActionListener(arg0 -> productsController.openNewProductView());
-		newProductButton.setBounds(533, 48, 111, 23);
+		newProductButton.setBounds(525, 48, 119, 23);
 		productsPanel.add(newProductButton);
 
 		JLabel productsLabel = new JLabel("Products:");
@@ -156,8 +157,9 @@ public class MainView extends JFrame implements IMainView, Serializable {
 		productsPanel.add(productDescriptionLabel);
 
 		productDeleteButton = new JButton("Delete");
+		productDeleteButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("delete.png")));
 		productDeleteButton.addActionListener(e -> productsController.deleteSelectedProduct());
-		productDeleteButton.setBounds(190, 508, 73, 23);
+		productDeleteButton.setBounds(181, 509, 83, 23);
 		productsPanel.add(productDeleteButton);
 
 		JPanel clientsPanel = new JPanel();

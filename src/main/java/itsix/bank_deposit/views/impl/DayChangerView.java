@@ -1,5 +1,6 @@
 package itsix.bank_deposit.views.impl;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -21,12 +22,15 @@ public class DayChangerView extends JFrame implements IDayChangerView {
 	private IDateController dateController;
 
 	public DayChangerView(IDateController dateController) {
+		setResizable(false);
 		this.dateController = dateController;
 		initialize();
 	}
 
 	private void initialize() {
 		setBounds(100, 100, 297, 124);
+		setTitle("Day changer");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("calendar.png")));
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 

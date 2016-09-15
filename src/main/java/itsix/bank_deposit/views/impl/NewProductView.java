@@ -1,5 +1,6 @@
 package itsix.bank_deposit.views.impl;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -7,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -47,34 +49,37 @@ public class NewProductView extends JFrame implements INewProductView {
 
 	private void initializeGUI() {
 		setResizable(false);
-		setBounds(100, 100, 321, 429);
+		setBounds(100, 100, 249, 381);
 		getContentPane().setLayout(null);
 
+		setTitle("New product");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("new_product.png")));
+
 		nameLabel = new JLabel("Name:");
-		nameLabel.setBounds(71, 27, 31, 14);
+		nameLabel.setBounds(22, 25, 31, 14);
 		getContentPane().add(nameLabel);
 
 		interestLabel = new JLabel("Interest rate (%):");
-		interestLabel.setBounds(71, 65, 91, 14);
+		interestLabel.setBounds(22, 63, 91, 14);
 		getContentPane().add(interestLabel);
 
 		periodLabel = new JLabel("Period");
-		periodLabel.setBounds(71, 104, 46, 14);
+		periodLabel.setBounds(22, 102, 46, 14);
 		getContentPane().add(periodLabel);
 
 		currencyLabel = new JLabel("Currency:");
-		currencyLabel.setBounds(71, 145, 73, 14);
+		currencyLabel.setBounds(22, 143, 73, 14);
 		getContentPane().add(currencyLabel);
 
 		minSumLabel = new JLabel("Min sum:");
-		minSumLabel.setBounds(71, 188, 46, 14);
+		minSumLabel.setBounds(22, 186, 46, 14);
 		getContentPane().add(minSumLabel);
 
 		maxSumLabel = new JLabel("Max sum:");
-		maxSumLabel.setBounds(71, 232, 46, 14);
+		maxSumLabel.setBounds(22, 230, 46, 14);
 		getContentPane().add(maxSumLabel);
 
-		fixedIRRadioButton = new JRadioButton("Fixed Interest rate");
+		fixedIRRadioButton = new JRadioButton("Fixed Interest");
 		fixedIRRadioButton.setSelected(true);
 		fixedIRRadioButton.addActionListener(new ActionListener() {
 			@Override
@@ -83,10 +88,10 @@ public class NewProductView extends JFrame implements INewProductView {
 			}
 		});
 		buttonGroup.add(fixedIRRadioButton);
-		fixedIRRadioButton.setBounds(9, 281, 135, 23);
+		fixedIRRadioButton.setBounds(15, 276, 98, 23);
 		getContentPane().add(fixedIRRadioButton);
 
-		variableIRRadioButton = new JRadioButton("Variable interest rate");
+		variableIRRadioButton = new JRadioButton("Variable interest");
 		variableIRRadioButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -96,10 +101,11 @@ public class NewProductView extends JFrame implements INewProductView {
 			}
 		});
 		buttonGroup.add(variableIRRadioButton);
-		variableIRRadioButton.setBounds(159, 281, 138, 23);
+		variableIRRadioButton.setBounds(122, 276, 103, 23);
 		getContentPane().add(variableIRRadioButton);
 
 		saveButton = new JButton("Save");
+		saveButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("accept.png")));
 		saveButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -108,40 +114,40 @@ public class NewProductView extends JFrame implements INewProductView {
 
 			}
 		});
-		saveButton.setBounds(102, 344, 89, 23);
+		saveButton.setBounds(75, 315, 89, 23);
 		getContentPane().add(saveButton);
 
 		nameTextField = new JTextField();
-		nameTextField.setBounds(172, 24, 86, 20);
+		nameTextField.setBounds(134, 25, 86, 20);
 		getContentPane().add(nameTextField);
 		nameTextField.setColumns(10);
 
 		interestRateTextField = new DoubleJTextField();
 		interestRateTextField.setText("0.0");
-		interestRateTextField.setBounds(172, 62, 86, 20);
+		interestRateTextField.setBounds(134, 63, 86, 20);
 		getContentPane().add(interestRateTextField);
 		interestRateTextField.setColumns(10);
 
 		periodTextField = new IntegerJTextField();
 		periodTextField.setText("0");
-		periodTextField.setBounds(172, 101, 86, 20);
+		periodTextField.setBounds(134, 102, 86, 20);
 		getContentPane().add(periodTextField);
 		periodTextField.setColumns(10);
 
 		minSumTextField = new IntegerJTextField();
 		minSumTextField.setText("0");
-		minSumTextField.setBounds(172, 185, 86, 20);
+		minSumTextField.setBounds(134, 186, 86, 20);
 		getContentPane().add(minSumTextField);
 		minSumTextField.setColumns(10);
 
 		maxSumTextField = new IntegerJTextField();
 		maxSumTextField.setText("0");
-		maxSumTextField.setBounds(172, 229, 86, 20);
+		maxSumTextField.setBounds(134, 230, 86, 20);
 		getContentPane().add(maxSumTextField);
 		maxSumTextField.setColumns(10);
 
 		currencyComboBox = new JComboBox<ICurrency>();
-		currencyComboBox.setBounds(172, 142, 86, 20);
+		currencyComboBox.setBounds(134, 143, 86, 20);
 		getContentPane().add(currencyComboBox);
 
 		addWindowListener(new WindowAdapter() {

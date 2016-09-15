@@ -1,11 +1,13 @@
 package itsix.bank_deposit.views.impl;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -34,64 +36,68 @@ public class UpdateProductView extends JFrame implements IUpdateProductView {
 
 	private void initializeGUI() {
 
-		setBounds(100, 100, 274, 351);
+		setBounds(100, 100, 224, 328);
 		getContentPane().setLayout(null);
 
+		setTitle("Update");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("product.png")));
+
 		JLabel nameLabel = new JLabel("Name:");
-		nameLabel.setBounds(42, 14, 31, 14);
+		nameLabel.setBounds(10, 14, 31, 14);
 		getContentPane().add(nameLabel);
 
 		nameTextField = new JTextField();
 		nameTextField.setColumns(10);
-		nameTextField.setBounds(143, 11, 86, 20);
+		nameTextField.setBounds(111, 11, 86, 20);
 		getContentPane().add(nameTextField);
 
 		JLabel interestRateLabel = new JLabel("Interest rate (%):");
-		interestRateLabel.setBounds(42, 52, 91, 14);
+		interestRateLabel.setBounds(10, 52, 91, 14);
 		getContentPane().add(interestRateLabel);
 
 		interestRateTextField = new DoubleJTextField();
 		interestRateTextField.setColumns(10);
-		interestRateTextField.setBounds(143, 49, 86, 20);
+		interestRateTextField.setBounds(111, 49, 86, 20);
 		getContentPane().add(interestRateTextField);
 
 		JLabel periodLabel = new JLabel("Period");
-		periodLabel.setBounds(42, 91, 46, 14);
+		periodLabel.setBounds(10, 91, 46, 14);
 		getContentPane().add(periodLabel);
 
 		periodTextField = new IntegerJTextField();
 		periodTextField.setColumns(10);
-		periodTextField.setBounds(143, 88, 86, 20);
+		periodTextField.setBounds(111, 88, 86, 20);
 		getContentPane().add(periodTextField);
 
 		JLabel currencyLabel = new JLabel("Currency:");
-		currencyLabel.setBounds(42, 132, 73, 14);
+		currencyLabel.setBounds(10, 132, 73, 14);
 		getContentPane().add(currencyLabel);
 
 		currencyComboBox = new JComboBox<ICurrency>();
 		currencyComboBox.setEnabled(false);
-		currencyComboBox.setBounds(143, 129, 86, 20);
+		currencyComboBox.setBounds(111, 129, 86, 20);
 		getContentPane().add(currencyComboBox);
 
 		JLabel minSumLabel = new JLabel("Min sum:");
-		minSumLabel.setBounds(42, 175, 46, 14);
+		minSumLabel.setBounds(10, 175, 46, 14);
 		getContentPane().add(minSumLabel);
 
 		minSumTextField = new IntegerJTextField();
 		minSumTextField.setColumns(10);
-		minSumTextField.setBounds(143, 172, 86, 20);
+		minSumTextField.setBounds(111, 172, 86, 20);
 		getContentPane().add(minSumTextField);
 
 		JLabel maxSumLabel = new JLabel("Max sum:");
-		maxSumLabel.setBounds(42, 219, 46, 14);
+		maxSumLabel.setBounds(10, 219, 46, 14);
 		getContentPane().add(maxSumLabel);
 
 		maxSumTextField = new IntegerJTextField();
 		maxSumTextField.setColumns(10);
-		maxSumTextField.setBounds(143, 216, 86, 20);
+		maxSumTextField.setBounds(111, 216, 86, 20);
 		getContentPane().add(maxSumTextField);
 
 		updateButton = new JButton("Update");
+		updateButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("edit.png")));
 		updateButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -99,7 +105,7 @@ public class UpdateProductView extends JFrame implements IUpdateProductView {
 
 			}
 		});
-		updateButton.setBounds(83, 262, 89, 23);
+		updateButton.setBounds(54, 260, 89, 23);
 		getContentPane().add(updateButton);
 
 		addWindowListener(new WindowAdapter() {

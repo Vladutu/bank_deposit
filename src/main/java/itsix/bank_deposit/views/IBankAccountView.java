@@ -5,7 +5,7 @@ import itsix.bank_deposit.publisher_subscriber.ISubscriber;
 
 public interface IBankAccountView extends ISubscriber {
 
-	void show(IAccount selectedAccount);
+	void show(IAccount selectedAccount, String lastName);
 
 	int getMoneyAmount();
 
