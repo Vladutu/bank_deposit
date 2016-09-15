@@ -1,5 +1,7 @@
 package itsix.bank_deposit;
 
+import java.io.IOException;
+
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -44,17 +46,15 @@ import itsix.bank_deposit.controller.impl.ProductsController;
 import itsix.bank_deposit.logic.IDate;
 import itsix.bank_deposit.logic.IDecimalFormatter;
 import itsix.bank_deposit.logic.ITimeScheduler;
-import itsix.bank_deposit.logic.impl.Date;
 import itsix.bank_deposit.logic.impl.DecimalFormatter;
 import itsix.bank_deposit.logic.impl.TimeScheduler;
 import itsix.bank_deposit.repository.IClientRepository;
 import itsix.bank_deposit.repository.ICurrencyRepository;
 import itsix.bank_deposit.repository.IDepositRepository;
+import itsix.bank_deposit.repository.IMainRepository;
 import itsix.bank_deposit.repository.IProductRepository;
-import itsix.bank_deposit.repository.impl.ClientRepository;
-import itsix.bank_deposit.repository.impl.CurrencyRepository;
-import itsix.bank_deposit.repository.impl.DepositRepository;
-import itsix.bank_deposit.repository.impl.ProductRepository;
+import itsix.bank_deposit.serialization.IRepositorySerializator;
+import itsix.bank_deposit.serialization.impl.RepositorySerializator;
 import itsix.bank_deposit.validator.IClientValidator;
 import itsix.bank_deposit.validator.IDepositValidator;
 import itsix.bank_deposit.validator.IProductValidator;
@@ -80,24 +80,26 @@ import itsix.bank_deposit.views.impl.NewDepositView;
 import itsix.bank_deposit.views.impl.NewProductView;
 import itsix.bank_deposit.views.impl.UpdateProductView;
 
-/**
- * Hello world!
- */
 public class App {
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
-			IllegalAccessException, UnsupportedLookAndFeelException {
+			IllegalAccessException, UnsupportedLookAndFeelException, IOException {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
+		IRepositorySerializator repositorySerializator = new RepositorySerializator();
+		IMainRepository mainRepository = repositorySerializator.deserialize();
+
 		// TODO: this must be retrieved from the repository
-		IDate currentDate = new Date(1);
+		IDate currentDate = mainRepository.getCurrentDate();
 		IDateBuilder dateBuilder = new DateBuilder(currentDate);
 
-		IDepositRepository depositsRepository = new DepositRepository();
+		IDepositRepository depositsRepository = mainRepository.getDepositRepository();
 
 		IInnerPublisherBuilder innerPublisherBuilder = new InnerPublisherBuilder();
 
-		IProductRepository productsRepository = new ProductRepository(innerPublisherBuilder.build());
-		ICurrencyRepository currencyRepository = new CurrencyRepository();
+		IProductRepository productsRepository = mainRepository.getProductRepository();
+		productsRepository.setInnerPublisher(innerPublisherBuilder.build());
+
+		ICurrencyRepository currencyRepository = mainRepository.getCurrencyRepository();
 
 		IDecimalFormatter decimalFormatter = new DecimalFormatter();
 		IInnerDepositBuilder innerDepositBuilder = new InnerDepositBuilder(innerPublisherBuilder, decimalFormatter);
@@ -117,7 +119,7 @@ public class App {
 		IProductsController productsController = new ProductsController(fixedInterestProductBuilder,
 				variableInterestProductBuilder, productsRepository, currencyRepository, productValidator);
 
-		IClientRepository clientRepository = new ClientRepository();
+		IClientRepository clientRepository = mainRepository.getClientRepository();
 		IClientInformationBuilder clientInformationBuilder = new ClientInformationBuilder();
 
 		IOperationBuilder operationBuilder = new OperationBuilder(dateBuilder);
@@ -161,7 +163,8 @@ public class App {
 		clientsController.setCapitalizationButtonState(capitalizationButtonStateBuilder.build());
 
 		SwingUtilities.invokeLater(() -> {
-			IMainView mainView = new MainView(productsController, clientsController, productsRepository.getProducts());
+			IMainView mainView = new MainView(repositorySerializator, productsController, clientsController,
+					productsRepository.getProducts());
 			productsRepository.subscribe(mainView);
 			productsController.setMainView(mainView);
 			clientsController.setMainView(mainView);

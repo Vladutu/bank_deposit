@@ -1,11 +1,13 @@
 package itsix.bank_deposit.logic.impl;
 
+import java.io.Serializable;
+
 import itsix.bank_deposit.logic.IDate;
 
 /**
  * Created by Geo on 24.08.2016.
  */
-public class Date implements IDate, Cloneable {
+public class Date implements IDate, Cloneable, Serializable {
 
 	private int dayNumber;
 

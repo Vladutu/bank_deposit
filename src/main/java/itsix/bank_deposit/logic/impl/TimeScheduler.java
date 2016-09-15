@@ -1,24 +1,25 @@
 package itsix.bank_deposit.logic.impl;
 
-import itsix.bank_deposit.logic.IDeposit;
-import itsix.bank_deposit.logic.ITimeScheduler;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeScheduler implements ITimeScheduler {
+import itsix.bank_deposit.logic.IDeposit;
+import itsix.bank_deposit.logic.ITimeScheduler;
 
-    private List<IDeposit> deposits;
+public class TimeScheduler implements ITimeScheduler, Serializable {
 
-    public TimeScheduler(List<IDeposit> deposits) {
-        this.deposits = deposits;
-    }
+	private List<IDeposit> deposits;
 
-    @Override
-    public void start() {
-        for (IDeposit deposit : new ArrayList<>(deposits)) {
-            deposit.update();
-        }
-    }
+	public TimeScheduler(List<IDeposit> deposits) {
+		this.deposits = deposits;
+	}
+
+	@Override
+	public void start() {
+		for (IDeposit deposit : new ArrayList<>(deposits)) {
+			deposit.update();
+		}
+	}
 
 }

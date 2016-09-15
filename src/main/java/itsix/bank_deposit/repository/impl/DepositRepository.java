@@ -1,31 +1,33 @@
 package itsix.bank_deposit.repository.impl;
 
-import itsix.bank_deposit.logic.IDeposit;
-import itsix.bank_deposit.repository.IDepositRepository;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DepositRepository implements IDepositRepository {
+import itsix.bank_deposit.logic.IDeposit;
+import itsix.bank_deposit.repository.IDepositRepository;
 
-    private List<IDeposit> deposits = new ArrayList<>();
+public class DepositRepository implements IDepositRepository, Serializable {
 
-    public DepositRepository() {
-    }
+	private List<IDeposit> deposits;
 
-    @Override
-    public void addDeposit(IDeposit deposit) {
-        deposits.add(deposit);
-    }
+	public DepositRepository() {
+		deposits = new ArrayList<>();
+	}
 
-    @Override
-    public List<IDeposit> getDeposits() {
-        return deposits;
-    }
+	@Override
+	public void addDeposit(IDeposit deposit) {
+		deposits.add(deposit);
+	}
 
-    @Override
-    public void remove(IDeposit deposit) {
-        deposits.remove(deposit);
-    }
+	@Override
+	public List<IDeposit> getDeposits() {
+		return deposits;
+	}
+
+	@Override
+	public void remove(IDeposit deposit) {
+		deposits.remove(deposit);
+	}
 
 }

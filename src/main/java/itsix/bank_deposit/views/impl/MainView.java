@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -38,6 +39,7 @@ import itsix.bank_deposit.controller.IClientsController;
 import itsix.bank_deposit.controller.IProductsController;
 import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IProduct;
+import itsix.bank_deposit.serialization.IRepositorySerializator;
 import itsix.bank_deposit.views.IMainView;
 
 public class MainView extends JFrame implements IMainView, Serializable {
@@ -79,12 +81,14 @@ public class MainView extends JFrame implements IMainView, Serializable {
 	private List<IProduct> products;
 
 	private ListSelectionListener productListSelectionListener;
+	private IRepositorySerializator repositorySerializator;
 
-	public MainView(IProductsController productsController, IClientsController clientsController,
-			List<IProduct> products) {
+	public MainView(IRepositorySerializator repositorySerializator, IProductsController productsController,
+			IClientsController clientsController, List<IProduct> products) {
 		this.productsController = productsController;
 		this.clientsController = clientsController;
 		this.products = products;
+		this.repositorySerializator = repositorySerializator;
 		productListSelectionListener = new MyListSelectionListener(productsController);
 		initialize();
 	}
@@ -305,9 +309,15 @@ public class MainView extends JFrame implements IMainView, Serializable {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				// serializerController.serialize();
+				try {
+					repositorySerializator.serialize();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				setVisible(false);
 				dispose();
+
 			}
 		});
 
