@@ -113,6 +113,11 @@ public class ClientsController implements IClientsController, Serializable {
 
 			clientRepository.save(client);
 			newClientView.closeWindow();
+
+			selectedClient = client;
+			mainView.setClientFields(selectedClient.getSsn(), selectedClient.getFirstName(),
+					selectedClient.getLastName(), selectedClient.getAddress(), selectedClient.getAccounts());
+			mainView.enableButtons();
 		}
 
 	}
@@ -313,6 +318,7 @@ public class ClientsController implements IClientsController, Serializable {
 	public void terminateDeposit() {
 		ICloseableDeposit closeableDeposit = checkDepositsView.getSelectedCloseableDeposit();
 		closeableDeposit.markForTermination();
+		JOptionPane.showMessageDialog(null, "Deposit marked for termination!");
 	}
 
 	@Override

@@ -72,6 +72,7 @@ public class CheckDepositsView extends JFrame implements ICheckDepositsView {
 		scrollPane.setViewportView(depositsTable);
 
 		terminationButton = new JButton("Mark selected for termination");
+		terminationButton.setEnabled(false);
 		terminationButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("delete.png")));
 		terminationButton.addActionListener(new AbstractAction() {
 			@Override
