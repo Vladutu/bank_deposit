@@ -36,7 +36,6 @@ import javax.swing.event.ListSelectionListener;
 
 import itsix.bank_deposit.controller.IClientsController;
 import itsix.bank_deposit.controller.IProductsController;
-import itsix.bank_deposit.controller.ISerializerController;
 import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IProduct;
 import itsix.bank_deposit.views.IMainView;
@@ -76,17 +75,15 @@ public class MainView extends JFrame implements IMainView, Serializable {
 
 	private IProductsController productsController;
 	private IClientsController clientsController;
-	private ISerializerController serializerController;
 
 	private List<IProduct> products;
 
 	private ListSelectionListener productListSelectionListener;
 
 	public MainView(IProductsController productsController, IClientsController clientsController,
-			ISerializerController serializerController, List<IProduct> products) {
+			List<IProduct> products) {
 		this.productsController = productsController;
 		this.clientsController = clientsController;
-		this.serializerController = serializerController;
 		this.products = products;
 		productListSelectionListener = new MyListSelectionListener(productsController);
 		initialize();
