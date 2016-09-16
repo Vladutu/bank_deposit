@@ -1,8 +1,10 @@
 package itsix.bank_deposit.logic.impl;
 
+import java.io.Serializable;
+
 import itsix.bank_deposit.logic.IInterestCalculator;
 
-public class InterestCalculator implements IInterestCalculator {
+public class InterestCalculator implements IInterestCalculator, Serializable {
 
 	private float interestRate;
 

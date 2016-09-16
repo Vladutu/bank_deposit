@@ -1,5 +1,7 @@
 package itsix.bank_deposit.builder.impl;
 
+import java.io.Serializable;
+
 import itsix.bank_deposit.builder.IDateBuilder;
 import itsix.bank_deposit.builder.IOperationBuilder;
 import itsix.bank_deposit.logic.IOperation;
@@ -9,7 +11,7 @@ import itsix.bank_deposit.logic.impl.WithdrawOperation;
 /**
  * Created by Geo on 24.08.2016.
  */
-public class OperationBuilder implements IOperationBuilder {
+public class OperationBuilder implements IOperationBuilder, Serializable {
 
 	private IDateBuilder dateBuilder;
 

@@ -4,20 +4,24 @@ import itsix.bank_deposit.logic.IDate;
 
 public interface IMainRepository {
 
-	void setProductRepository(IProductRepository productsRepository);
-
-	void setCurrencyRepository(ICurrencyRepository currencyRepository);
-
-	void setClientRepository(IClientRepository clientRepository);
-
-	IClientRepository getClientRepository();
-
-	ICurrencyRepository getCurrencyRepository();
-
-	IProductRepository getProductRepository();
-
 	IDate getCurrentDate();
 
 	void setCurrentDate(IDate currentDate);
+
+	IClientRepository getClientRepository();
+
+	void setClientRepository(IClientRepository clientRepository);
+
+	ICurrencyRepository getCurrencyRepository();
+
+	void setCurrencyRepository(ICurrencyRepository currencyRepository);
+
+	IProductRepository getProductRepository();
+
+	void setProductRepository(IProductRepository productRepository);
+
+	IDepositRepository getDepositRepository();
+
+	void setDepositRepository(IDepositRepository depositRepository);
 
 }
