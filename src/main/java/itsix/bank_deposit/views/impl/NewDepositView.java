@@ -1,9 +1,13 @@
 package itsix.bank_deposit.views.impl;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -27,29 +31,42 @@ public class NewDepositView extends JFrame implements INewDepositView {
 
 	private IClientsController clientsController;
 
+	private ActionListener comboBoxActionListener;
+
 	public NewDepositView(IClientsController clientsController) {
 		this.clientsController = clientsController;
 		initialize();
 	}
 
 	private void initialize() {
+		comboBoxActionListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clientsController.updateProductInfo();
+			}
+
+		};
+
 		setBounds(100, 100, 505, 284);
 		getContentPane().setLayout(null);
+
+		setTitle("New deposit");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("deposit.png")));
 
 		JLabel depositTypeLabel = new JLabel("Deposit Type:");
 		depositTypeLabel.setBounds(28, 37, 77, 23);
 		getContentPane().add(depositTypeLabel);
 
 		productComboBox = new JComboBox<>();
+		productComboBox.addActionListener(comboBoxActionListener);
+		productComboBox.setBounds(124, 38, 91, 23);
 		productComboBox.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clientsController.updateProductInfo();
-
+				clientsController.onProductSelect();
 			}
 		});
-		productComboBox.setBounds(124, 38, 91, 23);
 		getContentPane().add(productComboBox);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -91,16 +108,37 @@ public class NewDepositView extends JFrame implements INewDepositView {
 		getContentPane().add(capitalizationCheckButton);
 
 		createButton = new JButton("Create");
+		createButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("accept.png")));
+		createButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clientsController.createDeposit();
+
+			}
+		});
 		createButton.setBounds(177, 205, 89, 23);
 		getContentPane().add(createButton);
 
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				closeWindow();
+			}
+		});
+
+		setLocationRelativeTo(null);
 	}
 
 	@Override
 	public void show(List<IProduct> products) {
+		productComboBox.removeActionListener(comboBoxActionListener);
+		productComboBox.removeAllItems();
+
 		for (IProduct product : products) {
 			productComboBox.addItem(product);
 		}
+		productComboBox.addActionListener(comboBoxActionListener);
+		clientsController.updateProductInfo();
 
 		setVisible(true);
 	}
@@ -129,5 +167,24 @@ public class NewDepositView extends JFrame implements INewDepositView {
 	public void uncheckCapitalizationButton() {
 		capitalizationCheckButton.setSelected(false);
 
+	}
+
+	@Override
+	public void resetButtons() {
+		capitalizationCheckButton.setSelected(false);
+		renewalCheckButton.setSelected(false);
+		capitalizationCheckButton.setEnabled(false);
+	}
+
+	@Override
+	public int getSum() {
+		return Integer.valueOf(sumTextField.getText());
+	}
+
+	@Override
+	public void closeWindow() {
+		setVisible(false);
+		resetButtons();
+		sumTextField.setText("");
 	}
 }

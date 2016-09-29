@@ -23,4 +23,16 @@ public interface IClient {
     boolean canCreateBankAccount();
 
     List<ICurrency> getRemainingCurrenciesForAccounts();
+
+    void addDeposit(IDeposit deposit);
+
+    boolean canCreateDeposit(ICurrency currency, int money);
+
+    void withdrawMoney(ICurrency currency, int money);
+
+    List<IDeposit> getDeposits();
+
+    void removeDeposit(IDeposit deposit);
+
+    void depositMoney(ICurrency currency, float money);
 }

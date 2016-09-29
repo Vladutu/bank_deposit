@@ -11,17 +11,22 @@ public interface IAccount extends IPublisher {
 
     String getCurrencySymbol();
 
-    int getBalance();
+    float getBalance();
 
-    int getCreditBalance();
+    float getCreditBalance();
 
-    int getDebitBalance();
+    float getDebitBalance();
 
     ICurrency getCurrency();
 
-    void deposit(int money);
+    void deposit(float money);
 
-    void withdraw(int money) throws InvalidOperationException;
+    void withdraw(float money) throws InvalidOperationException;
 
     List<ICurrency> subtractOwnCurrency(List<ICurrency> remainingCurrencies);
+
+    boolean hasCurrency(ICurrency currency);
+
+    boolean hasFunds(float money);
+
 }

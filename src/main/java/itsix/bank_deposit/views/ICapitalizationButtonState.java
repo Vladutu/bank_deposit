@@ -2,10 +2,13 @@ package itsix.bank_deposit.views;
 
 public interface ICapitalizationButtonState {
 
-	ICapitalizationButtonState nextState();
+    ICapitalizationButtonState nextState();
 
-	void execute();
+    void execute();
 
-	void setNextState(ICapitalizationButtonState state);
+    void setNextState(ICapitalizationButtonState state);
 
+    ICapitalizationButtonState reset();
+
+    void setInitialState(ICapitalizationButtonState initialState);
 }

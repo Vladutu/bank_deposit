@@ -1,20 +1,23 @@
 package itsix.bank_deposit.builder.impl;
 
+import java.io.Serializable;
+
 import itsix.bank_deposit.builder.IDateBuilder;
 import itsix.bank_deposit.logic.IDate;
-import itsix.bank_deposit.logic.impl.Date;
-
-import java.time.LocalDateTime;
 
 /**
  * Created by Geo on 24.08.2016.
  */
-public class DateBuilder implements IDateBuilder {
+public class DateBuilder implements IDateBuilder, Serializable {
 
-    @Override
-    public IDate buildCurrentDate() {
-        LocalDateTime localDateTime = LocalDateTime.now();
+	private IDate currentDate;
 
-        return new Date(localDateTime.getHour(), localDateTime.getMinute(), localDateTime.getSecond(), localDateTime.getDayOfMonth(), localDateTime.getMonth(), localDateTime.getYear());
-    }
+	public DateBuilder(IDate currentDate) {
+		this.currentDate = currentDate;
+	}
+
+	@Override
+	public IDate buildCurrentDate() {
+		return currentDate.createClone();
+	}
 }

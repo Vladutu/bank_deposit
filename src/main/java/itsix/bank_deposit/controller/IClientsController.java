@@ -1,49 +1,56 @@
 package itsix.bank_deposit.controller;
 
-import itsix.bank_deposit.views.IBankAccountView;
-import itsix.bank_deposit.views.ICapitalizationButtonState;
-import itsix.bank_deposit.views.IMainView;
-import itsix.bank_deposit.views.INewAccountView;
-import itsix.bank_deposit.views.INewClientView;
-import itsix.bank_deposit.views.INewDepositView;
+import itsix.bank_deposit.views.*;
 
 public interface IClientsController {
 
-	void setMainView(IMainView mainView);
+    void setMainView(IMainView mainView);
 
-	void openNewClientView();
+    void openNewClientView();
 
-	void saveClient();
+    void saveClient();
 
-	void searchClient();
+    void searchClient();
 
-	void setNewClientView(INewClientView newClientView);
+    void setNewClientView(INewClientView newClientView);
 
-	void updateClient();
+    void updateClient();
 
-	void openBankAccountView();
+    void openBankAccountView();
 
-	void setBankAccountView(IBankAccountView bankAccountView);
+    void setBankAccountView(IBankAccountView bankAccountView);
 
-	void depositMoney();
+    void depositMoney();
 
-	void withdrawMoney();
+    void withdrawMoney();
 
-	void setNewAccountView(INewAccountView newAccountView);
+    void setNewAccountView(INewAccountView newAccountView);
 
-	void openNewAccountView();
+    void openNewAccountView();
 
-	void createNewAccount();
+    void createNewAccount();
 
-	void setNewDepositView(INewDepositView newDepositView);
+    void setNewDepositView(INewDepositView newDepositView);
 
-	void openNewDepositView();
+    void openNewDepositView();
 
-	void updateProductInfo();
+    void updateProductInfo();
 
-	void changeRenewalState();
+    void changeRenewalState();
 
-	void changeCapitalizationState();
+    void changeCapitalizationState();
 
-	void setCapitalizationButtonState(ICapitalizationButtonState capitalizationButtonState);
+    void setCapitalizationButtonState(ICapitalizationButtonState capitalizationButtonState);
+
+    void onProductSelect();
+
+    void createDeposit();
+
+    void setCheckDepositsView(ICheckDepositsView checkDepositsView);
+
+    void openCheckDepositsView();
+
+    void terminateDeposit();
+
+    void onSelectedDepositRow();
 }

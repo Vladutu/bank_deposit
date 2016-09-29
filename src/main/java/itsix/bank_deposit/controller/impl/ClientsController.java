@@ -12,14 +12,19 @@ import itsix.bank_deposit.exception.EntityNotFoundException;
 import itsix.bank_deposit.exception.InvalidOperationException;
 import itsix.bank_deposit.logic.IAccount;
 import itsix.bank_deposit.logic.IClient;
+import itsix.bank_deposit.logic.ICloseableDeposit;
 import itsix.bank_deposit.logic.ICurrency;
+import itsix.bank_deposit.logic.IDeposit;
 import itsix.bank_deposit.logic.IProduct;
 import itsix.bank_deposit.repository.IClientRepository;
+import itsix.bank_deposit.repository.IDepositRepository;
 import itsix.bank_deposit.repository.IProductRepository;
 import itsix.bank_deposit.validator.IClientValidator;
+import itsix.bank_deposit.validator.IDepositValidator;
 import itsix.bank_deposit.validator.IValidationResult;
 import itsix.bank_deposit.views.IBankAccountView;
 import itsix.bank_deposit.views.ICapitalizationButtonState;
+import itsix.bank_deposit.views.ICheckDepositsView;
 import itsix.bank_deposit.views.IMainView;
 import itsix.bank_deposit.views.INewAccountView;
 import itsix.bank_deposit.views.INewClientView;
@@ -37,9 +42,13 @@ public class ClientsController implements IClientsController, Serializable {
 
 	private transient INewDepositView newDepositView;
 
+	private transient ICheckDepositsView checkDepositsView;
+
 	private IClientRepository clientRepository;
 
 	private IProductRepository productsRepository;
+
+	private IDepositRepository depositsRepository;
 
 	private IClientBuilder clientBuilder;
 
@@ -47,19 +56,26 @@ public class ClientsController implements IClientsController, Serializable {
 
 	private IClientValidator clientValidator;
 
+	private IDepositValidator depositValidator;
+
 	private IClient selectedClient = null;
 
 	private IAccount selectedAccount = null;
 
+	private IProduct selectedProduct = null;
+
 	private ICapitalizationButtonState capitalizationButtonState;
 
-	public ClientsController(IClientRepository clientRepository, IProductRepository productsRepository,
-			IClientBuilder clientBuilder, IClientValidator clientValidator, IAccountBuilder accountBuilder) {
+	public ClientsController(IDepositRepository depositsRepository, IClientRepository clientRepository,
+			IProductRepository productsRepository, IClientBuilder clientBuilder, IClientValidator clientValidator,
+			IDepositValidator depositValidator, IAccountBuilder accountBuilder) {
 		this.clientRepository = clientRepository;
 		this.productsRepository = productsRepository;
 		this.clientBuilder = clientBuilder;
 		this.clientValidator = clientValidator;
 		this.accountBuilder = accountBuilder;
+		this.depositValidator = depositValidator;
+		this.depositsRepository = depositsRepository;
 	}
 
 	@Override
@@ -97,6 +113,11 @@ public class ClientsController implements IClientsController, Serializable {
 
 			clientRepository.save(client);
 			newClientView.closeWindow();
+
+			selectedClient = client;
+			mainView.setClientFields(selectedClient.getSsn(), selectedClient.getFirstName(),
+					selectedClient.getLastName(), selectedClient.getAddress(), selectedClient.getAccounts());
+			mainView.enableButtons();
 		}
 
 	}
@@ -157,7 +178,7 @@ public class ClientsController implements IClientsController, Serializable {
 	@Override
 	public void openBankAccountView() {
 		selectedAccount = mainView.getSelectedBankAccount();
-		bankAccountView.show(selectedAccount);
+		bankAccountView.show(selectedAccount, selectedClient.getLastName());
 		selectedAccount.subscribe(bankAccountView);
 
 	}
@@ -230,7 +251,9 @@ public class ClientsController implements IClientsController, Serializable {
 	public void updateProductInfo() {
 		IProduct product = newDepositView.getSelectedProduct();
 
-		newDepositView.updateProductInfo(product);
+		if (product != null) {
+			newDepositView.updateProductInfo(product);
+		}
 
 	}
 
@@ -239,11 +262,12 @@ public class ClientsController implements IClientsController, Serializable {
 		capitalizationButtonState = capitalizationButtonState.nextState();
 		capitalizationButtonState.execute();
 
+		selectedProduct.generatorRenewalState();
 	}
 
 	@Override
 	public void changeCapitalizationState() {
-		// TODO Auto-generated method stub
+		selectedProduct.generatorCapitalizationState();
 
 	}
 
@@ -251,7 +275,56 @@ public class ClientsController implements IClientsController, Serializable {
 	public void setCapitalizationButtonState(ICapitalizationButtonState capitalizationButtonState) {
 		this.capitalizationButtonState = capitalizationButtonState;
 		capitalizationButtonState.execute();
+	}
 
+	@Override
+	public void onProductSelect() {
+		if (selectedProduct != null) {
+			selectedProduct.generatorReset();
+		}
+
+		selectedProduct = newDepositView.getSelectedProduct();
+		newDepositView.resetButtons();
+		capitalizationButtonState = capitalizationButtonState.reset();
+	}
+
+	@Override
+	public void createDeposit() {
+		int money = newDepositView.getSum();
+
+		IValidationResult result = depositValidator.validate(selectedProduct, selectedClient, money);
+		if (!result.isValid()) {
+			JOptionPane.showMessageDialog(null, result.getErrorDescription());
+			return;
+		}
+
+		selectedProduct.createDeposit(selectedClient, money);
+
+		newDepositView.closeWindow();
+	}
+
+	@Override
+	public void setCheckDepositsView(ICheckDepositsView checkDepositsView) {
+		this.checkDepositsView = checkDepositsView;
+
+	}
+
+	@Override
+	public void openCheckDepositsView() {
+		checkDepositsView.show(selectedClient.getDeposits());
+	}
+
+	@Override
+	public void terminateDeposit() {
+		ICloseableDeposit closeableDeposit = checkDepositsView.getSelectedCloseableDeposit();
+		closeableDeposit.markForTermination();
+		JOptionPane.showMessageDialog(null, "Deposit marked for termination!");
+	}
+
+	@Override
+	public void onSelectedDepositRow() {
+		IDeposit selectedDeposit = checkDepositsView.getSelectedDeposit();
+		checkDepositsView.changeTerminationButtonState(selectedDeposit.getRenewal());
 	}
 
 }

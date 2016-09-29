@@ -1,20 +1,24 @@
 package itsix.bank_deposit.logic.impl;
 
+import java.io.Serializable;
+
 import itsix.bank_deposit.logic.IDate;
 import itsix.bank_deposit.logic.IOperation;
 
 /**
  * Created by Geo on 24.08.2016.
  */
-public class WithdrawOperation implements IOperation {
+public class WithdrawOperation implements IOperation, Serializable {
 
-    private int creditBefore;
-    private int creditAfter;
-    private IDate iDate;
+	private float creditBefore;
 
-    public WithdrawOperation(int creditBefore, int creditAfter, IDate iDate) {
-        this.creditBefore = creditBefore;
-        this.creditAfter = creditAfter;
-        this.iDate = iDate;
-    }
+	private float creditAfter;
+
+	private IDate iDate;
+
+	public WithdrawOperation(float creditBefore, float creditAfter, IDate iDate) {
+		this.creditBefore = creditBefore;
+		this.creditAfter = creditAfter;
+		this.iDate = iDate;
+	}
 }
